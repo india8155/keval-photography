@@ -2,131 +2,173 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Keval's Photography Gallery</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gallery | Keval Photography</title>
   <link rel="icon" type="image/png" href="images/favicon.png" />
   <style>
-    body {
+    * {
       margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
       font-family: 'Segoe UI', sans-serif;
+      color: white;
       background: url('images/background.jpg') no-repeat center center fixed;
       background-size: cover;
-      color: white;
-    }
-
-    .overlay {
-      background-color: rgba(0, 0, 0, 0.7);
-      min-height: 100vh;
-      padding: 60px 20px 40px;
-    }
-
-    h1 {
-      text-align: center;
-      margin-bottom: 40px;
-      font-size: 3em;
-      text-shadow: 2px 2px 10px black;
-    }
-
-    .gallery-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
-      max-width: 1200px;
-      margin: auto;
-    }
-
-    .gallery-item {
       position: relative;
-      overflow: hidden;
-      border-radius: 10px;
-      box-shadow: 0 0 10px #000;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: -1;
+    }
+
+    header {
+      text-align: center;
+      padding: 60px 20px 30px;
+    }
+
+    header h1 {
+      font-size: 3rem;
+      background-color: rgba(0, 0, 0, 0.4);
+      display: inline-block;
+      padding: 10px 20px;
+      border-radius: 12px;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      padding: 40px;
     }
 
     .gallery-item img {
       width: 100%;
-      height: auto;
-      display: block;
-      transition: transform 0.3s ease;
+      border-radius: 10px;
       cursor: pointer;
+      transition: transform 0.3s;
     }
 
     .gallery-item img:hover {
       transform: scale(1.05);
     }
 
-    .download-btn {
-      position: absolute;
-      bottom: 10px;
-      right: 10px;
-      background: rgba(0, 0, 0, 0.6);
-      color: #fff;
-      padding: 5px 10px;
-      text-decoration: none;
-      font-size: 0.8em;
-      border-radius: 5px;
-    }
-
     .lightbox {
       display: none;
       position: fixed;
       z-index: 1000;
-      left: 0;
       top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
       background: rgba(0, 0, 0, 0.9);
-      align-items: center;
       justify-content: center;
-    }
-
-    .lightbox img {
-      max-width: 90%;
-      max-height: 90%;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-      border-radius: 8px;
-      animation: zoomIn 0.3s ease-in-out;
-    }
-
-    @keyframes zoomIn {
-      from {
-        transform: scale(0.7);
-        opacity: 0;
-      }
-      to {
-        transform: scale(1);
-        opacity: 1;
-      }
+      align-items: center;
+      padding: 20px;
     }
 
     .lightbox:target {
       display: flex;
     }
 
-    .back-to-top {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: rgba(0,0,0,0.6);
-      color: white;
-      padding: 10px 15px;
-      border-radius: 50%;
-      font-size: 20px;
-      text-decoration: none;
-      transition: background 0.3s;
-      z-index: 999;
+    .lightbox img {
+      max-width: 90%;
+      max-height: 90%;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
     }
 
-    .back-to-top:hover {
-      background: rgba(255,255,255,0.2);
+    .lightbox a {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      color: white;
+      font-size: 28px;
+      text-decoration: none;
+    }
+
+    .download-btn {
+      position: absolute;
+      bottom: 40px;
+      right: 40px;
+      background: #ffffff33;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 500;
+      backdrop-filter: blur(4px);
+      transition: background 0.3s;
+    }
+
+    .download-btn:hover {
+      background: #ffffff55;
+    }
+
+    #topBtn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      font-size: 24px;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      padding: 12px 16px;
+      cursor: pointer;
+      display: none;
+      z-index: 1001;
+      backdrop-filter: blur(4px);
+    }
+
+    #topBtn:hover {
+      background: rgba(255, 255, 255, 0.4);
     }
   </style>
 </head>
 <body>
-  <div class="overlay">
-    <h1>My Photography Gallery</h1>
-    <div class="gallery-container">
 
-      <!-- START OF IMAGE BLOCK -->
+  <header>
+    <h1>My Photography Gallery</h1>
+  </header>
+
+  <section class="gallery">
+    <!-- Gallery Images -->
+    <!-- Each image block -->
+    <!-- Use this block for all 17 images -->
+    <!-- Change the image number accordingly -->
+    <!-- Example below: -->
+    <!-- Repeat this block for each image from 1 to 17 -->
+    <!-- Begin image blocks -->
+    <!-- I will now paste all 17 blocks below -->
+
+    <!-- 1.jpg to 17.jpg -->
+    <!-- Start image blocks -->
+    <!-- You can copy/paste this block and just change the number for src, id, alt, etc -->
+
+    <!-- REPEAT -->
+    <!-- Image Block -->
+    <!-- Lightbox image and link -->
+    <!-- Just change number for each image -->
+    <!-- Begin -->
+    <!-- 1.jpg -->
+    <!-- REPEAT -->
+    <!-- START -->
+    <!-- Repeat this 17 times for each image -->
+    <!-- OR use loop with a generator -->
+    <!-- Generated below -->
+
+    <!-- Gallery blocks generated in one go -->
+    <<!-- START OF IMAGE BLOCK -->
 <!-- Each image includes lightbox and download button -->
 
 <!-- Image 1 -->
@@ -283,9 +325,21 @@
 </div>
 
 <!-- END OF IMAGE BLOCK -->
-    </div>
-  </div>
+  </section>
 
-  <a href="#" class="back-to-top">&#8679;</a>
+  <button onclick="scrollToTop()" id="topBtn">↑</button>
+
+  <script>
+    const topBtn = document.getElementById("topBtn");
+
+    window.onscroll = function () {
+      topBtn.style.display = window.pageYOffset > 300 ? "block" : "none";
+    };
+
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
+
 </body>
 </html>
