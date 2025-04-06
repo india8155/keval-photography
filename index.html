@@ -2,123 +2,99 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Keval Photography</title>
-  <link rel="icon" href="images/favicon.png" type="image/png">
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet" />
   <style>
-    body {
+    * {
       margin: 0;
-      font-family: 'Open Sans', sans-serif;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body, html {
+      height: 100%;
+      font-family: 'Poppins', sans-serif;
+    }
+    .background {
       background: url('images/2.jpg') no-repeat center center fixed;
       background-size: cover;
-      color: #fff;
-      scroll-behavior: smooth;
+      height: 100%;
+      width: 100%;
+      position: relative;
     }
-
-    header {
-      background-color: rgba(0, 0, 0, 0.7);
-      padding: 1.5rem;
-      text-align: center;
-    }
-
-    header h1 {
-      margin: 0;
-      font-size: 2.5rem;
-    }
-
-    nav {
-      text-align: center;
-      margin: 20px 0;
-    }
-
-    nav a {
-      margin: 0 15px;
-      color: #fff;
-      text-decoration: none;
-      font-size: 1.1rem;
-      padding: 8px 12px;
-      border: 2px solid #fff;
-      border-radius: 5px;
-      transition: background 0.3s ease, color 0.3s ease;
-    }
-
-    nav a:hover {
-      background: #fff;
-      color: #000;
-    }
-
-    .content {
-      text-align: center;
-      padding: 60px 20px;
-      background-color: rgba(0, 0, 0, 0.5);
-    }
-
-    .content h2 {
-      font-size: 2rem;
-      margin-bottom: 20px;
-    }
-
-    .instagram-btn {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 12px 24px;
-      background-color: #E1306C;
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.6);
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
       color: white;
-      text-decoration: none;
-      border-radius: 5px;
-      font-weight: bold;
-      transition: background 0.3s ease;
-    }
-
-    .instagram-btn:hover {
-      background-color: #c72c61;
-    }
-
-    footer {
       text-align: center;
       padding: 20px;
-      background-color: rgba(0, 0, 0, 0.6);
-      font-size: 14px;
     }
-
-    @media (max-width: 600px) {
-      header h1 {
-        font-size: 2rem;
+    .overlay h1 {
+      font-size: 3em;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .overlay p {
+      font-size: 1.2em;
+      font-weight: 300;
+    }
+    .buttons {
+      margin-top: 30px;
+    }
+    .buttons a {
+      text-decoration: none;
+      padding: 12px 24px;
+      border-radius: 30px;
+      margin: 10px;
+      font-size: 1em;
+      font-weight: 500;
+      display: inline-block;
+      transition: all 0.3s ease;
+    }
+    .gallery-btn {
+      background-color: #ffffff;
+      color: #000;
+    }
+    .gallery-btn:hover {
+      background-color: #ddd;
+    }
+    .insta-btn {
+      background-color: #E1306C;
+      color: white;
+    }
+    .insta-btn:hover {
+      background-color: #c2215d;
+    }
+    @media (max-width: 768px) {
+      .overlay h1 {
+        font-size: 2em;
       }
-
-      nav a {
-        display: block;
-        margin: 10px auto;
-      }
-
-      .content h2 {
-        font-size: 1.5rem;
+      .buttons a {
+        font-size: 0.9em;
+        padding: 10px 20px;
       }
     }
   </style>
 </head>
 <body>
-
-  <header>
-    <h1>Keval Photography</h1>
-  </header>
-
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="gallery.html">Gallery</a>
-    <a href="https://www.instagram.com/keval.kotadia?igsh=MW1lZmJveDZtdG1odg==" target="_blank">Instagram</a>
-  </nav>
-
-  <div class="content">
-    <h2>Welcome to My Photography World</h2>
-    <p>Explore the beauty of nature through my lens. Dive into the gallery to see more.</p>
-    <a class="instagram-btn" href="https://www.instagram.com/keval.kotadia?igsh=MW1lZmJveDZtdG1odg==" target="_blank">Follow on Instagram</a>
+  <div class="background">
+    <div class="overlay">
+      <h1>Keval Photography</h1>
+      <p>Capturing Nature's Beauty One Frame at a Time</p>
+      <div class="buttons">
+        <a href="gallery.html" class="gallery-btn">View Gallery</a>
+        <a href="https://www.instagram.com/keval.kotadia?igsh=MW1lZmJveDZtdG1odg==" target="_blank" class="insta-btn">Follow on Instagram</a>
+      </div>
+    </div>
   </div>
-
-  <footer>
-    &copy; 2025 Keval Photography. All rights reserved.
-  </footer>
-
 </body>
 </html>
