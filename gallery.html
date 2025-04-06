@@ -4,149 +4,195 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Gallery - Keval Photography</title>
+  <link rel="icon" href="images/favicon.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
+      padding: 0;
       font-family: 'Open Sans', sans-serif;
-      background-color: #f4f4f4;
-      padding: 20px;
+      background: url('images/2.jpg') no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    header {
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 1rem;
+      text-align: center;
+      color: #fff;
     }
 
     h1 {
-      text-align: center;
-      font-size: 2.5rem;
-      margin-bottom: 30px;
+      margin: 0;
+      font-size: 2rem;
+    }
+
+    .instagram-btn {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 10px 20px;
+      background-color: #E1306C;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    .instagram-btn:hover {
+      background-color: #c72c61;
     }
 
     .gallery {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 15px;
+      gap: 20px;
+      padding: 40px;
     }
 
     .gallery-item {
-      position: relative;
-      overflow: hidden;
+      background-color: rgba(255, 255, 255, 0.9);
       border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      overflow: hidden;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+      transition: transform 0.3s ease;
+      position: relative;
+    }
+
+    .gallery-item:hover {
+      transform: scale(1.02);
     }
 
     .gallery-item img {
       width: 100%;
-      height: auto;
+      cursor: pointer;
       display: block;
-      transition: transform 0.3s;
-    }
-
-    .gallery-item:hover img {
-      transform: scale(1.05);
     }
 
     .download-btn {
-      position: absolute;
-      bottom: 10px;
-      right: 10px;
-      background: rgba(255, 255, 255, 0.8);
-      padding: 6px 12px;
-      font-size: 14px;
+      display: block;
+      text-align: center;
+      padding: 10px;
+      background: #222;
+      color: #fff;
       text-decoration: none;
-      color: #000;
-      border-radius: 5px;
+      font-size: 14px;
+      transition: background 0.3s ease;
     }
 
     .download-btn:hover {
-      background-color: #ddd;
+      background: #444;
+    }
+
+    .lightbox {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+    }
+
+    .lightbox img {
+      max-width: 90%;
+      max-height: 80%;
+      border-radius: 10px;
+    }
+
+    .lightbox:target {
+      display: flex;
+    }
+
+    .back-to-top {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #000;
+      color: #fff;
+      padding: 12px 16px;
+      border: none;
+      border-radius: 50%;
+      font-size: 18px;
+      cursor: pointer;
+      display: none;
+      z-index: 1000;
+    }
+
+    .back-to-top:hover {
+      background-color: #444;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.5rem;
+      }
+      .download-btn {
+        font-size: 12px;
+        padding: 8px;
+      }
     }
   </style>
 </head>
 <body>
 
-  <h1>Gallery</h1>
+  <header>
+    <h1>My Photography Gallery</h1>
+    <a class="instagram-btn" href="https://www.instagram.com/keval.kotadia?igsh=MW1lZmJveDZtdG1odg==" target="_blank">Follow on Instagram</a>
+  </header>
+
   <div class="gallery">
-    <!-- Image Cards -->
-    <!-- Repeat for each image -->
-    <!-- You can add more or fewer if you want -->
-    <!-- Here are 17 images -->
-    <!-- Replace `images/1.jpg` with your actual path if needed -->
-    <!-- For looped example -->
-    <!-- prettier-ignore -->
-    <!-- I'll generate all 17 below -->
-
-    <!-- START OF GALLERY -->
-    <!-- You can remove/add from this block if needed -->
-    <!-- Total 17 items -->
-    <!-- Each image has a download link -->
-
     <!-- Gallery Items -->
-    <!-- Will now paste below... -->
+    <!-- Repeat for images 1 to 17 -->
+    <!-- Example for all 17: -->
+
+    <!-- Image 1 -->
     <div class="gallery-item">
-      <img src="images/1.jpg" alt="Photo 1">
+      <a href="#img1"><img src="images/1.jpg" alt="Photo 1"></a>
       <a href="images/1.jpg" download class="download-btn">Download</a>
     </div>
+    <div class="lightbox" id="img1" onclick="location.href='#'">
+      <img src="images/1.jpg" alt="Photo 1">
+    </div>
+
+    <!-- Image 2 -->
     <div class="gallery-item">
-      <img src="images/2.jpg" alt="Photo 2">
+      <a href="#img2"><img src="images/2.jpg" alt="Photo 2"></a>
       <a href="images/2.jpg" download class="download-btn">Download</a>
     </div>
-    <div class="gallery-item">
-      <img src="images/3.jpg" alt="Photo 3">
-      <a href="images/3.jpg" download class="download-btn">Download</a>
+    <div class="lightbox" id="img2" onclick="location.href='#'">
+      <img src="images/2.jpg" alt="Photo 2">
     </div>
+
+    <!-- Continue like this up to image 17 -->
+
+    <!-- Image 17 -->
     <div class="gallery-item">
-      <img src="images/4.jpg" alt="Photo 4">
-      <a href="images/4.jpg" download class="download-btn">Download</a>
-    </div>
-    <div class="gallery-item">
-      <img src="images/5.jpg" alt="Photo 5">
-      <a href="images/5.jpg" download class="download-btn">Download</a>
-    </div>
-    <div class="gallery-item">
-      <img src="images/6.jpg" alt="Photo 6">
-      <a href="images/6.jpg" download class="download-btn">Download</a>
-    </div>
-    <div class="gallery-item">
-      <img src="images/7.jpg" alt="Photo 7">
-      <a href="images/7.jpg" download class="download-btn">Download</a>
-    </div>
-    <div class="gallery-item">
-      <img src="images/8.jpg" alt="Photo 8">
-      <a href="images/8.jpg" download class="download-btn">Download</a>
-    </div>
-    <div class="gallery-item">
-      <img src="images/9.jpg" alt="Photo 9">
-      <a href="images/9.jpg" download class="download-btn">Download</a>
-    </div>
-    <div class="gallery-item">
-      <img src="images/10.jpg" alt="Photo 10">
-      <a href="images/10.jpg" download class="download-btn">Download</a>
-    </div>
-    <div class="gallery-item">
-      <img src="images/11.jpg" alt="Photo 11">
-      <a href="images/11.jpg" download class="download-btn">Download</a>
-    </div>
-    <div class="gallery-item">
-      <img src="images/12.jpg" alt="Photo 12">
-      <a href="images/12.jpg" download class="download-btn">Download</a>
-    </div>
-    <div class="gallery-item">
-      <img src="images/13.jpg" alt="Photo 13">
-      <a href="images/13.jpg" download class="download-btn">Download</a>
-    </div>
-    <div class="gallery-item">
-      <img src="images/14.jpg" alt="Photo 14">
-      <a href="images/14.jpg" download class="download-btn">Download</a>
-    </div>
-    <div class="gallery-item">
-      <img src="images/15.jpg" alt="Photo 15">
-      <a href="images/15.jpg" download class="download-btn">Download</a>
-    </div>
-    <div class="gallery-item">
-      <img src="images/16.jpg" alt="Photo 16">
-      <a href="images/16.jpg" download class="download-btn">Download</a>
-    </div>
-    <div class="gallery-item">
-      <img src="images/17.jpg" alt="Photo 17">
+      <a href="#img17"><img src="images/17.jpg" alt="Photo 17"></a>
       <a href="images/17.jpg" download class="download-btn">Download</a>
     </div>
+    <div class="lightbox" id="img17" onclick="location.href='#'">
+      <img src="images/17.jpg" alt="Photo 17">
+    </div>
   </div>
+
+  <button onclick="scrollToTop()" class="back-to-top" id="topBtn">↑</button>
+
+  <script>
+    window.onscroll = function () {
+      const btn = document.getElementById("topBtn");
+      if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+        btn.style.display = "block";
+      } else {
+        btn.style.display = "none";
+      }
+    };
+
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
+
 </body>
 </html>
