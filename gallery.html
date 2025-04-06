@@ -3,41 +3,39 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Gallery - Keval's Photography</title>
+  <title>Gallery - Keval Photography</title>
   <style>
     body {
       margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-      background: #111;
-      color: white;
+      font-family: 'Open Sans', sans-serif;
+      background-color: #f4f4f4;
+      padding: 20px;
     }
 
     h1 {
       text-align: center;
-      padding: 40px 0 10px;
       font-size: 2.5rem;
+      margin-bottom: 30px;
     }
 
     .gallery {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-      padding: 20px;
+      gap: 15px;
     }
 
     .gallery-item {
       position: relative;
       overflow: hidden;
       border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
 
     .gallery-item img {
       width: 100%;
       height: auto;
       display: block;
-      transition: transform 0.3s ease;
+      transition: transform 0.3s;
     }
 
     .gallery-item:hover img {
@@ -48,240 +46,106 @@
       position: absolute;
       bottom: 10px;
       right: 10px;
-      background: rgba(0, 0, 0, 0.6);
-      color: white;
+      background: rgba(255, 255, 255, 0.8);
       padding: 6px 12px;
-      border-radius: 6px;
+      font-size: 14px;
       text-decoration: none;
-      font-size: 0.9rem;
-      transition: background 0.3s;
+      color: #000;
+      border-radius: 5px;
     }
 
     .download-btn:hover {
-      background: rgba(255, 255, 255, 0.2);
+      background-color: #ddd;
     }
   </style>
 </head>
 <body>
-  <h1>My Photography Gallery</h1>
+
+  <h1>Gallery</h1>
   <div class="gallery">
-    <!-- Gallery items -->
+    <!-- Image Cards -->
     <!-- Repeat for each image -->
-    <!-- Images assumed in images/1.jpg to images/17.jpg -->
-    <!-- Start -->
-    <!-- You can copy-paste or generate this with a loop -->
-    <!-- Here's all 17 -->
-    <!-- Replace 'images/' with correct path if needed -->
-    <!-- If not in a folder, just use '1.jpg' -->
+    <!-- You can add more or fewer if you want -->
+    <!-- Here are 17 images -->
+    <!-- Replace `images/1.jpg` with your actual path if needed -->
+    <!-- For looped example -->
+    <!-- prettier-ignore -->
+    <!-- I'll generate all 17 below -->
 
-    <!-- Auto-generated items -->
-    <!-- You can remove some if you use fewer images -->
-    <!-- You have 17 images -->
-    <!-- Start loop -->
-    <!-- Below block repeats for each image -->
+    <!-- START OF GALLERY -->
+    <!-- You can remove/add from this block if needed -->
+    <!-- Total 17 items -->
+    <!-- Each image has a download link -->
 
-    <!-- START IMAGES -->
-    <!-- You can paste this into the .gallery div -->
-    <!-- Image 1 to 17 -->
-    <!-- Start -->
-    <!-- Generated automatically -->
-    <!-- Begin Loop -->
-    <!-- Do not edit below unless changing filenames -->
-    <!-- All images are assumed inside 'images/' folder -->
-    <!-- Or change the path if needed -->
-    <!-- 17 images -->
-    <!-- Each block starts below -->
-
-    <!-- Image blocks -->
-    <!-- You can paste all of this inside <div class="gallery"> -->
-
-    <!-- BEGIN IMAGE ITEMS -->
-    <!-- They are already below -->
-
-    <!-- Code generated below -->
-    <!-- Do not remove until end -->
-    <!-- For image 1 to 17 -->
-
-    <!-- Image items start -->
-    <!-- Each one is a gallery-item div -->
-
-    <!-- Image items -->
-    <!-- You can modify the filename/path if different -->
-
-    <!-- Copy and paste into the gallery -->
-    <!-- Image list -->
-    <!-- Auto-generated -->
-
-    <!-- Code Start -->
-    <!-- Image list for 1.jpg to 17.jpg -->
-    <!-- Start -->
-    <!-- Below this line -->
-
-    <!-- Image blocks -->
-
-    <!-- Paste these inside <div class="gallery"> -->
-
-    <!-- Begin -->
-    <!-- image 1 to 17 -->
-    <!-- -->
-
-    <!-- Start gallery items -->
-    <!-- -->
-
-    <!-- Repeat for all 17 images -->
-    <!-- -->
-
-    <!-- Now generating -->
-    <!-- -->
-    <!-- -->
-
-    <!-- Below code is actual items -->
-    <!-- -->
-
-    <!-- Now: -->
-
-    <!-- IMAGE BLOCKS START -->
-    <!-- -->
-
-    <!-- Generated gallery items -->
-    <!-- -->
-
-    <!-- All 17 images -->
-    <!-- -->
-
-    <!-- Below this line is final gallery item code -->
-
-    <!-- -->
-
-    <!-- Here you go: -->
-
-    <!-- -->
-    <!-- Actual Image items -->
-
-    <!-- Now inserting -->
-    <!-- -->
-
-    <!-- All inside .gallery -->
-
-    <!-- Start: -->
-
-    <!-- -->
-
-    <!-- Generated start -->
-
-    <!-- All done manually -->
-    <!-- -->
-
-    <!-- Now real code starts -->
-
-    <!-- -->
-
-    <!-- Below are 17 images -->
-    <!-- -->
-
-    <!-- BEGIN GALLERY ITEMS -->
-
-    <!-- Loop start -->
-    <!-- Image 1 -->
+    <!-- Gallery Items -->
+    <!-- Will now paste below... -->
     <div class="gallery-item">
-      <img src="images/1.jpg" alt="Photo 1" />
-      <a class="download-btn" href="images/1.jpg" download>Download</a>
+      <img src="images/1.jpg" alt="Photo 1">
+      <a href="images/1.jpg" download class="download-btn">Download</a>
     </div>
-
-    <!-- Image 2 -->
     <div class="gallery-item">
-      <img src="images/2.jpg" alt="Photo 2" />
-      <a class="download-btn" href="images/2.jpg" download>Download</a>
+      <img src="images/2.jpg" alt="Photo 2">
+      <a href="images/2.jpg" download class="download-btn">Download</a>
     </div>
-
-    <!-- Image 3 -->
     <div class="gallery-item">
-      <img src="images/3.jpg" alt="Photo 3" />
-      <a class="download-btn" href="images/3.jpg" download>Download</a>
+      <img src="images/3.jpg" alt="Photo 3">
+      <a href="images/3.jpg" download class="download-btn">Download</a>
     </div>
-
-    <!-- Image 4 -->
     <div class="gallery-item">
-      <img src="images/4.jpg" alt="Photo 4" />
-      <a class="download-btn" href="images/4.jpg" download>Download</a>
+      <img src="images/4.jpg" alt="Photo 4">
+      <a href="images/4.jpg" download class="download-btn">Download</a>
     </div>
-
-    <!-- Image 5 -->
     <div class="gallery-item">
-      <img src="images/5.jpg" alt="Photo 5" />
-      <a class="download-btn" href="images/5.jpg" download>Download</a>
+      <img src="images/5.jpg" alt="Photo 5">
+      <a href="images/5.jpg" download class="download-btn">Download</a>
     </div>
-
-    <!-- Image 6 -->
     <div class="gallery-item">
-      <img src="images/6.jpg" alt="Photo 6" />
-      <a class="download-btn" href="images/6.jpg" download>Download</a>
+      <img src="images/6.jpg" alt="Photo 6">
+      <a href="images/6.jpg" download class="download-btn">Download</a>
     </div>
-
-    <!-- Image 7 -->
     <div class="gallery-item">
-      <img src="images/7.jpg" alt="Photo 7" />
-      <a class="download-btn" href="images/7.jpg" download>Download</a>
+      <img src="images/7.jpg" alt="Photo 7">
+      <a href="images/7.jpg" download class="download-btn">Download</a>
     </div>
-
-    <!-- Image 8 -->
     <div class="gallery-item">
-      <img src="images/8.jpg" alt="Photo 8" />
-      <a class="download-btn" href="images/8.jpg" download>Download</a>
+      <img src="images/8.jpg" alt="Photo 8">
+      <a href="images/8.jpg" download class="download-btn">Download</a>
     </div>
-
-    <!-- Image 9 -->
     <div class="gallery-item">
-      <img src="images/9.jpg" alt="Photo 9" />
-      <a class="download-btn" href="images/9.jpg" download>Download</a>
+      <img src="images/9.jpg" alt="Photo 9">
+      <a href="images/9.jpg" download class="download-btn">Download</a>
     </div>
-
-    <!-- Image 10 -->
     <div class="gallery-item">
-      <img src="images/10.jpg" alt="Photo 10" />
-      <a class="download-btn" href="images/10.jpg" download>Download</a>
+      <img src="images/10.jpg" alt="Photo 10">
+      <a href="images/10.jpg" download class="download-btn">Download</a>
     </div>
-
-    <!-- Image 11 -->
     <div class="gallery-item">
-      <img src="images/11.jpg" alt="Photo 11" />
-      <a class="download-btn" href="images/11.jpg" download>Download</a>
+      <img src="images/11.jpg" alt="Photo 11">
+      <a href="images/11.jpg" download class="download-btn">Download</a>
     </div>
-
-    <!-- Image 12 -->
     <div class="gallery-item">
-      <img src="images/12.jpg" alt="Photo 12" />
-      <a class="download-btn" href="images/12.jpg" download>Download</a>
+      <img src="images/12.jpg" alt="Photo 12">
+      <a href="images/12.jpg" download class="download-btn">Download</a>
     </div>
-
-    <!-- Image 13 -->
     <div class="gallery-item">
-      <img src="images/13.jpg" alt="Photo 13" />
-      <a class="download-btn" href="images/13.jpg" download>Download</a>
+      <img src="images/13.jpg" alt="Photo 13">
+      <a href="images/13.jpg" download class="download-btn">Download</a>
     </div>
-
-    <!-- Image 14 -->
     <div class="gallery-item">
-      <img src="images/14.jpg" alt="Photo 14" />
-      <a class="download-btn" href="images/14.jpg" download>Download</a>
+      <img src="images/14.jpg" alt="Photo 14">
+      <a href="images/14.jpg" download class="download-btn">Download</a>
     </div>
-
-    <!-- Image 15 -->
     <div class="gallery-item">
-      <img src="images/15.jpg" alt="Photo 15" />
-      <a class="download-btn" href="images/15.jpg" download>Download</a>
+      <img src="images/15.jpg" alt="Photo 15">
+      <a href="images/15.jpg" download class="download-btn">Download</a>
     </div>
-
-    <!-- Image 16 -->
     <div class="gallery-item">
-      <img src="images/16.jpg" alt="Photo 16" />
-      <a class="download-btn" href="images/16.jpg" download>Download</a>
+      <img src="images/16.jpg" alt="Photo 16">
+      <a href="images/16.jpg" download class="download-btn">Download</a>
     </div>
-
-    <!-- Image 17 -->
     <div class="gallery-item">
-      <img src="images/17.jpg" alt="Photo 17" />
-      <a class="download-btn" href="images/17.jpg" download>Download</a>
+      <img src="images/17.jpg" alt="Photo 17">
+      <a href="images/17.jpg" download class="download-btn">Download</a>
     </div>
   </div>
 </body>
