@@ -2,276 +2,303 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Gallery - Keval Photography</title>
-  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="icon" href="favicon.png" type="image/png" />
   <style>
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: url('images/background.jpg') no-repeat center center fixed;
+      background: url('background.jpg') no-repeat center center fixed;
       background-size: cover;
-      color: white;
-    }
-    .overlay {
-      background-color: rgba(0, 0, 0, 0.75);
-      position: absolute;
-      inset: 0;
-      z-index: -1;
-    }
-    header {
-      text-align: center;
-      padding: 2rem;
+      color: #fff;
       position: relative;
     }
+
+    .overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0, 0, 0, 0.75);
+      z-index: 0;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+      padding: 60px 20px;
+      text-align: center;
+    }
+
     h1 {
-      font-size: 2.5rem;
-      margin-bottom: 0.5rem;
+      font-size: 3rem;
+      margin-bottom: 40px;
+      text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
     }
-    .btn-bar {
-      margin-top: 1rem;
-    }
-    .btn-bar a {
-      background: #222;
-      color: #fff;
-      text-decoration: none;
-      padding: 0.6rem 1rem;
-      margin: 0 0.5rem;
-      border-radius: 5px;
-      transition: 0.3s;
-    }
-    .btn-bar a:hover {
-      background: #555;
-    }
+
     .gallery {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 15px;
-      padding: 2rem;
-      position: relative;
-      z-index: 1;
+      gap: 20px;
+      max-width: 1200px;
+      margin: auto;
     }
+
     .gallery-item {
       position: relative;
-      overflow: hidden;
-      border-radius: 10px;
     }
-    .gallery-item img {
+
+    .gallery img {
       width: 100%;
       height: auto;
-      display: block;
-      border: 3px solid white;
-      border-radius: 10px;
-      cursor: pointer;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
+      transition: transform 0.3s;
     }
+
+    .gallery img:hover {
+      transform: scale(1.05);
+    }
+
     .download-btn {
-      display: block;
-      text-align: center;
-      background: rgba(0, 0, 0, 0.7);
-      color: white;
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      background-color: rgba(0, 0, 0, 0.7);
+      color: #fff;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.9rem;
       text-decoration: none;
-      padding: 0.4rem;
-      margin-top: 5px;
-      border-radius: 5px;
-      transition: 0.3s;
+      transition: background-color 0.2s;
     }
+
     .download-btn:hover {
-      background: #333;
+      background-color: #ff3d00;
     }
+
     .lightbox {
       display: none;
       position: fixed;
-      z-index: 10;
-      padding-top: 5%;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgba(0,0,0,0.9);
-      text-align: center;
+      z-index: 9999;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.9);
+      justify-content: center;
+      align-items: center;
     }
+
     .lightbox img {
-      max-width: 90%;
-      max-height: 80vh;
-      border-radius: 10px;
-      box-shadow: 0 0 20px black;
+      max-width: 90vw;
+      max-height: 90vh;
+      border-radius: 8px;
     }
-    #backToTop {
+
+    .back-to-top {
       position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background-color: rgba(0,0,0,0.7);
-      color: white;
+      bottom: 25px;
+      right: 25px;
+      background-color: rgba(0, 0, 0, 0.7);
+      color: #fff;
       padding: 10px 15px;
-      border: none;
       border-radius: 50%;
-      font-size: 18px;
-      cursor: pointer;
-      display: none;
-      z-index: 999;
+      font-size: 20px;
+      text-decoration: none;
+      transition: background-color 0.3s;
+    }
+
+    .back-to-top:hover {
+      background-color: #ff3d00;
+    }
+
+    .footer {
+      margin-top: 60px;
+      text-align: center;
+      color: #ccc;
+      font-size: 0.9rem;
+    }
+
+    .insta-btn {
+      display: inline-block;
+      margin-top: 15px;
+      background-color: #E1306C;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 25px;
+      text-decoration: none;
+      transition: background-color 0.3s;
+    }
+
+    .insta-btn:hover {
+      background-color: #c2185b;
     }
   </style>
 </head>
 <body>
   <div class="overlay"></div>
-
-  <header>
+  <div class="content">
     <h1>My Photography Gallery</h1>
-    <div class="btn-bar">
-      <a href="index.html">Home</a>
-      <a href="https://www.instagram.com/keval.kotadia?igsh=MW1lZmJveDZtdG1odg==" target="_blank">Follow on Instagram</a>
+
+    <div class="gallery">
+      <!-- 17 Images -->
+      <div class="gallery-item">
+        <a href="#lightbox1"><img src="images/1.jpg" alt="Photo 1"></a>
+        <a class="download-btn" href="images/1.jpg" download>Download</a>
+      </div>
+      <div class="lightbox" id="lightbox1" onclick="this.style.display='none'">
+        <img src="images/1.jpg" alt="Photo 1">
+      </div>
+
+      <div class="gallery-item">
+        <a href="#lightbox2"><img src="images/2.jpg" alt="Photo 2"></a>
+        <a class="download-btn" href="images/2.jpg" download>Download</a>
+      </div>
+      <div class="lightbox" id="lightbox2" onclick="this.style.display='none'">
+        <img src="images/2.jpg" alt="Photo 2">
+      </div>
+
+      <div class="gallery-item">
+        <a href="#lightbox3"><img src="images/3.jpg" alt="Photo 3"></a>
+        <a class="download-btn" href="images/3.jpg" download>Download</a>
+      </div>
+      <div class="lightbox" id="lightbox3" onclick="this.style.display='none'">
+        <img src="images/3.jpg" alt="Photo 3">
+      </div>
+
+      <div class="gallery-item">
+        <a href="#lightbox4"><img src="images/4.jpg" alt="Photo 4"></a>
+        <a class="download-btn" href="images/4.jpg" download>Download</a>
+      </div>
+      <div class="lightbox" id="lightbox4" onclick="this.style.display='none'">
+        <img src="images/4.jpg" alt="Photo 4">
+      </div>
+
+      <div class="gallery-item">
+        <a href="#lightbox5"><img src="images/5.jpg" alt="Photo 5"></a>
+        <a class="download-btn" href="images/5.jpg" download>Download</a>
+      </div>
+      <div class="lightbox" id="lightbox5" onclick="this.style.display='none'">
+        <img src="images/5.jpg" alt="Photo 5">
+      </div>
+
+      <div class="gallery-item">
+        <a href="#lightbox6"><img src="images/6.jpg" alt="Photo 6"></a>
+        <a class="download-btn" href="images/6.jpg" download>Download</a>
+      </div>
+      <div class="lightbox" id="lightbox6" onclick="this.style.display='none'">
+        <img src="images/6.jpg" alt="Photo 6">
+      </div>
+
+      <div class="gallery-item">
+        <a href="#lightbox7"><img src="images/7.jpg" alt="Photo 7"></a>
+        <a class="download-btn" href="images/7.jpg" download>Download</a>
+      </div>
+      <div class="lightbox" id="lightbox7" onclick="this.style.display='none'">
+        <img src="images/7.jpg" alt="Photo 7">
+      </div>
+
+      <div class="gallery-item">
+        <a href="#lightbox8"><img src="images/8.jpg" alt="Photo 8"></a>
+        <a class="download-btn" href="images/8.jpg" download>Download</a>
+      </div>
+      <div class="lightbox" id="lightbox8" onclick="this.style.display='none'">
+        <img src="images/8.jpg" alt="Photo 8">
+      </div>
+
+      <div class="gallery-item">
+        <a href="#lightbox9"><img src="images/9.jpg" alt="Photo 9"></a>
+        <a class="download-btn" href="images/9.jpg" download>Download</a>
+      </div>
+      <div class="lightbox" id="lightbox9" onclick="this.style.display='none'">
+        <img src="images/9.jpg" alt="Photo 9">
+      </div>
+
+      <div class="gallery-item">
+        <a href="#lightbox10"><img src="images/10.jpg" alt="Photo 10"></a>
+        <a class="download-btn" href="images/10.jpg" download>Download</a>
+      </div>
+      <div class="lightbox" id="lightbox10" onclick="this.style.display='none'">
+        <img src="images/10.jpg" alt="Photo 10">
+      </div>
+
+      <div class="gallery-item">
+        <a href="#lightbox11"><img src="images/11.jpg" alt="Photo 11"></a>
+        <a class="download-btn" href="images/11.jpg" download>Download</a>
+      </div>
+      <div class="lightbox" id="lightbox11" onclick="this.style.display='none'">
+        <img src="images/11.jpg" alt="Photo 11">
+      </div>
+
+      <div class="gallery-item">
+        <a href="#lightbox12"><img src="images/12.jpg" alt="Photo 12"></a>
+        <a class="download-btn" href="images/12.jpg" download>Download</a>
+      </div>
+      <div class="lightbox" id="lightbox12" onclick="this.style.display='none'">
+        <img src="images/12.jpg" alt="Photo 12">
+      </div>
+
+      <div class="gallery-item">
+        <a href="#lightbox13"><img src="images/13.jpg" alt="Photo 13"></a>
+        <a class="download-btn" href="images/13.jpg" download>Download</a>
+      </div>
+      <div class="lightbox" id="lightbox13" onclick="this.style.display='none'">
+        <img src="images/13.jpg" alt="Photo 13">
+      </div>
+
+      <div class="gallery-item">
+        <a href="#lightbox14"><img src="images/14.jpg" alt="Photo 14"></a>
+        <a class="download-btn" href="images/14.jpg" download>Download</a>
+      </div>
+      <div class="lightbox" id="lightbox14" onclick="this.style.display='none'">
+        <img src="images/14.jpg" alt="Photo 14">
+      </div>
+
+      <div class="gallery-item">
+        <a href="#lightbox15"><img src="images/15.jpg" alt="Photo 15"></a>
+        <a class="download-btn" href="images/15.jpg" download>Download</a>
+      </div>
+      <div class="lightbox" id="lightbox15" onclick="this.style.display='none'">
+        <img src="images/15.jpg" alt="Photo 15">
+      </div>
+
+      <div class="gallery-item">
+        <a href="#lightbox16"><img src="images/16.jpg" alt="Photo 16"></a>
+        <a class="download-btn" href="images/16.jpg" download>Download</a>
+      </div>
+      <div class="lightbox" id="lightbox16" onclick="this.style.display='none'">
+        <img src="images/16.jpg" alt="Photo 16">
+      </div>
+
+      <div class="gallery-item">
+        <a href="#lightbox17"><img src="images/17.jpg" alt="Photo 17"></a>
+        <a class="download-btn" href="images/17.jpg" download>Download</a>
+      </div>
+      <div class="lightbox" id="lightbox17" onclick="this.style.display='none'">
+        <img src="images/17.jpg" alt="Photo 17">
+      </div>
     </div>
-  </header>
 
-  <div class="gallery">
-    !<div class="gallery-item">
-  <a href="#lightbox1"><img src="images/1.jpg" alt="Photo 1"></a>
-  <a class="download-btn" href="images/1.jpg" download>Download</a>
-</div>
-<div id="lightbox1" class="lightbox" onclick="this.style.display='none'">
-  <img src="images/1.jpg" alt="Photo 1">
-</div>
-
-<div class="gallery-item">
-  <a href="#lightbox2"><img src="images/2.jpg" alt="Photo 2"></a>
-  <a class="download-btn" href="images/2.jpg" download>Download</a>
-</div>
-<div id="lightbox2" class="lightbox" onclick="this.style.display='none'">
-  <img src="images/2.jpg" alt="Photo 2">
-</div>
-
-<div class="gallery-item">
-  <a href="#lightbox3"><img src="images/3.jpg" alt="Photo 3"></a>
-  <a class="download-btn" href="images/3.jpg" download>Download</a>
-</div>
-<div id="lightbox3" class="lightbox" onclick="this.style.display='none'">
-  <img src="images/3.jpg" alt="Photo 3">
-</div>
-
-<div class="gallery-item">
-  <a href="#lightbox4"><img src="images/4.jpg" alt="Photo 4"></a>
-  <a class="download-btn" href="images/4.jpg" download>Download</a>
-</div>
-<div id="lightbox4" class="lightbox" onclick="this.style.display='none'">
-  <img src="images/4.jpg" alt="Photo 4">
-</div>
-
-<div class="gallery-item">
-  <a href="#lightbox5"><img src="images/5.jpg" alt="Photo 5"></a>
-  <a class="download-btn" href="images/5.jpg" download>Download</a>
-</div>
-<div id="lightbox5" class="lightbox" onclick="this.style.display='none'">
-  <img src="images/5.jpg" alt="Photo 5">
-</div>
-
-<div class="gallery-item">
-  <a href="#lightbox6"><img src="images/6.jpg" alt="Photo 6"></a>
-  <a class="download-btn" href="images/6.jpg" download>Download</a>
-</div>
-<div id="lightbox6" class="lightbox" onclick="this.style.display='none'">
-  <img src="images/6.jpg" alt="Photo 6">
-</div>
-
-<div class="gallery-item">
-  <a href="#lightbox7"><img src="images/7.jpg" alt="Photo 7"></a>
-  <a class="download-btn" href="images/7.jpg" download>Download</a>
-</div>
-<div id="lightbox7" class="lightbox" onclick="this.style.display='none'">
-  <img src="images/7.jpg" alt="Photo 7">
-</div>
-
-<div class="gallery-item">
-  <a href="#lightbox8"><img src="images/8.jpg" alt="Photo 8"></a>
-  <a class="download-btn" href="images/8.jpg" download>Download</a>
-</div>
-<div id="lightbox8" class="lightbox" onclick="this.style.display='none'">
-  <img src="images/8.jpg" alt="Photo 8">
-</div>
-
-<div class="gallery-item">
-  <a href="#lightbox9"><img src="images/9.jpg" alt="Photo 9"></a>
-  <a class="download-btn" href="images/9.jpg" download>Download</a>
-</div>
-<div id="lightbox9" class="lightbox" onclick="this.style.display='none'">
-  <img src="images/9.jpg" alt="Photo 9">
-</div>
-
-<div class="gallery-item">
-  <a href="#lightbox10"><img src="images/10.jpg" alt="Photo 10"></a>
-  <a class="download-btn" href="images/10.jpg" download>Download</a>
-</div>
-<div id="lightbox10" class="lightbox" onclick="this.style.display='none'">
-  <img src="images/10.jpg" alt="Photo 10">
-</div>
-
-<div class="gallery-item">
-  <a href="#lightbox11"><img src="images/11.jpg" alt="Photo 11"></a>
-  <a class="download-btn" href="images/11.jpg" download>Download</a>
-</div>
-<div id="lightbox11" class="lightbox" onclick="this.style.display='none'">
-  <img src="images/11.jpg" alt="Photo 11">
-</div>
-
-<div class="gallery-item">
-  <a href="#lightbox12"><img src="images/12.jpg" alt="Photo 12"></a>
-  <a class="download-btn" href="images/12.jpg" download>Download</a>
-</div>
-<div id="lightbox12" class="lightbox" onclick="this.style.display='none'">
-  <img src="images/12.jpg" alt="Photo 12">
-</div>
-
-<div class="gallery-item">
-  <a href="#lightbox13"><img src="images/13.jpg" alt="Photo 13"></a>
-  <a class="download-btn" href="images/13.jpg" download>Download</a>
-</div>
-<div id="lightbox13" class="lightbox" onclick="this.style.display='none'">
-  <img src="images/13.jpg" alt="Photo 13">
-</div>
-
-<div class="gallery-item">
-  <a href="#lightbox14"><img src="images/14.jpg" alt="Photo 14"></a>
-  <a class="download-btn" href="images/14.jpg" download>Download</a>
-</div>
-<div id="lightbox14" class="lightbox" onclick="this.style.display='none'">
-  <img src="images/14.jpg" alt="Photo 14">
-</div>
-
-<div class="gallery-item">
-  <a href="#lightbox15"><img src="images/15.jpg" alt="Photo 15"></a>
-  <a class="download-btn" href="images/15.jpg" download>Download</a>
-</div>
-<div id="lightbox15" class="lightbox" onclick="this.style.display='none'">
-  <img src="images/15.jpg" alt="Photo 15">
-</div>
-
-<div class="gallery-item">
-  <a href="#lightbox16"><img src="images/16.jpg" alt="Photo 16"></a>
-  <a class="download-btn" href="images/16.jpg" download>Download</a>
-</div>
-<div id="lightbox16" class="lightbox" onclick="this.style.display='none'">
-  <img src="images/16.jpg" alt="Photo 16">
-</div>
-
-<div class="gallery-item">
-  <a href="#lightbox17"><img src="images/17.jpg" alt="Photo 17"></a>
-  <a class="download-btn" href="images/17.jpg" download>Download</a>
-</div>
-<div id="lightbox17" class="lightbox" onclick="this.style.display='none'">
-  <img src="images/17.jpg" alt="Photo 17">
-</div>
+    <div class="footer">
+      <p>© 2025 Keval Photography</p>
+      <a class="insta-btn" href="https://www.instagram.com/keval.kotadia?igsh=MW1lZmJveDZtdG1odg==" target="_blank">Follow on Instagram</a>
+    </div>
   </div>
 
-  <button onclick="scrollToTop()" id="backToTop" title="Go to top">↑</button>
+  <a href="#" class="back-to-top">&#8679;</a>
 
   <script>
-    window.onscroll = () => {
-      const btn = document.getElementById("backToTop");
-      btn.style.display = window.scrollY > 100 ? "block" : "none";
-    };
-    function scrollToTop() {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
+    document.querySelectorAll('.lightbox').forEach(lb => {
+      lb.style.display = 'flex';
+      lb.style.justifyContent = 'center';
+      lb.style.alignItems = 'center';
+      lb.style.display = 'none';
+    });
+
+    document.querySelector('.back-to-top').addEventListener('click', function(e) {
+      e.preventDefault();
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    });
   </script>
 </body>
 </html>
