@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Keval Photography</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Open+Sans&display=swap" rel="stylesheet">
   <style>
@@ -11,12 +11,10 @@
       padding: 0;
       box-sizing: border-box;
     }
-
     body, html {
       font-family: 'Open Sans', sans-serif;
       height: 100%;
     }
-
     html {
       scroll-behavior: smooth;
     }
@@ -34,11 +32,10 @@
     .hero::after {
       content: "";
       position: absolute;
-      top: 0;
-      left: 0;
+      top: 0; left: 0;
       height: 100%;
       width: 100%;
-      background-color: rgba(0, 0, 0, 0.5);
+      background-color: rgba(0,0,0,0.6);
       z-index: 1;
     }
 
@@ -55,7 +52,7 @@
     }
 
     .btn {
-      background-color: #fff;
+      background-color: #ffffff;
       color: #000;
       padding: 12px 25px;
       font-weight: bold;
@@ -65,7 +62,7 @@
     }
 
     .btn:hover {
-      background-color: #ccc;
+      background-color: #ddd;
     }
 
     nav {
@@ -84,6 +81,18 @@
 
     nav a:hover {
       text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      .hero-content h1 {
+        font-size: 2rem;
+      }
+      nav {
+        right: 10px;
+      }
+      nav a {
+        font-size: 14px;
+      }
     }
   </style>
 </head>
