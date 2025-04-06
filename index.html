@@ -1,100 +1,122 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<!DOCTYPE html><html lang="en"><head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Keval Photography</title>
+  <title>Keval's Photography</title>
   <link rel="icon" type="image/png" href="favicon.png" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-    }
-    body, html {
-      height: 100%;
-      font-family: 'Poppins', sans-serif;
-    }
-    .background {
-      background: url('images/2.jpg') no-repeat center center fixed;
-      background-size: cover;
-      height: 100%;
-      width: 100%;
-      position: relative;
-    }
-    .overlay {
-      background-color: rgba(0, 0, 0, 0.6);
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      color: white;
-      text-align: center;
-      padding: 20px;
-    }
-    .overlay h1 {
-      font-size: 3em;
-      font-weight: 700;
-      margin-bottom: 10px;
-    }
-    .overlay p {
-      font-size: 1.2em;
-      font-weight: 300;
-    }
-    .buttons {
-      margin-top: 30px;
-    }
-    .buttons a {
-      text-decoration: none;
-      padding: 12px 24px;
-      border-radius: 30px;
-      margin: 10px;
-      font-size: 1em;
-      font-weight: 500;
-      display: inline-block;
-      transition: all 0.3s ease;
-    }
-    .gallery-btn {
-      background-color: #ffffff;
-      color: #000;
-    }
-    .gallery-btn:hover {
-      background-color: #ddd;
-    }
-    .insta-btn {
-      background-color: #E1306C;
-      color: white;
-    }
-    .insta-btn:hover {
-      background-color: #c2215d;
-    }
-    @media (max-width: 768px) {
-      .overlay h1 {
-        font-size: 2em;
-      }
-      .buttons a {
-        font-size: 0.9em;
-        padding: 10px 20px;
-      }
-    }
+    }body {
+  font-family: 'Playfair Display', serif;
+  background: url('images/background.jpg') no-repeat center center/cover;
+  height: 100vh;
+  color: #fff;
+  position: relative;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1;
+}
+
+.container {
+  position: relative;
+  z-index: 2;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+}
+
+h1 {
+  font-size: 4em;
+  margin-bottom: 0.3em;
+  text-shadow: 2px 2px 8px #000;
+}
+
+p {
+  font-size: 1.5em;
+  margin-bottom: 1em;
+  text-shadow: 1px 1px 4px #000;
+}
+
+.buttons {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.buttons a {
+  padding: 12px 24px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid #fff;
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.1em;
+  border-radius: 8px;
+  backdrop-filter: blur(5px);
+  transition: background 0.3s ease;
+}
+
+.buttons a:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.instagram {
+  margin-top: 30px;
+}
+
+.instagram a {
+  text-decoration: none;
+  color: #fff;
+  background: #E1306C;
+  padding: 10px 20px;
+  border-radius: 50px;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.instagram a:hover {
+  background: #C2185B;
+}
+
+@media (max-width: 600px) {
+  h1 {
+    font-size: 2.5em;
+  }
+
+  p {
+    font-size: 1.2em;
+  }
+
+  .buttons a {
+    font-size: 1em;
+  }
+}
+
   </style>
-</head>
-<body>
-  <div class="background">
-    <div class="overlay">
-      <h1>Keval Photography</h1>
-      <p>Capturing Nature's Beauty One Frame at a Time</p>
-      <div class="buttons">
-        <a href="gallery.html" class="gallery-btn">View Gallery</a>
-        <a href="https://www.instagram.com/keval.kotadia?igsh=MW1lZmJveDZtdG1odg==" target="_blank" class="insta-btn">Follow on Instagram</a>
-      </div>
+</head><body>
+  <div class="overlay"></div>
+  <div class="container">
+    <h1>Keval's Photography</h1>
+    <p>Capturing moments from nature’s heart</p>
+    <div class="buttons">
+      <a href="gallery.html">Gallery</a>
+      <a href="https://www.instagram.com/keval.kotadia?igsh=MW1lZmJveDZtdG1odg==" target="_blank">Instagram</a>
+    </div>
+    <div class="instagram">
+      <a href="https://www.instagram.com/keval.kotadia?igsh=MW1lZmJveDZtdG1odg==" target="_blank">Follow on Instagram</a>
     </div>
   </div>
-</body>
-</html>
+</body></html>
