@@ -2,344 +2,281 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Gallery | Keval Photography</title>
-  <link rel="icon" type="image/png" href="images/favicon.png" />
+  <link rel="icon" href="images/favicon.png" type="image/png"/>
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
-
     body {
       font-family: 'Segoe UI', sans-serif;
-      color: white;
       background: url('images/background.jpg') no-repeat center center fixed;
       background-size: cover;
-      position: relative;
+      color: white;
     }
-
     body::before {
       content: "";
       position: fixed;
       top: 0;
       left: 0;
-      height: 100%;
       width: 100%;
-      background: rgba(0, 0, 0, 0.6);
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
       z-index: -1;
     }
-
     header {
       text-align: center;
-      padding: 60px 20px 30px;
+      padding: 50px 20px 20px;
     }
-
     header h1 {
       font-size: 3rem;
-      background-color: rgba(0, 0, 0, 0.4);
+      background: rgba(0,0,0,0.5);
       display: inline-block;
       padding: 10px 20px;
       border-radius: 12px;
     }
-
     .gallery {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 20px;
       padding: 40px;
     }
-
-    .gallery-item img {
+    .gallery img {
       width: 100%;
       border-radius: 10px;
       cursor: pointer;
-      transition: transform 0.3s;
+      transition: 0.3s ease;
     }
-
-    .gallery-item img:hover {
+    .gallery img:hover {
       transform: scale(1.05);
     }
-
     .lightbox {
       display: none;
       position: fixed;
-      z-index: 1000;
+      z-index: 9999;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.9);
+      background: rgba(0,0,0,0.9);
       justify-content: center;
       align-items: center;
+      flex-direction: column;
       padding: 20px;
     }
-
+    .lightbox img {
+      max-width: 90%;
+      max-height: 80vh;
+      border-radius: 12px;
+      margin-bottom: 20px;
+    }
     .lightbox:target {
       display: flex;
     }
-
-    .lightbox img {
-      max-width: 90%;
-      max-height: 90%;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
-      border-radius: 12px;
-    }
-
-    .lightbox a {
+    .lightbox a.close {
       position: absolute;
       top: 20px;
-      right: 20px;
-      color: white;
-      font-size: 28px;
+      right: 30px;
+      font-size: 30px;
       text-decoration: none;
+      color: white;
     }
-
     .download-btn {
-      position: absolute;
-      bottom: 40px;
-      right: 40px;
-      background: #ffffff33;
+      background: rgba(255,255,255,0.2);
+      padding: 10px 20px;
       color: white;
-      padding: 10px 16px;
-      border-radius: 8px;
       text-decoration: none;
-      font-weight: 500;
-      backdrop-filter: blur(4px);
-      transition: background 0.3s;
+      border-radius: 8px;
+      font-weight: bold;
     }
-
     .download-btn:hover {
-      background: #ffffff55;
+      background: rgba(255,255,255,0.4);
     }
-
     #topBtn {
       position: fixed;
       bottom: 30px;
       right: 30px;
       font-size: 24px;
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(255,255,255,0.3);
       color: white;
       border: none;
       border-radius: 50%;
       padding: 12px 16px;
       cursor: pointer;
       display: none;
-      z-index: 1001;
-      backdrop-filter: blur(4px);
+      z-index: 10000;
     }
-
     #topBtn:hover {
-      background: rgba(255, 255, 255, 0.4);
+      background: rgba(255,255,255,0.5);
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <h1>My Photography Gallery</h1>
-  </header>
+<header>
+  <h1>My Photography Gallery</h1>
+</header>
 
-  <section class="gallery">
-    <!-- Gallery Images -->
-    <!-- Each image block -->
-    <!-- Use this block for all 17 images -->
-    <!-- Change the image number accordingly -->
-    <!-- Example below: -->
-    <!-- Repeat this block for each image from 1 to 17 -->
-    <!-- Begin image blocks -->
-    <!-- I will now paste all 17 blocks below -->
+<section class="gallery">
+  <!-- 17 Image Blocks -->
+  <!-- Copy/Paste format -->
+  <!-- 1.jpg to 17.jpg -->
+  <!-- Lightbox for each -->
+  <!-- Begin -->
 
-    <!-- 1.jpg to 17.jpg -->
-    <!-- Start image blocks -->
-    <!-- You can copy/paste this block and just change the number for src, id, alt, etc -->
+  <!-- Image + Lightbox Block -->
+  <!-- Repeated 17 times -->
+  <!-- Only change number -->
 
-    <!-- REPEAT -->
-    <!-- Image Block -->
-    <!-- Lightbox image and link -->
-    <!-- Just change number for each image -->
-    <!-- Begin -->
-    <!-- 1.jpg -->
-    <!-- REPEAT -->
-    <!-- START -->
-    <!-- Repeat this 17 times for each image -->
-    <!-- OR use loop with a generator -->
-    <!-- Generated below -->
+  <!-- START IMAGE BLOCKS -->
+  <!-- Repeat for 1 to 17 -->
+  <!-- Example for 1.jpg -->
+  <!-- Repeat below pattern -->
 
-    <!-- Gallery blocks generated in one go -->
-    <<!-- START OF IMAGE BLOCK -->
-<!-- Each image includes lightbox and download button -->
+  <!-- Images -->
+  <!-- You can duplicate -->
+  <!-- Only change number -->
+  <!-- START -->
+  <!-- Use same folder structure -->
 
-<!-- Image 1 -->
-<div class="gallery-item">
-  <a href="#img1"><img src="images/1.jpg" alt="Photo 1" /></a>
-  <a class="download-btn" href="images/1.jpg" download>Download</a>
-</div>
-<div class="lightbox" id="img1">
-  <a href="#"><img src="images/1.jpg" alt="Full Photo 1" /></a>
-</div>
+  <!-- Begin of 17 Blocks -->
+  <!-- Clean and working -->
 
-<!-- Image 2 -->
-<div class="gallery-item">
-  <a href="#img2"><img src="images/2.jpg" alt="Photo 2" /></a>
-  <a class="download-btn" href="images/2.jpg" download>Download</a>
-</div>
-<div class="lightbox" id="img2">
-  <a href="#"><img src="images/2.jpg" alt="Full Photo 2" /></a>
-</div>
+  <div><a href="#img1"><img src="images/1.jpg" alt="Photo 1"></a></div>
+  <div class="lightbox" id="img1">
+    <a href="#" class="close">&times;</a>
+    <img src="images/1.jpg" alt="Full Photo 1">
+    <a class="download-btn" href="images/1.jpg" download>Download</a>
+  </div>
 
-<!-- Image 3 -->
-<div class="gallery-item">
-  <a href="#img3"><img src="images/3.jpg" alt="Photo 3" /></a>
-  <a class="download-btn" href="images/3.jpg" download>Download</a>
-</div>
-<div class="lightbox" id="img3">
-  <a href="#"><img src="images/3.jpg" alt="Full Photo 3" /></a>
-</div>
+  <div><a href="#img2"><img src="images/2.jpg" alt="Photo 2"></a></div>
+  <div class="lightbox" id="img2">
+    <a href="#" class="close">&times;</a>
+    <img src="images/2.jpg" alt="Full Photo 2">
+    <a class="download-btn" href="images/2.jpg" download>Download</a>
+  </div>
 
-<!-- Image 4 -->
-<div class="gallery-item">
-  <a href="#img4"><img src="images/4.jpg" alt="Photo 4" /></a>
-  <a class="download-btn" href="images/4.jpg" download>Download</a>
-</div>
-<div class="lightbox" id="img4">
-  <a href="#"><img src="images/4.jpg" alt="Full Photo 4" /></a>
-</div>
+  <div><a href="#img3"><img src="images/3.jpg" alt="Photo 3"></a></div>
+  <div class="lightbox" id="img3">
+    <a href="#" class="close">&times;</a>
+    <img src="images/3.jpg" alt="Full Photo 3">
+    <a class="download-btn" href="images/3.jpg" download>Download</a>
+  </div>
 
-<!-- Image 5 -->
-<div class="gallery-item">
-  <a href="#img5"><img src="images/5.jpg" alt="Photo 5" /></a>
-  <a class="download-btn" href="images/5.jpg" download>Download</a>
-</div>
-<div class="lightbox" id="img5">
-  <a href="#"><img src="images/5.jpg" alt="Full Photo 5" /></a>
-</div>
+  <div><a href="#img4"><img src="images/4.jpg" alt="Photo 4"></a></div>
+  <div class="lightbox" id="img4">
+    <a href="#" class="close">&times;</a>
+    <img src="images/4.jpg" alt="Full Photo 4">
+    <a class="download-btn" href="images/4.jpg" download>Download</a>
+  </div>
 
-<!-- Image 6 -->
-<div class="gallery-item">
-  <a href="#img6"><img src="images/6.jpg" alt="Photo 6" /></a>
-  <a class="download-btn" href="images/6.jpg" download>Download</a>
-</div>
-<div class="lightbox" id="img6">
-  <a href="#"><img src="images/6.jpg" alt="Full Photo 6" /></a>
-</div>
+  <div><a href="#img5"><img src="images/5.jpg" alt="Photo 5"></a></div>
+  <div class="lightbox" id="img5">
+    <a href="#" class="close">&times;</a>
+    <img src="images/5.jpg" alt="Full Photo 5">
+    <a class="download-btn" href="images/5.jpg" download>Download</a>
+  </div>
 
-<!-- Image 7 -->
-<div class="gallery-item">
-  <a href="#img7"><img src="images/7.jpg" alt="Photo 7" /></a>
-  <a class="download-btn" href="images/7.jpg" download>Download</a>
-</div>
-<div class="lightbox" id="img7">
-  <a href="#"><img src="images/7.jpg" alt="Full Photo 7" /></a>
-</div>
+  <div><a href="#img6"><img src="images/6.jpg" alt="Photo 6"></a></div>
+  <div class="lightbox" id="img6">
+    <a href="#" class="close">&times;</a>
+    <img src="images/6.jpg" alt="Full Photo 6">
+    <a class="download-btn" href="images/6.jpg" download>Download</a>
+  </div>
 
-<!-- Image 8 -->
-<div class="gallery-item">
-  <a href="#img8"><img src="images/8.jpg" alt="Photo 8" /></a>
-  <a class="download-btn" href="images/8.jpg" download>Download</a>
-</div>
-<div class="lightbox" id="img8">
-  <a href="#"><img src="images/8.jpg" alt="Full Photo 8" /></a>
-</div>
+  <div><a href="#img7"><img src="images/7.jpg" alt="Photo 7"></a></div>
+  <div class="lightbox" id="img7">
+    <a href="#" class="close">&times;</a>
+    <img src="images/7.jpg" alt="Full Photo 7">
+    <a class="download-btn" href="images/7.jpg" download>Download</a>
+  </div>
 
-<!-- Image 9 -->
-<div class="gallery-item">
-  <a href="#img9"><img src="images/9.jpg" alt="Photo 9" /></a>
-  <a class="download-btn" href="images/9.jpg" download>Download</a>
-</div>
-<div class="lightbox" id="img9">
-  <a href="#"><img src="images/9.jpg" alt="Full Photo 9" /></a>
-</div>
+  <div><a href="#img8"><img src="images/8.jpg" alt="Photo 8"></a></div>
+  <div class="lightbox" id="img8">
+    <a href="#" class="close">&times;</a>
+    <img src="images/8.jpg" alt="Full Photo 8">
+    <a class="download-btn" href="images/8.jpg" download>Download</a>
+  </div>
 
-<!-- Image 10 -->
-<div class="gallery-item">
-  <a href="#img10"><img src="images/10.jpg" alt="Photo 10" /></a>
-  <a class="download-btn" href="images/10.jpg" download>Download</a>
-</div>
-<div class="lightbox" id="img10">
-  <a href="#"><img src="images/10.jpg" alt="Full Photo 10" /></a>
-</div>
+  <div><a href="#img9"><img src="images/9.jpg" alt="Photo 9"></a></div>
+  <div class="lightbox" id="img9">
+    <a href="#" class="close">&times;</a>
+    <img src="images/9.jpg" alt="Full Photo 9">
+    <a class="download-btn" href="images/9.jpg" download>Download</a>
+  </div>
 
-<!-- Image 11 -->
-<div class="gallery-item">
-  <a href="#img11"><img src="images/11.jpg" alt="Photo 11" /></a>
-  <a class="download-btn" href="images/11.jpg" download>Download</a>
-</div>
-<div class="lightbox" id="img11">
-  <a href="#"><img src="images/11.jpg" alt="Full Photo 11" /></a>
-</div>
+  <div><a href="#img10"><img src="images/10.jpg" alt="Photo 10"></a></div>
+  <div class="lightbox" id="img10">
+    <a href="#" class="close">&times;</a>
+    <img src="images/10.jpg" alt="Full Photo 10">
+    <a class="download-btn" href="images/10.jpg" download>Download</a>
+  </div>
 
-<!-- Image 12 -->
-<div class="gallery-item">
-  <a href="#img12"><img src="images/12.jpg" alt="Photo 12" /></a>
-  <a class="download-btn" href="images/12.jpg" download>Download</a>
-</div>
-<div class="lightbox" id="img12">
-  <a href="#"><img src="images/12.jpg" alt="Full Photo 12" /></a>
-</div>
+  <div><a href="#img11"><img src="images/11.jpg" alt="Photo 11"></a></div>
+  <div class="lightbox" id="img11">
+    <a href="#" class="close">&times;</a>
+    <img src="images/11.jpg" alt="Full Photo 11">
+    <a class="download-btn" href="images/11.jpg" download>Download</a>
+  </div>
 
-<!-- Image 13 -->
-<div class="gallery-item">
-  <a href="#img13"><img src="images/13.jpg" alt="Photo 13" /></a>
-  <a class="download-btn" href="images/13.jpg" download>Download</a>
-</div>
-<div class="lightbox" id="img13">
-  <a href="#"><img src="images/13.jpg" alt="Full Photo 13" /></a>
-</div>
+  <div><a href="#img12"><img src="images/12.jpg" alt="Photo 12"></a></div>
+  <div class="lightbox" id="img12">
+    <a href="#" class="close">&times;</a>
+    <img src="images/12.jpg" alt="Full Photo 12">
+    <a class="download-btn" href="images/12.jpg" download>Download</a>
+  </div>
 
-<!-- Image 14 -->
-<div class="gallery-item">
-  <a href="#img14"><img src="images/14.jpg" alt="Photo 14" /></a>
-  <a class="download-btn" href="images/14.jpg" download>Download</a>
-</div>
-<div class="lightbox" id="img14">
-  <a href="#"><img src="images/14.jpg" alt="Full Photo 14" /></a>
-</div>
+  <div><a href="#img13"><img src="images/13.jpg" alt="Photo 13"></a></div>
+  <div class="lightbox" id="img13">
+    <a href="#" class="close">&times;</a>
+    <img src="images/13.jpg" alt="Full Photo 13">
+    <a class="download-btn" href="images/13.jpg" download>Download</a>
+  </div>
 
-<!-- Image 15 -->
-<div class="gallery-item">
-  <a href="#img15"><img src="images/15.jpg" alt="Photo 15" /></a>
-  <a class="download-btn" href="images/15.jpg" download>Download</a>
-</div>
-<div class="lightbox" id="img15">
-  <a href="#"><img src="images/15.jpg" alt="Full Photo 15" /></a>
-</div>
+  <div><a href="#img14"><img src="images/14.jpg" alt="Photo 14"></a></div>
+  <div class="lightbox" id="img14">
+    <a href="#" class="close">&times;</a>
+    <img src="images/14.jpg" alt="Full Photo 14">
+    <a class="download-btn" href="images/14.jpg" download>Download</a>
+  </div>
 
-<!-- Image 16 -->
-<div class="gallery-item">
-  <a href="#img16"><img src="images/16.jpg" alt="Photo 16" /></a>
-  <a class="download-btn" href="images/16.jpg" download>Download</a>
-</div>
-<div class="lightbox" id="img16">
-  <a href="#"><img src="images/16.jpg" alt="Full Photo 16" /></a>
-</div>
+  <div><a href="#img15"><img src="images/15.jpg" alt="Photo 15"></a></div>
+  <div class="lightbox" id="img15">
+    <a href="#" class="close">&times;</a>
+    <img src="images/15.jpg" alt="Full Photo 15">
+    <a class="download-btn" href="images/15.jpg" download>Download</a>
+  </div>
 
-<!-- Image 17 -->
-<div class="gallery-item">
-  <a href="#img17"><img src="images/17.jpg" alt="Photo 17" /></a>
-  <a class="download-btn" href="images/17.jpg" download>Download</a>
-</div>
-<div class="lightbox" id="img17">
-  <a href="#"><img src="images/17.jpg" alt="Full Photo 17" /></a>
-</div>
+  <div><a href="#img16"><img src="images/16.jpg" alt="Photo 16"></a></div>
+  <div class="lightbox" id="img16">
+    <a href="#" class="close">&times;</a>
+    <img src="images/16.jpg" alt="Full Photo 16">
+    <a class="download-btn" href="images/16.jpg" download>Download</a>
+  </div>
 
-<!-- END OF IMAGE BLOCK -->
-  </section>
+  <div><a href="#img17"><img src="images/17.jpg" alt="Photo 17"></a></div>
+  <div class="lightbox" id="img17">
+    <a href="#" class="close">&times;</a>
+    <img src="images/17.jpg" alt="Full Photo 17">
+    <a class="download-btn" href="images/17.jpg" download>Download</a>
+  </div>
 
-  <button onclick="scrollToTop()" id="topBtn">↑</button>
+</section>
 
-  <script>
-    const topBtn = document.getElementById("topBtn");
+<button onclick="scrollToTop()" id="topBtn">↑</button>
 
-    window.onscroll = function () {
-      topBtn.style.display = window.pageYOffset > 300 ? "block" : "none";
-    };
-
-    function scrollToTop() {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  </script>
+<script>
+  const topBtn = document.getElementById("topBtn");
+  window.onscroll = function () {
+    topBtn.style.display = window.scrollY > 300 ? "block" : "none";
+  };
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
 
 </body>
 </html>
