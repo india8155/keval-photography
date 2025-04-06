@@ -71,6 +71,7 @@
     }
 
     .back-to-top {
+      display: none;
       position: fixed;
       bottom: 30px;
       right: 30px;
@@ -81,6 +82,8 @@
       font-size: 20px;
       text-decoration: none;
       z-index: 2;
+      cursor: pointer;
+      transition: background 0.3s;
     }
 
     .back-to-top:hover {
@@ -108,12 +111,18 @@
     </div>
   </div>
 
-  <a href="#" class="back-to-top" onclick="scrollToTop()">&#8679;</a>
+  <a href="#" class="back-to-top" id="backToTop">&#8679;</a>
 
   <script>
-    function scrollToTop() {
+    document.getElementById('backToTop').addEventListener('click', function (e) {
+      e.preventDefault();
       window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+    });
+
+    window.addEventListener('scroll', function () {
+      const btn = document.getElementById('backToTop');
+      btn.style.display = window.scrollY > 200 ? 'block' : 'none';
+    });
   </script>
 </body>
 </html>
