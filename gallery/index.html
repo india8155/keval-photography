@@ -3,103 +3,248 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Gallery - Keval Photography</title>
-  <link rel="icon" href="../images/favicon.png" type="image/png" />
-  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Keval's Gallery</title>
+  <link rel="icon" href="/images/favicon.png" type="image/png"/>
   <style>
     body {
-      background: url('../images/background.jpg') no-repeat center center fixed;
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: url('/images/background.jpg') no-repeat center center fixed;
       background-size: cover;
+      color: white;
+      position: relative;
     }
+
     .overlay {
-      background-color: rgba(0, 0, 0, 0.6);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.75);
+      z-index: -1;
     }
-    .lightbox {
-      backdrop-filter: blur(10px);
+
+    header {
+      text-align: center;
+      padding: 2rem 1rem 1rem;
     }
-    .watermark {
+
+    header h1 {
+      font-size: 2.5rem;
+      letter-spacing: 2px;
+      margin: 0;
+      text-shadow: 0 0 10px black;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .buttons a {
+      text-decoration: none;
+      background: #ffffff20;
+      padding: 0.7rem 1.2rem;
+      border: 1px solid white;
+      border-radius: 30px;
+      color: white;
+      transition: 0.3s;
+    }
+
+    .buttons a:hover {
+      background: white;
+      color: black;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+      padding: 2rem;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .gallery img {
+      width: 100%;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      box-shadow: 0 0 10px #00000070;
+    }
+
+    .gallery img:hover {
+      transform: scale(1.03);
+    }
+
+    #lightbox {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.9);
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      z-index: 999;
+    }
+
+    #lightbox img {
+      max-width: 90%;
+      max-height: 80%;
+      border-radius: 10px;
+    }
+
+    .lightbox-controls {
+      margin-top: 1rem;
+      display: flex;
+      gap: 1rem;
+    }
+
+    .lightbox-controls button {
+      padding: 0.5rem 1rem;
+      background: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .lightbox-controls button:hover {
+      background: #ddd;
+    }
+
+    #watermark {
       position: fixed;
       bottom: 10px;
-      right: 20px;
-      color: rgba(255, 255, 255, 0.3);
+      right: 10px;
       font-size: 14px;
-      pointer-events: none;
-      z-index: 10;
+      opacity: 0.5;
     }
-    .fade-in {
-      animation: fadeIn 1s ease-in-out;
+
+    #backToTop {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      font-size: 1.5rem;
+      background: #ffffff20;
+      color: white;
+      padding: 10px 14px;
+      border-radius: 50%;
+      border: 1px solid white;
+      cursor: pointer;
+      display: none;
+      transition: 0.3s;
     }
+
+    #backToTop:hover {
+      background: white;
+      color: black;
+    }
+
     @keyframes fadeIn {
-      from {opacity: 0;}
-      to {opacity: 1;}
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
+
+    .gallery img {
+      animation: fadeIn 0.6s ease-in-out;
+    }
+
   </style>
 </head>
-<body class="text-white overlay">
+<body>
 
-  <!-- Top Buttons -->
-  <div class="absolute top-4 right-4 space-x-2 z-20">
-    <a href="/" class="bg-black/60 px-4 py-2 rounded hover:bg-white hover:text-black transition">Home</a>
-    <a href="https://www.instagram.com/keval.kotadia" target="_blank" class="bg-pink-600 hover:bg-pink-700 text-white px-4 py-2 rounded transition">Follow on Instagram</a>
+<div class="overlay"></div>
+
+<header>
+  <h1>Keval's Photography</h1>
+  <div class="buttons">
+    <a href="index.html">🏠 Home</a>
+    <a href="https://www.instagram.com/keval.kotadia?igsh=MW1lZmJveDZtdG1odg==" target="_blank">📷 Follow on Instagram</a>
   </div>
+</header>
 
-  <div class="min-h-screen px-4 pt-20 pb-10 fade-in">
-    <h1 class="text-4xl font-bold text-center mb-8">Photo Gallery</h1>
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-      <!-- Image Block Start -->
-      <!-- Repeat for 17 images -->
-      ${[...Array(17).keys()].map(i => `
-        <div class="relative group">
-          <img src="../images/${i+1}.jpg" alt="Photo ${i+1}" class="w-full h-64 object-cover rounded-lg shadow-lg cursor-pointer transition-transform duration-300 hover:scale-105" onclick="openLightbox(${i+1})" />
-        </div>
-      `).join('')}
-      <!-- Image Block End -->
-    </div>
+<section class="gallery">
+  <!-- Image Blocks (17 total) -->
+  <img src="/images/1.jpg" alt="Photo 1" onclick="openLightbox(0)">
+  <img src="/images/2.jpg" alt="Photo 2" onclick="openLightbox(1)">
+  <img src="/images/3.jpg" alt="Photo 3" onclick="openLightbox(2)">
+  <img src="/images/4.jpg" alt="Photo 4" onclick="openLightbox(3)">
+  <img src="/images/5.jpg" alt="Photo 5" onclick="openLightbox(4)">
+  <img src="/images/6.jpg" alt="Photo 6" onclick="openLightbox(5)">
+  <img src="/images/7.jpg" alt="Photo 7" onclick="openLightbox(6)">
+  <img src="/images/8.jpg" alt="Photo 8" onclick="openLightbox(7)">
+  <img src="/images/9.jpg" alt="Photo 9" onclick="openLightbox(8)">
+  <img src="/images/10.jpg" alt="Photo 10" onclick="openLightbox(9)">
+  <img src="/images/11.jpg" alt="Photo 11" onclick="openLightbox(10)">
+  <img src="/images/12.jpg" alt="Photo 12" onclick="openLightbox(11)">
+  <img src="/images/13.jpg" alt="Photo 13" onclick="openLightbox(12)">
+  <img src="/images/14.jpg" alt="Photo 14" onclick="openLightbox(13)">
+  <img src="/images/15.jpg" alt="Photo 15" onclick="openLightbox(14)">
+  <img src="/images/16.jpg" alt="Photo 16" onclick="openLightbox(15)">
+  <img src="/images/17.jpg" alt="Photo 17" onclick="openLightbox(16)">
+</section>
+
+<div id="lightbox">
+  <img id="lightboxImage" src="" alt="Preview"/>
+  <div class="lightbox-controls">
+    <button onclick="prevImage()">⟵ Prev</button>
+    <button onclick="downloadImage()">⬇️ Download</button>
+    <button onclick="nextImage()">Next ⟶</button>
+    <button onclick="closeLightbox()">❌ Close</button>
   </div>
+</div>
 
-  <!-- Watermark -->
-  <div class="watermark">© Keval Photography</div>
+<div id="watermark">© Keval Photography</div>
+<div id="backToTop" onclick="scrollToTop()">↑</div>
 
-  <!-- Scroll to top -->
-  <button onclick="scrollToTop()" class="fixed bottom-5 right-5 bg-black/60 hover:bg-white hover:text-black text-white px-3 py-2 rounded-full transition z-50">↑</button>
+<script>
+  const images = Array.from(document.querySelectorAll('.gallery img'));
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImage = document.getElementById('lightboxImage');
+  let currentIndex = 0;
 
-  <!-- Lightbox -->
-  <div id="lightbox" class="hidden fixed inset-0 bg-black/90 flex items-center justify-center z-50 lightbox">
-    <button onclick="closeLightbox()" class="absolute top-4 right-6 text-white text-xl bg-red-600 hover:bg-red-700 px-3 py-1 rounded-full">×</button>
-    <button onclick="prevImage()" class="absolute left-4 text-white text-2xl">&#10094;</button>
-    <img id="lightboxImage" src="" class="max-h-[90vh] max-w-[90vw] rounded shadow-lg transition-all duration-300" />
-    <button onclick="nextImage()" class="absolute right-4 text-white text-2xl">&#10095;</button>
-    <a id="downloadBtn" href="" download class="absolute bottom-5 right-6 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow-lg">Download</a>
-  </div>
+  function openLightbox(index) {
+    currentIndex = index;
+    lightboxImage.src = images[currentIndex].src;
+    lightbox.style.display = 'flex';
+  }
 
-  <script>
-    let currentIndex = 1;
+  function closeLightbox() {
+    lightbox.style.display = 'none';
+  }
 
-    function openLightbox(index) {
-      currentIndex = index;
-      const imgPath = '../images/' + index + '.jpg';
-      document.getElementById('lightboxImage').src = imgPath;
-      document.getElementById('downloadBtn').href = imgPath;
-      document.getElementById('lightbox').classList.remove('hidden');
-    }
+  function nextImage() {
+    currentIndex = (currentIndex + 1) % images.length;
+    lightboxImage.src = images[currentIndex].src;
+  }
 
-    function closeLightbox() {
-      document.getElementById('lightbox').classList.add('hidden');
-    }
+  function prevImage() {
+    currentIndex = (currentIndex - 1 + images.length) % images.length;
+    lightboxImage.src = images[currentIndex].src;
+  }
 
-    function nextImage() {
-      currentIndex = currentIndex >= 17 ? 1 : currentIndex + 1;
-      openLightbox(currentIndex);
-    }
+  function downloadImage() {
+    const link = document.createElement('a');
+    link.href = images[currentIndex].src;
+    link.download = `photo_${currentIndex + 1}.jpg`;
+    link.click();
+  }
 
-    function prevImage() {
-      currentIndex = currentIndex <= 1 ? 17 : currentIndex - 1;
-      openLightbox(currentIndex);
-    }
+  window.onscroll = function () {
+    const btn = document.getElementById("backToTop");
+    btn.style.display = window.scrollY > 200 ? "block" : "none";
+  };
 
-    function scrollToTop() {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  </script>
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+
 </body>
 </html>
