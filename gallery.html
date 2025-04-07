@@ -2,240 +2,195 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Gallery - Keval Photography</title>
-  <link rel="icon" href="images/favicon.png" type="image/png"/>
+  <link rel="icon" type="image/png" href="images/favicon.png" />
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
       background: url('images/background.jpg') no-repeat center center fixed;
       background-size: cover;
-      color: white;
-      min-height: 100vh;
       position: relative;
+      color: white;
     }
 
     .overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 100%;
-      background: rgba(0, 0, 0, 0.6);
-      z-index: 1;
+      position: fixed;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.7);
+      z-index: -1;
     }
 
-    .container {
-      position: relative;
-      z-index: 2;
-      padding: 60px 20px;
-      max-width: 1200px;
-      margin: auto;
+    header {
+      text-align: center;
+      padding: 2rem;
     }
 
     h1 {
-      text-align: center;
-      margin-bottom: 40px;
       font-size: 3rem;
-      text-shadow: 2px 2px 10px black;
+      margin-bottom: 0.5rem;
+    }
+
+    .buttons {
+      margin-top: 1rem;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 10px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border: 1px solid white;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background-color: white;
+      color: black;
     }
 
     .gallery {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+      padding: 20px;
     }
 
     .gallery img {
       width: 100%;
       border-radius: 10px;
       cursor: pointer;
-      transition: transform 0.3s ease;
+      transition: transform 0.3s;
     }
 
     .gallery img:hover {
-      transform: scale(1.03);
+      transform: scale(1.05);
     }
 
     /* Lightbox */
     .lightbox {
-      display: none;
       position: fixed;
-      z-index: 999;
-      left: 0;
       top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgba(0, 0, 0, 0.95);
-      justify-content: center;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.9);
+      display: none;
       align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      z-index: 999;
+      padding: 1rem;
     }
 
-    .lightbox-content {
+    .lightbox img {
       max-width: 90%;
-      max-height: 90%;
-      position: relative;
-    }
-
-    .lightbox-content img {
-      width: auto;
-      height: auto;
-      max-width: 100%;
-      max-height: 100%;
-      display: block;
-      margin: auto;
+      max-height: 80vh;
       border-radius: 10px;
     }
 
-    .download-btn {
-      position: absolute;
-      top: 20px;
-      right: 80px;
-      background-color: white;
-      color: black;
-      padding: 8px 14px;
-      text-decoration: none;
-      border-radius: 6px;
-      font-weight: bold;
+    .lightbox a {
+      color: white;
+      margin-top: 10px;
+      text-decoration: underline;
     }
 
-    .close {
+    .close-btn {
       position: absolute;
       top: 20px;
-      right: 20px;
+      right: 30px;
+      font-size: 2rem;
       color: white;
-      font-size: 30px;
-      font-weight: bold;
       cursor: pointer;
     }
 
-    #scrollToTop {
+    #topBtn {
       position: fixed;
       bottom: 20px;
       right: 20px;
-      z-index: 1000;
-      background-color: rgba(255,255,255,0.1);
-      border: 2px solid white;
-      color: white;
-      padding: 10px 15px;
+      background: white;
+      color: black;
+      border: none;
       border-radius: 50%;
-      font-size: 18px;
+      width: 40px;
+      height: 40px;
+      font-size: 20px;
       cursor: pointer;
       display: none;
+      box-shadow: 0 0 10px black;
     }
 
-    #scrollToTop:hover {
-      background-color: white;
-      color: black;
-    }
-
-    .top-buttons {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      z-index: 2;
-      display: flex;
-      gap: 15px;
-    }
-
-    .top-buttons a {
-      padding: 10px 18px;
-      background-color: rgba(255,255,255,0.1);
-      border: 2px solid white;
-      color: white;
-      border-radius: 30px;
-      text-decoration: none;
-      font-weight: bold;
-      transition: all 0.3s ease;
-    }
-
-    .top-buttons a:hover {
-      background-color: white;
-      color: black;
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
+      .btn {
+        padding: 8px 16px;
+      }
     }
   </style>
 </head>
 <body>
   <div class="overlay"></div>
-  <div class="top-buttons">
-    <a href="index.html">Home</a>
-    <a href="https://www.instagram.com/keval.kotadia" target="_blank">Instagram</a>
-  </div>
-  <div class="container">
-    <h1>Gallery</h1>
-    <div class="gallery">
-      <!-- 17 image blocks -->
-      <!-- Update file names if needed -->
-      <!-- Example for image 1 -->
-      <!-- Repeat up to 17.jpg -->
-      <!-- Copy paste pattern for rest -->
-      <!-- Image block start -->
-      <img src="images/1.jpg" alt="Photo 1" onclick="openLightbox('images/1.jpg')">
-      <img src="images/2.jpg" alt="Photo 2" onclick="openLightbox('images/2.jpg')">
-      <img src="images/3.jpg" alt="Photo 3" onclick="openLightbox('images/3.jpg')">
-      <img src="images/4.jpg" alt="Photo 4" onclick="openLightbox('images/4.jpg')">
-      <img src="images/5.jpg" alt="Photo 5" onclick="openLightbox('images/5.jpg')">
-      <img src="images/6.jpg" alt="Photo 6" onclick="openLightbox('images/6.jpg')">
-      <img src="images/7.jpg" alt="Photo 7" onclick="openLightbox('images/7.jpg')">
-      <img src="images/8.jpg" alt="Photo 8" onclick="openLightbox('images/8.jpg')">
-      <img src="images/9.jpg" alt="Photo 9" onclick="openLightbox('images/9.jpg')">
-      <img src="images/10.jpg" alt="Photo 10" onclick="openLightbox('images/10.jpg')">
-      <img src="images/11.jpg" alt="Photo 11" onclick="openLightbox('images/11.jpg')">
-      <img src="images/12.jpg" alt="Photo 12" onclick="openLightbox('images/12.jpg')">
-      <img src="images/13.jpg" alt="Photo 13" onclick="openLightbox('images/13.jpg')">
-      <img src="images/14.jpg" alt="Photo 14" onclick="openLightbox('images/14.jpg')">
-      <img src="images/15.jpg" alt="Photo 15" onclick="openLightbox('images/15.jpg')">
-      <img src="images/16.jpg" alt="Photo 16" onclick="openLightbox('images/16.jpg')">
-      <img src="images/17.jpg" alt="Photo 17" onclick="openLightbox('images/17.jpg')">
+
+  <header>
+    <h1>Keval's Photography Gallery</h1>
+    <div class="buttons">
+      <a href="index.html" class="btn">Home</a>
+      <a href="https://www.instagram.com/keval.kotadia?igsh=MW1lZmJveDZtdG1odg==" class="btn" target="_blank">Follow on Instagram</a>
     </div>
+  </header>
+
+  <div class="gallery">
+    <img src="images/1.jpg" alt="Photo 1" onclick="openLightbox('images/1.jpg')">
+    <img src="images/2.jpg" alt="Photo 2" onclick="openLightbox('images/2.jpg')">
+    <img src="images/3.jpg" alt="Photo 3" onclick="openLightbox('images/3.jpg')">
+    <img src="images/4.jpg" alt="Photo 4" onclick="openLightbox('images/4.jpg')">
+    <img src="images/5.jpg" alt="Photo 5" onclick="openLightbox('images/5.jpg')">
+    <img src="images/6.jpg" alt="Photo 6" onclick="openLightbox('images/6.jpg')">
+    <img src="images/7.jpg" alt="Photo 7" onclick="openLightbox('images/7.jpg')">
+    <img src="images/8.jpg" alt="Photo 8" onclick="openLightbox('images/8.jpg')">
+    <img src="images/9.jpg" alt="Photo 9" onclick="openLightbox('images/9.jpg')">
+    <img src="images/10.jpg" alt="Photo 10" onclick="openLightbox('images/10.jpg')">
+    <img src="images/11.jpg" alt="Photo 11" onclick="openLightbox('images/11.jpg')">
+    <img src="images/12.jpg" alt="Photo 12" onclick="openLightbox('images/12.jpg')">
+    <img src="images/13.jpg" alt="Photo 13" onclick="openLightbox('images/13.jpg')">
+    <img src="images/14.jpg" alt="Photo 14" onclick="openLightbox('images/14.jpg')">
+    <img src="images/15.jpg" alt="Photo 15" onclick="openLightbox('images/15.jpg')">
+    <img src="images/16.jpg" alt="Photo 16" onclick="openLightbox('images/16.jpg')">
+    <img src="images/17.jpg" alt="Photo 17" onclick="openLightbox('images/17.jpg')">
   </div>
 
-  <div id="lightbox" class="lightbox" onclick="closeLightbox(event)">
-    <div class="lightbox-content">
-      <span class="close" onclick="closeLightbox(event)">&times;</span>
-      <a id="downloadLink" class="download-btn" download>Download</a>
-      <img id="lightboxImage" src="" alt="Lightbox Image"/>
-    </div>
+  <div class="lightbox" id="lightbox">
+    <span class="close-btn" onclick="closeLightbox()">×</span>
+    <img id="lightboxImage" src="" alt="Lightbox Image">
+    <a id="downloadBtn" href="" download>Download</a>
   </div>
 
-  <button id="scrollToTop" onclick="scrollToTop()">↑</button>
+  <button onclick="scrollToTop()" id="topBtn">&#8679;</button>
 
   <script>
-    const lightbox = document.getElementById("lightbox");
-    const lightboxImage = document.getElementById("lightboxImage");
-    const downloadLink = document.getElementById("downloadLink");
-
     function openLightbox(src) {
-      lightbox.style.display = "flex";
-      lightboxImage.src = src;
-      downloadLink.href = src;
+      document.getElementById("lightboxImage").src = src;
+      document.getElementById("downloadBtn").href = src;
+      document.getElementById("lightbox").style.display = "flex";
     }
 
-    function closeLightbox(e) {
-      if (e.target === lightbox || e.target.classList.contains("close")) {
-        lightbox.style.display = "none";
-        lightboxImage.src = "";
-      }
+    function closeLightbox() {
+      document.getElementById("lightbox").style.display = "none";
     }
 
-    const scrollBtn = document.getElementById("scrollToTop");
-    window.onscroll = function() {
-      if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
-        scrollBtn.style.display = "block";
-      } else {
-        scrollBtn.style.display = "none";
-      }
+    window.onscroll = function () {
+      const btn = document.getElementById("topBtn");
+      btn.style.display = window.scrollY > 100 ? "block" : "none";
     };
 
     function scrollToTop() {
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   </script>
 </body>
