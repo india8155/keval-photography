@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Gallery - Keval Photography</title>
-  <link rel="icon" type="image/png" href="images/favicon.png" />
+  <link rel="icon" href="images/favicon.png" type="image/png" />
   <style>
     body {
       margin: 0;
@@ -13,6 +13,7 @@
       background-size: cover;
       position: relative;
       color: white;
+      overflow-x: hidden;
     }
 
     .overlay {
@@ -25,11 +26,12 @@
     header {
       text-align: center;
       padding: 2rem;
+      animation: fadeIn 1.5s ease;
     }
 
     h1 {
       font-size: 3rem;
-      margin-bottom: 0.5rem;
+      margin-bottom: 1rem;
     }
 
     .buttons {
@@ -58,6 +60,7 @@
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 15px;
       padding: 20px;
+      animation: fadeIn 2s ease;
     }
 
     .gallery img {
@@ -65,6 +68,7 @@
       border-radius: 10px;
       cursor: pointer;
       transition: transform 0.3s;
+      position: relative;
     }
 
     .gallery img:hover {
@@ -84,6 +88,7 @@
       flex-direction: column;
       z-index: 999;
       padding: 1rem;
+      animation: fadeIn 0.5s ease;
     }
 
     .lightbox img {
@@ -91,12 +96,24 @@
       max-height: 80vh;
       border-radius: 10px;
       margin-bottom: 15px;
+      position: relative;
+    }
+
+    .watermark {
+      position: absolute;
+      bottom: 15px;
+      right: 20px;
+      font-size: 0.9rem;
+      color: white;
+      opacity: 0.6;
+      font-weight: bold;
     }
 
     .lightbox-controls {
       display: flex;
-      gap: 20px;
+      gap: 15px;
       align-items: center;
+      flex-wrap: wrap;
     }
 
     .lightbox button, .download-btn {
@@ -150,6 +167,11 @@
         gap: 10px;
       }
     }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
   </style>
 </head>
 <body>
@@ -163,35 +185,35 @@
     </div>
   </header>
 
-  <div class="gallery">
-    <img src="images/1.jpg" alt="Photo 1" onclick="openLightbox('images/1.jpg')">
-    <img src="images/2.jpg" alt="Photo 2" onclick="openLightbox('images/2.jpg')">
-    <img src="images/3.jpg" alt="Photo 3" onclick="openLightbox('images/3.jpg')">
-    <img src="images/4.jpg" alt="Photo 4" onclick="openLightbox('images/4.jpg')">
-    <img src="images/5.jpg" alt="Photo 5" onclick="openLightbox('images/5.jpg')">
-    <img src="images/6.jpg" alt="Photo 6" onclick="openLightbox('images/6.jpg')">
-    <img src="images/7.jpg" alt="Photo 7" onclick="openLightbox('images/7.jpg')">
-    <img src="images/8.jpg" alt="Photo 8" onclick="openLightbox('images/8.jpg')">
-    <img src="images/9.jpg" alt="Photo 9" onclick="openLightbox('images/9.jpg')">
-    <img src="images/10.jpg" alt="Photo 10" onclick="openLightbox('images/10.jpg')">
-    <img src="images/11.jpg" alt="Photo 11" onclick="openLightbox('images/11.jpg')">
-    <img src="images/12.jpg" alt="Photo 12" onclick="openLightbox('images/12.jpg')">
-    <img src="images/13.jpg" alt="Photo 13" onclick="openLightbox('images/13.jpg')">
-    <img src="images/14.jpg" alt="Photo 14" onclick="openLightbox('images/14.jpg')">
-    <img src="images/15.jpg" alt="Photo 15" onclick="openLightbox('images/15.jpg')">
-    <img src="images/16.jpg" alt="Photo 16" onclick="openLightbox('images/16.jpg')">
-    <img src="images/17.jpg" alt="Photo 17" onclick="openLightbox('images/17.jpg')">
+  <div class="gallery-grid">
+  <!-- Repeat this block for each image -->
+  <!-- Image 1 -->
+    <img src="images/1.jpg" alt="Photo 1" class="gallery-img" onclick="openLightbox(this)">
+    <img src="images/2.jpg" alt="Photo 2" class="gallery-img" onclick="openLightbox(this)">
+    <img src="images/3.jpg" alt="Photo 3" class="gallery-img" onclick="openLightbox(this)">
+    <img src="images/4.jpg" alt="Photo 4" class="gallery-img" onclick="openLightbox(this)">
+    <img src="images/5.jpg" alt="Photo 5" class="gallery-img" onclick="openLightbox(this)">
+    <img src="images/6.jpg" alt="Photo 6" class="gallery-img" onclick="openLightbox(this)">
+    <img src="images/7.jpg" alt="Photo 7" class="gallery-img" onclick="openLightbox(this)">
+    <img src="images/8.jpg" alt="Photo 8" class="gallery-img" onclick="openLightbox(this)">
+    <img src="images/9.jpg" alt="Photo 9" class="gallery-img" onclick="openLightbox(this)">
+    <img src="images/10.jpg" alt="Photo 10" class="gallery-img" onclick="openLightbox(this)">
+    <img src="images/11.jpg" alt="Photo 11" class="gallery-img" onclick="openLightbox(this)">
+    <img src="images/12.jpg" alt="Photo 12" class="gallery-img" onclick="openLightbox(this)">
+    <img src="images/13.jpg" alt="Photo 13" class="gallery-img" onclick="openLightbox(this)">
+    <img src="images/14.jpg" alt="Photo 14" class="gallery-img" onclick="openLightbox(this)">
+    <img src="images/15.jpg" alt="Photo 15" class="gallery-img" onclick="openLightbox(this)">
+    <img src="images/16.jpg" alt="Photo 16" class="gallery-img" onclick="openLightbox(this)">
+    <img src="images/17.jpg" alt="Photo 17" class="gallery-img" onclick="openLightbox(this)">
+  </div>
 
-    <script>
-      for (let i = 1; i <= 17; i++) {
-        document.write(`<img src="images/${i}.jpg" alt="Photo ${i}" onclick="openLightbox(${i})">`);
-      }
-    </script>
+    <!-- IMAGES BLOCK WILL BE INSERTED HERE SEPARATELY -->
   </div>
 
   <div class="lightbox" id="lightbox">
     <span class="close-btn" onclick="closeLightbox()">×</span>
     <img id="lightboxImage" src="" alt="Lightbox Image">
+    <div class="watermark">© Keval Photography</div>
     <div class="lightbox-controls">
       <button onclick="prevImage()">Previous</button>
       <a id="downloadBtn" class="download-btn" href="" download>Download</a>
@@ -203,6 +225,7 @@
 
   <script>
     let currentIndex = 1;
+    const totalImages = 17;
 
     function openLightbox(index) {
       currentIndex = index;
@@ -221,12 +244,12 @@
     }
 
     function prevImage() {
-      currentIndex = currentIndex === 1 ? 17 : currentIndex - 1;
+      currentIndex = currentIndex === 1 ? totalImages : currentIndex - 1;
       updateLightbox();
     }
 
     function nextImage() {
-      currentIndex = currentIndex === 17 ? 1 : currentIndex + 1;
+      currentIndex = currentIndex === totalImages ? 1 : currentIndex + 1;
       updateLightbox();
     }
 
