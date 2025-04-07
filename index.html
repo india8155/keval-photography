@@ -2,47 +2,136 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Keval Kotadia | Home</title>
-  <link rel="icon" type="image/png" href="images/favicon.png" />
-  <script src="https://cdn.tailwindcss.com"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Keval Kotadia</title>
+  <link rel="icon" href="/images/favicon.png" type="image/png"/>
   <style>
     body {
-      background: url('images/background.jpg') no-repeat center center fixed;
-      background-size: cover;
+      margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      scroll-behavior: smooth;
+      background: url('/images/background.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      position: relative;
     }
+
     .overlay {
-      background-color: rgba(0, 0, 0, 0.7);
-      min-height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.75);
+      z-index: -1;
     }
-    .fade-in {
-      animation: fadeIn 1.5s ease-in-out;
+
+    header {
+      text-align: center;
+      padding: 4rem 1rem 2rem;
     }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+
+    header h1 {
+      font-size: 3rem;
+      letter-spacing: 2px;
+      margin: 0;
+      text-shadow: 0 0 10px black;
     }
-    .watermark {
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .buttons a {
+      text-decoration: none;
+      background: #ffffff20;
+      padding: 0.8rem 1.5rem;
+      border: 1px solid white;
+      border-radius: 30px;
+      color: white;
+      transition: 0.3s;
+      font-size: 1.1rem;
+    }
+
+    .buttons a:hover {
+      background: white;
+      color: black;
+    }
+
+    .content {
+      text-align: center;
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 1rem;
+    }
+
+    .content p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      text-shadow: 0 0 5px black;
+    }
+
+    #watermark {
       position: fixed;
       bottom: 10px;
-      left: 10px;
-      color: rgba(255,255,255,0.3);
+      right: 10px;
       font-size: 14px;
-      z-index: 50;
+      opacity: 0.5;
+    }
+
+    #backToTop {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      font-size: 1.5rem;
+      background: #ffffff20;
+      color: white;
+      padding: 10px 14px;
+      border-radius: 50%;
+      border: 1px solid white;
+      cursor: pointer;
+      display: none;
+      transition: 0.3s;
+    }
+
+    #backToTop:hover {
+      background: white;
+      color: black;
     }
   </style>
 </head>
 <body>
-  <div class="overlay text-white flex flex-col items-center justify-center min-h-screen px-4">
-    <h1 class="text-5xl font-bold mb-4 fade-in text-center">Keval Kotadia</h1>
-    <p class="text-xl mb-8 fade-in text-center">Nature & Wildlife Photographer</p>
-    <div class="flex gap-6 fade-in">
-      <a href="gallery/" class="bg-white text-black px-6 py-3 rounded shadow hover:bg-gray-200 transition">View Gallery</a>
-      <a href="https://www.instagram.com/keval.kotadia?igsh=MW1lZmJveDZtdG1odg==" target="_blank" class="bg-pink-600 text-white px-6 py-3 rounded shadow hover:bg-pink-500 transition">Follow on Instagram</a>
-    </div>
+
+<div class="overlay"></div>
+
+<header>
+  <h1>Welcome to Keval's World</h1>
+  <div class="buttons">
+    <a href="/gallery/">📷 View Gallery</a>
+    <a href="https://www.instagram.com/keval.kotadia?igsh=MW1lZmJveDZtdG1odg==" target="_blank">📸 Follow on Instagram</a>
   </div>
-  <div class="watermark">© Keval Kotadia</div>
+</header>
+
+<section class="content">
+  <p>Hi, I'm Keval Kotadia. Welcome to my photography portfolio where I share the beauty of nature through my lens. Feel free to browse the gallery and connect with me on Instagram!</p>
+</section>
+
+<div id="watermark">© Keval Kotadia</div>
+<div id="backToTop" onclick="scrollToTop()">↑</div>
+
+<script>
+  window.onscroll = function () {
+    const btn = document.getElementById("backToTop");
+    btn.style.display = window.scrollY > 200 ? "block" : "none";
+  };
+
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+
 </body>
 </html>
