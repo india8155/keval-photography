@@ -1,135 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gallery | Keval Kotadia</title>
-  <link rel="icon" type="image/png" href="../images/favicon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gallery - Keval Photography</title>
+  <link rel="icon" type="image/png" href="../images/favicon.png" />
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
       background: url('../images/background.jpg') no-repeat center center fixed;
       background-size: cover;
-      font-family: 'Segoe UI', sans-serif;
-      scroll-behavior: smooth;
     }
     .overlay {
-      background-color: rgba(0, 0, 0, 0.7);
-      min-height: 100vh;
+      background-color: rgba(0, 0, 0, 0.6);
     }
-    .lightbox {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.9);
-      justify-content: center;
-      align-items: center;
-      z-index: 50;
-    }
-    .lightbox img {
-      max-width: 90%;
-      max-height: 90%;
-      object-fit: contain;
-    }
-    .lightbox-btn {
-      position: absolute;
-      background: rgba(255,255,255,0.2);
-      color: white;
-      font-size: 1.5rem;
-      padding: 0.5rem;
-      border-radius: 0.5rem;
-      cursor: pointer;
-    }
-    .lightbox-close { top: 1rem; right: 1rem; }
-    .lightbox-prev { left: 1rem; top: 50%; transform: translateY(-50%); }
-    .lightbox-next { right: 1rem; top: 50%; transform: translateY(-50%); }
-    .lightbox-download {
-      bottom: 1rem;
-      left: 50%;
-      transform: translateX(-50%);
-      background: white;
-      color: black;
-      padding: 0.5rem 1rem;
-      border-radius: 0.5rem;
-      font-weight: bold;
+    .lightbox-img {
+      max-width: 90vw;
+      max-height: 80vh;
     }
     .watermark {
-      position: fixed;
-      bottom: 10px;
-      left: 10px;
-      color: rgba(255,255,255,0.3);
-      font-size: 14px;
-      z-index: 50;
+      position: absolute;
+      bottom: 5px;
+      right: 10px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.6);
     }
   </style>
 </head>
-<body>
-  <div class="overlay text-white px-4 py-8">
-    <div class="flex justify-between items-center mb-8">
-      <a href="../" class="bg-white text-black px-4 py-2 rounded shadow hover:bg-gray-200">Home</a>
-      <a href="https://www.instagram.com/keval.kotadia?igsh=MW1lZmJveDZtdG1odg==" target="_blank" class="bg-pink-600 text-white px-4 py-2 rounded shadow hover:bg-pink-500">Follow on Instagram</a>
-    </div>
+<body class="overlay text-white">
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-      <!-- Image blocks -->
-      <!-- Replace with 1 to 17 -->
-      <script>
-        for (let i = 1; i <= 17; i++) {
-          document.write(`
-            <img src="../images/${i}.jpg" alt="Image ${i}" class="rounded shadow cursor-pointer hover:scale-105 transition" onclick="openLightbox(${i})">
-          `);
-        }
-      </script>
+  <!-- Header Buttons -->
+  <div class="flex justify-between items-center p-4">
+    <a href="../index.html" class="bg-white text-black px-4 py-2 rounded hover:bg-gray-300 transition">🏠 Home</a>
+    <a href="https://www.instagram.com/keval.kotadia" target="_blank"
+      class="bg-pink-600 hover:bg-pink-700 text-white px-4 py-2 rounded transition w-max">Follow on Instagram</a>
+  </div>
+
+  <!-- Gallery Grid -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4">
+    <!-- Image Blocks -->
+    <!-- Images 1 to 17 -->
+    <!-- Each image opens lightbox -->
+    <!-- Replace '1.jpg' to '17.jpg' if needed -->
+    <script>
+      const totalImages = 17;
+      for (let i = 1; i <= totalImages; i++) {
+        document.write(`
+          <img src="../images/${i}.jpg" 
+               class="w-full h-auto rounded cursor-pointer hover:scale-105 transition duration-200" 
+               onclick="openLightbox(${i})" 
+               alt="Image ${i}" />
+        `);
+      }
+    </script>
+  </div>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50 hidden">
+    <div class="relative text-center">
+      <img id="lightbox-img" src="" alt="Preview" class="lightbox-img rounded shadow-lg mx-auto" />
+      <div class="watermark">© Keval Photography</div>
+      <button id="prev" class="absolute top-1/2 left-[-50px] transform -translate-y-1/2 text-white text-4xl">&#10094;</button>
+      <button id="next" class="absolute top-1/2 right-[-50px] transform -translate-y-1/2 text-white text-4xl">&#10095;</button>
+      <a id="download" download class="absolute bottom-[-60px] left-1/2 transform -translate-x-1/2 bg-white text-black px-4 py-2 rounded hover:bg-gray-300 transition">Download</a>
+      <button id="close" class="absolute top-[-40px] right-[-40px] text-white text-3xl bg-red-600 px-3 rounded-full hover:bg-red-700 transition">&times;</button>
     </div>
   </div>
 
-  <div id="lightbox" class="lightbox">
-    <span class="lightbox-btn lightbox-close" onclick="closeLightbox()">&times;</span>
-    <span class="lightbox-btn lightbox-prev" onclick="prevImage()">&#10094;</span>
-    <img id="lightbox-img" src="" alt="Preview">
-    <span class="lightbox-btn lightbox-next" onclick="nextImage()">&#10095;</span>
-    <a id="downloadBtn" class="lightbox-btn lightbox-download" download>Download</a>
-  </div>
+  <!-- Back to Top Button -->
+  <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
+    class="fixed bottom-5 right-5 bg-white text-black px-4 py-2 rounded-full shadow-lg hover:bg-gray-300 transition z-40">
+    ⬆
+  </button>
 
-  <div class="watermark">© Keval Kotadia</div>
-
+  <!-- Scripts -->
   <script>
-    let currentIndex = 1;
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const downloadLink = document.getElementById('download');
+    let currentImage = 1;
+    const totalImages = 17;
 
     function openLightbox(index) {
-      currentIndex = index;
-      document.getElementById('lightbox').style.display = 'flex';
-      updateLightbox();
+      currentImage = index;
+      lightboxImg.src = `../images/${index}.jpg`;
+      downloadLink.href = `../images/${index}.jpg`;
+      lightbox.classList.remove('hidden');
     }
 
     function closeLightbox() {
-      document.getElementById('lightbox').style.display = 'none';
+      lightbox.classList.add('hidden');
     }
 
-    function nextImage() {
-      currentIndex = currentIndex >= 17 ? 1 : currentIndex + 1;
-      updateLightbox();
+    function showNext() {
+      currentImage = currentImage === totalImages ? 1 : currentImage + 1;
+      openLightbox(currentImage);
     }
 
-    function prevImage() {
-      currentIndex = currentIndex <= 1 ? 17 : currentIndex - 1;
-      updateLightbox();
+    function showPrev() {
+      currentImage = currentImage === 1 ? totalImages : currentImage - 1;
+      openLightbox(currentImage);
     }
 
-    function updateLightbox() {
-      const imgSrc = `../images/${currentIndex}.jpg`;
-      document.getElementById('lightbox-img').src = imgSrc;
-      document.getElementById('downloadBtn').href = imgSrc;
-    }
+    document.getElementById('close').onclick = closeLightbox;
+    document.getElementById('next').onclick = showNext;
+    document.getElementById('prev').onclick = showPrev;
 
+    // Keyboard Navigation
     document.addEventListener('keydown', (e) => {
-      if (document.getElementById('lightbox').style.display === 'flex') {
-        if (e.key === 'ArrowLeft') prevImage();
-        if (e.key === 'ArrowRight') nextImage();
+      if (!lightbox.classList.contains('hidden')) {
+        if (e.key === 'ArrowRight') showNext();
+        if (e.key === 'ArrowLeft') showPrev();
         if (e.key === 'Escape') closeLightbox();
       }
     });
   </script>
+
 </body>
 </html>
