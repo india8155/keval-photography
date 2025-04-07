@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Gallery | Keval Photography</title>
+  <title>Gallery - Keval Photography</title>
   <link rel="icon" href="images/favicon.png" type="image/png"/>
   <style>
     * {
@@ -11,272 +11,232 @@
       padding: 0;
       box-sizing: border-box;
     }
+
     body {
-      font-family: 'Segoe UI', sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: url('images/background.jpg') no-repeat center center fixed;
       background-size: cover;
       color: white;
+      min-height: 100vh;
+      position: relative;
     }
-    body::before {
-      content: "";
-      position: fixed;
+
+    .overlay {
+      position: absolute;
       top: 0;
       left: 0;
-      width: 100%;
       height: 100%;
-      background-color: rgba(0, 0, 0, 0.7);
-      z-index: -1;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 1;
     }
-    header {
+
+    .container {
+      position: relative;
+      z-index: 2;
+      padding: 60px 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    h1 {
       text-align: center;
-      padding: 50px 20px 20px;
-    }
-    header h1 {
+      margin-bottom: 40px;
       font-size: 3rem;
-      background: rgba(0,0,0,0.5);
-      display: inline-block;
-      padding: 10px 20px;
-      border-radius: 12px;
+      text-shadow: 2px 2px 10px black;
     }
+
     .gallery {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 20px;
-      padding: 40px;
     }
+
     .gallery img {
       width: 100%;
       border-radius: 10px;
       cursor: pointer;
-      transition: 0.3s ease;
+      transition: transform 0.3s ease;
     }
+
     .gallery img:hover {
-      transform: scale(1.05);
+      transform: scale(1.03);
     }
+
+    /* Lightbox */
     .lightbox {
       display: none;
       position: fixed;
-      z-index: 9999;
-      top: 0;
+      z-index: 999;
       left: 0;
+      top: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.9);
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.95);
       justify-content: center;
       align-items: center;
-      flex-direction: column;
-      padding: 20px;
     }
-    .lightbox img {
+
+    .lightbox-content {
       max-width: 90%;
-      max-height: 80vh;
-      border-radius: 12px;
-      margin-bottom: 20px;
+      max-height: 90%;
+      position: relative;
     }
-    .lightbox:target {
-      display: flex;
+
+    .lightbox-content img {
+      width: auto;
+      height: auto;
+      max-width: 100%;
+      max-height: 100%;
+      display: block;
+      margin: auto;
+      border-radius: 10px;
     }
-    .lightbox a.close {
+
+    .download-btn {
       position: absolute;
       top: 20px;
-      right: 30px;
-      font-size: 30px;
+      right: 80px;
+      background-color: white;
+      color: black;
+      padding: 8px 14px;
       text-decoration: none;
-      color: white;
-    }
-    .download-btn {
-      background: rgba(255,255,255,0.2);
-      padding: 10px 20px;
-      color: white;
-      text-decoration: none;
-      border-radius: 8px;
+      border-radius: 6px;
       font-weight: bold;
     }
-    .download-btn:hover {
-      background: rgba(255,255,255,0.4);
-    }
-    #topBtn {
-      position: fixed;
-      bottom: 30px;
-      right: 30px;
-      font-size: 24px;
-      background: rgba(255,255,255,0.3);
+
+    .close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
       color: white;
-      border: none;
+      font-size: 30px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    #scrollToTop {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000;
+      background-color: rgba(255,255,255,0.1);
+      border: 2px solid white;
+      color: white;
+      padding: 10px 15px;
       border-radius: 50%;
-      padding: 12px 16px;
+      font-size: 18px;
       cursor: pointer;
       display: none;
-      z-index: 10000;
     }
-    #topBtn:hover {
-      background: rgba(255,255,255,0.5);
+
+    #scrollToTop:hover {
+      background-color: white;
+      color: black;
+    }
+
+    .top-buttons {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      z-index: 2;
+      display: flex;
+      gap: 15px;
+    }
+
+    .top-buttons a {
+      padding: 10px 18px;
+      background-color: rgba(255,255,255,0.1);
+      border: 2px solid white;
+      color: white;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    .top-buttons a:hover {
+      background-color: white;
+      color: black;
     }
   </style>
 </head>
 <body>
-
-<header>
-  <h1>My Photography Gallery</h1>
-</header>
-
-<section class="gallery">
-  <!-- 17 Image Blocks -->
-  <!-- Copy/Paste format -->
-  <!-- 1.jpg to 17.jpg -->
-  <!-- Lightbox for each -->
-  <!-- Begin -->
-
-  <!-- Image + Lightbox Block -->
-  <!-- Repeated 17 times -->
-  <!-- Only change number -->
-
-  <!-- START IMAGE BLOCKS -->
-  <!-- Repeat for 1 to 17 -->
-  <!-- Example for 1.jpg -->
-  <!-- Repeat below pattern -->
-
-  <!-- Images -->
-  <!-- You can duplicate -->
-  <!-- Only change number -->
-  <!-- START -->
-  <!-- Use same folder structure -->
-
-  <!-- Begin of 17 Blocks -->
-  <!-- Clean and working -->
-
-  <div><a href="#img1"><img src="images/1.jpg" alt="Photo 1"></a></div>
-  <div class="lightbox" id="img1">
-    <a href="#" class="close">&times;</a>
-    <img src="images/1.jpg" alt="Full Photo 1">
-    <a class="download-btn" href="images/1.jpg" download>Download</a>
+  <div class="overlay"></div>
+  <div class="top-buttons">
+    <a href="index.html">Home</a>
+    <a href="https://www.instagram.com/keval.kotadia" target="_blank">Instagram</a>
+  </div>
+  <div class="container">
+    <h1>Gallery</h1>
+    <div class="gallery">
+      <!-- 17 image blocks -->
+      <!-- Update file names if needed -->
+      <!-- Example for image 1 -->
+      <!-- Repeat up to 17.jpg -->
+      <!-- Copy paste pattern for rest -->
+      <!-- Image block start -->
+      <img src="images/1.jpg" alt="Photo 1" onclick="openLightbox('images/1.jpg')">
+      <img src="images/2.jpg" alt="Photo 2" onclick="openLightbox('images/2.jpg')">
+      <img src="images/3.jpg" alt="Photo 3" onclick="openLightbox('images/3.jpg')">
+      <img src="images/4.jpg" alt="Photo 4" onclick="openLightbox('images/4.jpg')">
+      <img src="images/5.jpg" alt="Photo 5" onclick="openLightbox('images/5.jpg')">
+      <img src="images/6.jpg" alt="Photo 6" onclick="openLightbox('images/6.jpg')">
+      <img src="images/7.jpg" alt="Photo 7" onclick="openLightbox('images/7.jpg')">
+      <img src="images/8.jpg" alt="Photo 8" onclick="openLightbox('images/8.jpg')">
+      <img src="images/9.jpg" alt="Photo 9" onclick="openLightbox('images/9.jpg')">
+      <img src="images/10.jpg" alt="Photo 10" onclick="openLightbox('images/10.jpg')">
+      <img src="images/11.jpg" alt="Photo 11" onclick="openLightbox('images/11.jpg')">
+      <img src="images/12.jpg" alt="Photo 12" onclick="openLightbox('images/12.jpg')">
+      <img src="images/13.jpg" alt="Photo 13" onclick="openLightbox('images/13.jpg')">
+      <img src="images/14.jpg" alt="Photo 14" onclick="openLightbox('images/14.jpg')">
+      <img src="images/15.jpg" alt="Photo 15" onclick="openLightbox('images/15.jpg')">
+      <img src="images/16.jpg" alt="Photo 16" onclick="openLightbox('images/16.jpg')">
+      <img src="images/17.jpg" alt="Photo 17" onclick="openLightbox('images/17.jpg')">
+    </div>
   </div>
 
-  <div><a href="#img2"><img src="images/2.jpg" alt="Photo 2"></a></div>
-  <div class="lightbox" id="img2">
-    <a href="#" class="close">&times;</a>
-    <img src="images/2.jpg" alt="Full Photo 2">
-    <a class="download-btn" href="images/2.jpg" download>Download</a>
+  <div id="lightbox" class="lightbox" onclick="closeLightbox(event)">
+    <div class="lightbox-content">
+      <span class="close" onclick="closeLightbox(event)">&times;</span>
+      <a id="downloadLink" class="download-btn" download>Download</a>
+      <img id="lightboxImage" src="" alt="Lightbox Image"/>
+    </div>
   </div>
 
-  <div><a href="#img3"><img src="images/3.jpg" alt="Photo 3"></a></div>
-  <div class="lightbox" id="img3">
-    <a href="#" class="close">&times;</a>
-    <img src="images/3.jpg" alt="Full Photo 3">
-    <a class="download-btn" href="images/3.jpg" download>Download</a>
-  </div>
+  <button id="scrollToTop" onclick="scrollToTop()">↑</button>
 
-  <div><a href="#img4"><img src="images/4.jpg" alt="Photo 4"></a></div>
-  <div class="lightbox" id="img4">
-    <a href="#" class="close">&times;</a>
-    <img src="images/4.jpg" alt="Full Photo 4">
-    <a class="download-btn" href="images/4.jpg" download>Download</a>
-  </div>
+  <script>
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImage = document.getElementById("lightboxImage");
+    const downloadLink = document.getElementById("downloadLink");
 
-  <div><a href="#img5"><img src="images/5.jpg" alt="Photo 5"></a></div>
-  <div class="lightbox" id="img5">
-    <a href="#" class="close">&times;</a>
-    <img src="images/5.jpg" alt="Full Photo 5">
-    <a class="download-btn" href="images/5.jpg" download>Download</a>
-  </div>
+    function openLightbox(src) {
+      lightbox.style.display = "flex";
+      lightboxImage.src = src;
+      downloadLink.href = src;
+    }
 
-  <div><a href="#img6"><img src="images/6.jpg" alt="Photo 6"></a></div>
-  <div class="lightbox" id="img6">
-    <a href="#" class="close">&times;</a>
-    <img src="images/6.jpg" alt="Full Photo 6">
-    <a class="download-btn" href="images/6.jpg" download>Download</a>
-  </div>
+    function closeLightbox(e) {
+      if (e.target === lightbox || e.target.classList.contains("close")) {
+        lightbox.style.display = "none";
+        lightboxImage.src = "";
+      }
+    }
 
-  <div><a href="#img7"><img src="images/7.jpg" alt="Photo 7"></a></div>
-  <div class="lightbox" id="img7">
-    <a href="#" class="close">&times;</a>
-    <img src="images/7.jpg" alt="Full Photo 7">
-    <a class="download-btn" href="images/7.jpg" download>Download</a>
-  </div>
+    const scrollBtn = document.getElementById("scrollToTop");
+    window.onscroll = function() {
+      if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+        scrollBtn.style.display = "block";
+      } else {
+        scrollBtn.style.display = "none";
+      }
+    };
 
-  <div><a href="#img8"><img src="images/8.jpg" alt="Photo 8"></a></div>
-  <div class="lightbox" id="img8">
-    <a href="#" class="close">&times;</a>
-    <img src="images/8.jpg" alt="Full Photo 8">
-    <a class="download-btn" href="images/8.jpg" download>Download</a>
-  </div>
-
-  <div><a href="#img9"><img src="images/9.jpg" alt="Photo 9"></a></div>
-  <div class="lightbox" id="img9">
-    <a href="#" class="close">&times;</a>
-    <img src="images/9.jpg" alt="Full Photo 9">
-    <a class="download-btn" href="images/9.jpg" download>Download</a>
-  </div>
-
-  <div><a href="#img10"><img src="images/10.jpg" alt="Photo 10"></a></div>
-  <div class="lightbox" id="img10">
-    <a href="#" class="close">&times;</a>
-    <img src="images/10.jpg" alt="Full Photo 10">
-    <a class="download-btn" href="images/10.jpg" download>Download</a>
-  </div>
-
-  <div><a href="#img11"><img src="images/11.jpg" alt="Photo 11"></a></div>
-  <div class="lightbox" id="img11">
-    <a href="#" class="close">&times;</a>
-    <img src="images/11.jpg" alt="Full Photo 11">
-    <a class="download-btn" href="images/11.jpg" download>Download</a>
-  </div>
-
-  <div><a href="#img12"><img src="images/12.jpg" alt="Photo 12"></a></div>
-  <div class="lightbox" id="img12">
-    <a href="#" class="close">&times;</a>
-    <img src="images/12.jpg" alt="Full Photo 12">
-    <a class="download-btn" href="images/12.jpg" download>Download</a>
-  </div>
-
-  <div><a href="#img13"><img src="images/13.jpg" alt="Photo 13"></a></div>
-  <div class="lightbox" id="img13">
-    <a href="#" class="close">&times;</a>
-    <img src="images/13.jpg" alt="Full Photo 13">
-    <a class="download-btn" href="images/13.jpg" download>Download</a>
-  </div>
-
-  <div><a href="#img14"><img src="images/14.jpg" alt="Photo 14"></a></div>
-  <div class="lightbox" id="img14">
-    <a href="#" class="close">&times;</a>
-    <img src="images/14.jpg" alt="Full Photo 14">
-    <a class="download-btn" href="images/14.jpg" download>Download</a>
-  </div>
-
-  <div><a href="#img15"><img src="images/15.jpg" alt="Photo 15"></a></div>
-  <div class="lightbox" id="img15">
-    <a href="#" class="close">&times;</a>
-    <img src="images/15.jpg" alt="Full Photo 15">
-    <a class="download-btn" href="images/15.jpg" download>Download</a>
-  </div>
-
-  <div><a href="#img16"><img src="images/16.jpg" alt="Photo 16"></a></div>
-  <div class="lightbox" id="img16">
-    <a href="#" class="close">&times;</a>
-    <img src="images/16.jpg" alt="Full Photo 16">
-    <a class="download-btn" href="images/16.jpg" download>Download</a>
-  </div>
-
-  <div><a href="#img17"><img src="images/17.jpg" alt="Photo 17"></a></div>
-  <div class="lightbox" id="img17">
-    <a href="#" class="close">&times;</a>
-    <img src="images/17.jpg" alt="Full Photo 17">
-    <a class="download-btn" href="images/17.jpg" download>Download</a>
-  </div>
-
-</section>
-
-<button onclick="scrollToTop()" id="topBtn">↑</button>
-
-<script>
-  const topBtn = document.getElementById("topBtn");
-  window.onscroll = function () {
-    topBtn.style.display = window.scrollY > 300 ? "block" : "none";
-  };
-  function scrollToTop() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-</script>
-
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  </script>
 </body>
 </html>
