@@ -190,61 +190,67 @@
   <img src="../images/17.jpg" alt="Photo 17" onclick="openLightbox(16)">
 </section>
 
-<div id="lightbox">
-  <img id="lightboxImage" src="" alt="Preview"/>
-  <div class="lightbox-controls">
-    <button onclick="prevImage()">⟵ Prev</button>
-    <button onclick="downloadImage()">⬇️ Download</button>
-    <button onclick="nextImage()">Next ⟶</button>
-    <button onclick="closeLightbox()">❌ Close</button>
-  </div>
-</div>
+    <!-- Lightbox HTML -->
+    <div id="lightbox" class="hidden fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
+      <button onclick="closeLightbox()" class="absolute top-4 right-6 text-white text-4xl">&times;</button>
+      <button onclick="prevImage()" class="absolute left-4 text-white text-3xl">&#8592;</button>
+      <img id="lightboxImage" class="max-h-[90%] max-w-[90%] object-contain" src="" alt="Gallery Image">
+      <a id="downloadBtn" download class="absolute bottom-10 left-1/2 transform -translate-x-1/2 bg-white text-black px-4 py-2 rounded shadow-lg hover:bg-gray-200">Download</a>
+      <button onclick="nextImage()" class="absolute right-4 text-white text-3xl">&#8594;</button>
+    </div>
 
-<div id="watermark">© Keval Photography</div>
-<div id="backToTop" onclick="scrollToTop()">↑</div>
+    <!-- Scroll to top button -->
+    <button onclick="scrollToTop()" class="fixed bottom-6 right-6 bg-black bg-opacity-60 text-white px-3 py-2 rounded-full shadow-md hover:bg-opacity-90">
+      &uarr;
+    </button>
 
-<script>
-  const images = Array.from(document.querySelectorAll('.gallery img'));
-  const lightbox = document.getElementById('lightbox');
-  const lightboxImage = document.getElementById('lightboxImage');
-  let currentIndex = 0;
+    <!-- SCRIPT GOES HERE -->
+    <script>
+      let currentIndex = 1;
 
-  function openLightbox(index) {
-    currentIndex = index;
-    lightboxImage.src = images[currentIndex].src;
-    lightbox.style.display = 'flex';
-  }
+      function openLightbox(index) {
+        currentIndex = index;
+        updateLightbox();
+        document.getElementById('lightbox').classList.remove('hidden');
+      }
 
-  function closeLightbox() {
-    lightbox.style.display = 'none';
-  }
+      function closeLightbox() {
+        document.getElementById('lightbox').classList.add('hidden');
+      }
 
-  function nextImage() {
-    currentIndex = (currentIndex + 1) % images.length;
-    lightboxImage.src = images[currentIndex].src;
-  }
+      function nextImage() {
+        currentIndex = currentIndex >= 17 ? 1 : currentIndex + 1;
+        updateLightbox();
+      }
 
-  function prevImage() {
-    currentIndex = (currentIndex - 1 + images.length) % images.length;
-    lightboxImage.src = images[currentIndex].src;
-  }
+      function prevImage() {
+        currentIndex = currentIndex <= 1 ? 17 : currentIndex - 1;
+        updateLightbox();
+      }
 
-  function downloadImage() {
-    const link = document.createElement('a');
-    link.href = images[currentIndex].src;
-    link.download = `photo_${currentIndex + 1}.jpg`;
-    link.click();
-  }
+      function updateLightbox() {
+        const imgPath = '../images/' + currentIndex + '.jpg';
+        document.getElementById('lightboxImage').src = imgPath;
+        document.getElementById('downloadBtn').href = imgPath;
+      }
 
-  window.onscroll = function () {
-    const btn = document.getElementById("backToTop");
-    btn.style.display = window.scrollY > 200 ? "block" : "none";
-  };
+      function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
 
-  function scrollToTop() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-</script>
-
-</body>
+      // Keyboard navigation
+      document.addEventListener('keydown', function(event) {
+        const lightboxOpen = !document.getElementById('lightbox').classList.contains('hidden');
+        if (lightboxOpen) {
+          if (event.key === 'ArrowRight') {
+            nextImage();
+          } else if (event.key === 'ArrowLeft') {
+            prevImage();
+          } else if (event.key === 'Escape') {
+            closeLightbox();
+          }
+        }
+      });
+    </script>
+  </body>
 </html>
