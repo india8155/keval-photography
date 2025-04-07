@@ -71,14 +71,13 @@
       transform: scale(1.05);
     }
 
-    /* Lightbox */
     .lightbox {
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
       height: 100vh;
-      background: rgba(0,0,0,0.9);
+      background: rgba(0,0,0,0.95);
       display: none;
       align-items: center;
       justify-content: center;
@@ -91,21 +90,36 @@
       max-width: 90%;
       max-height: 80vh;
       border-radius: 10px;
+      margin-bottom: 15px;
     }
 
-    .lightbox a {
-      color: white;
-      margin-top: 10px;
-      text-decoration: underline;
+    .lightbox-controls {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .lightbox button, .download-btn {
+      background: white;
+      color: black;
+      border: none;
+      padding: 10px 16px;
+      font-size: 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
     }
 
     .close-btn {
       position: absolute;
-      top: 20px;
-      right: 30px;
-      font-size: 2rem;
+      top: 15px;
+      right: 20px;
+      font-size: 30px;
       color: white;
       cursor: pointer;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 50%;
+      padding: 5px 12px;
     }
 
     #topBtn {
@@ -130,6 +144,10 @@
       }
       .btn {
         padding: 8px 16px;
+      }
+      .lightbox-controls {
+        flex-direction: column;
+        gap: 10px;
       }
     }
   </style>
@@ -163,25 +181,53 @@
     <img src="images/15.jpg" alt="Photo 15" onclick="openLightbox('images/15.jpg')">
     <img src="images/16.jpg" alt="Photo 16" onclick="openLightbox('images/16.jpg')">
     <img src="images/17.jpg" alt="Photo 17" onclick="openLightbox('images/17.jpg')">
+
+    <script>
+      for (let i = 1; i <= 17; i++) {
+        document.write(`<img src="images/${i}.jpg" alt="Photo ${i}" onclick="openLightbox(${i})">`);
+      }
+    </script>
   </div>
 
   <div class="lightbox" id="lightbox">
     <span class="close-btn" onclick="closeLightbox()">×</span>
     <img id="lightboxImage" src="" alt="Lightbox Image">
-    <a id="downloadBtn" href="" download>Download</a>
+    <div class="lightbox-controls">
+      <button onclick="prevImage()">Previous</button>
+      <a id="downloadBtn" class="download-btn" href="" download>Download</a>
+      <button onclick="nextImage()">Next</button>
+    </div>
   </div>
 
   <button onclick="scrollToTop()" id="topBtn">&#8679;</button>
 
   <script>
-    function openLightbox(src) {
-      document.getElementById("lightboxImage").src = src;
-      document.getElementById("downloadBtn").href = src;
+    let currentIndex = 1;
+
+    function openLightbox(index) {
+      currentIndex = index;
+      updateLightbox();
       document.getElementById("lightbox").style.display = "flex";
+    }
+
+    function updateLightbox() {
+      const imgSrc = `images/${currentIndex}.jpg`;
+      document.getElementById("lightboxImage").src = imgSrc;
+      document.getElementById("downloadBtn").href = imgSrc;
     }
 
     function closeLightbox() {
       document.getElementById("lightbox").style.display = "none";
+    }
+
+    function prevImage() {
+      currentIndex = currentIndex === 1 ? 17 : currentIndex - 1;
+      updateLightbox();
+    }
+
+    function nextImage() {
+      currentIndex = currentIndex === 17 ? 1 : currentIndex + 1;
+      updateLightbox();
     }
 
     window.onscroll = function () {
