@@ -75,6 +75,7 @@
       cursor: pointer;
       transition: transform 0.3s ease;
       box-shadow: 0 0 10px #00000070;
+      animation: fadeIn 0.6s ease-in-out;
     }
 
     .gallery img:hover {
@@ -103,6 +104,7 @@
       margin-top: 1rem;
       display: flex;
       gap: 1rem;
+      flex-wrap: wrap;
     }
 
     .lightbox-controls button {
@@ -150,11 +152,6 @@
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
-
-    .gallery img {
-      animation: fadeIn 0.6s ease-in-out;
-    }
-
   </style>
 </head>
 <body>
@@ -170,24 +167,8 @@
 </header>
 
 <section class="gallery">
-  <!-- Image Blocks (17 total) -->
-  <img src="/images/1.jpg" alt="Photo 1" onclick="openLightbox(0)">
-  <img src="/images/2.jpg" alt="Photo 2" onclick="openLightbox(1)">
-  <img src="/images/3.jpg" alt="Photo 3" onclick="openLightbox(2)">
-  <img src="/images/4.jpg" alt="Photo 4" onclick="openLightbox(3)">
-  <img src="/images/5.jpg" alt="Photo 5" onclick="openLightbox(4)">
-  <img src="/images/6.jpg" alt="Photo 6" onclick="openLightbox(5)">
-  <img src="/images/7.jpg" alt="Photo 7" onclick="openLightbox(6)">
-  <img src="/images/8.jpg" alt="Photo 8" onclick="openLightbox(7)">
-  <img src="/images/9.jpg" alt="Photo 9" onclick="openLightbox(8)">
-  <img src="/images/10.jpg" alt="Photo 10" onclick="openLightbox(9)">
-  <img src="/images/11.jpg" alt="Photo 11" onclick="openLightbox(10)">
-  <img src="/images/12.jpg" alt="Photo 12" onclick="openLightbox(11)">
-  <img src="/images/13.jpg" alt="Photo 13" onclick="openLightbox(12)">
-  <img src="/images/14.jpg" alt="Photo 14" onclick="openLightbox(13)">
-  <img src="/images/15.jpg" alt="Photo 15" onclick="openLightbox(14)">
-  <img src="/images/16.jpg" alt="Photo 16" onclick="openLightbox(15)">
-  <img src="/images/17.jpg" alt="Photo 17" onclick="openLightbox(16)">
+  <!-- Image Blocks -->
+  ${[...Array(17)].map((_, i) => `<img src="/images/${i+1}.jpg" alt="Photo ${i+1}" onclick="openLightbox(${i})">`).join('\n')}
 </section>
 
 <div id="lightbox">
@@ -250,28 +231,26 @@
     const btn = document.getElementById("backToTop");
     btn.style.display = window.scrollY > 200 ? "block" : "none";
   };
-
   function scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  // Touch Swipe Support
+  // Swipe gesture for touchscreen
   let touchStartX = 0;
   let touchEndX = 0;
 
-  lightbox.addEventListener('touchstart', function(e) {
+  lightbox.addEventListener('touchstart', e => {
     touchStartX = e.changedTouches[0].screenX;
   });
 
-  lightbox.addEventListener('touchend', function(e) {
+  lightbox.addEventListener('touchend', e => {
     touchEndX = e.changedTouches[0].screenX;
-    handleGesture();
+    handleSwipe();
   });
 
-  function handleGesture() {
-    const threshold = 50; // Minimum px to detect swipe
-    if (touchEndX < touchStartX - threshold) nextImage();
-    if (touchEndX > touchStartX + threshold) prevImage();
+  function handleSwipe() {
+    if (touchEndX < touchStartX - 50) nextImage();
+    if (touchEndX > touchStartX + 50) prevImage();
   }
 </script>
 
