@@ -1,78 +1,489 @@
 <!DOCTYPE html>
+  
 <html lang="en">
+  
 <head>
+  
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Keval's Photography</title>
-  <link rel="stylesheet" href="/gallery/style.css" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  
+  <title>Keval's Gallery</title>
+  
+  <link rel="icon" href="/images/favicon.png" type="image/png"/>
+  
+  <style>
+  
+    body {
+  
+      margin: 0;
+  
+      font-family: 'Segoe UI', sans-serif;
+  
+      background: url('/images/background.jpg') no-repeat center center fixed;
+  
+      background-size: cover;
+  
+      color: white;
+  
+      position: relative;
+  
+    }
+  
+
+  
+    .overlay {
+  
+      position: fixed;
+  
+      top: 0;
+  
+      left: 0;
+  
+      width: 100%;
+  
+      height: 100%;
+  
+      background: rgba(0, 0, 0, 0.75);
+  
+      z-index: -1;
+  
+    }
+  
+
+  
+    header {
+  
+      text-align: center;
+  
+      padding: 2rem 1rem 1rem;
+  
+    }
+  
+
+  
+    header h1 {
+  
+      font-size: 2.5rem;
+  
+      letter-spacing: 2px;
+  
+      margin: 0;
+  
+      text-shadow: 0 0 10px black;
+  
+    }
+  
+
+  
+    .buttons {
+  
+      display: flex;
+  
+      justify-content: center;
+  
+      gap: 1rem;
+  
+      margin-top: 1rem;
+  
+      flex-wrap: wrap;
+  
+    }
+  
+
+  
+    .buttons a {
+  
+      text-decoration: none;
+  
+      background: #ffffff20;
+  
+      padding: 0.7rem 1.2rem;
+  
+      border: 1px solid white;
+  
+      border-radius: 30px;
+  
+      color: white;
+  
+      transition: 0.3s;
+  
+    }
+  
+
+  
+    .buttons a:hover {
+  
+      background: white;
+  
+      color: black;
+  
+    }
+  
+
+  
+    .gallery {
+  
+      display: grid;
+  
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  
+      gap: 15px;
+  
+      padding: 2rem;
+  
+      max-width: 1200px;
+  
+      margin: auto;
+  
+    }
+  
+
+  
+    .gallery img {
+  
+      width: 100%;
+  
+      border-radius: 10px;
+  
+      cursor: pointer;
+  
+      transition: transform 0.3s ease;
+  
+      box-shadow: 0 0 10px #00000070;
+  
+    }
+  
+
+  
+    .gallery img:hover {
+  
+      transform: scale(1.03);
+  
+    }
+  
+
+  
+    #lightbox {
+  
+      display: none;
+  
+      position: fixed;
+  
+      top: 0; left: 0;
+  
+      width: 100%; height: 100%;
+  
+      background: rgba(0,0,0,0.9);
+  
+      justify-content: center;
+  
+      align-items: center;
+  
+      flex-direction: column;
+  
+      z-index: 999;
+  
+    }
+  
+
+  
+    #lightbox img {
+  
+      max-width: 90%;
+  
+      max-height: 80%;
+  
+      border-radius: 10px;
+  
+    }
+  
+
+  
+    .lightbox-controls {
+  
+      margin-top: 1rem;
+  
+      display: flex;
+  
+      gap: 1rem;
+  
+    }
+  
+
+  
+    .lightbox-controls button {
+  
+      padding: 0.5rem 1rem;
+  
+      background: white;
+  
+      border: none;
+  
+      border-radius: 5px;
+  
+      cursor: pointer;
+  
+      font-weight: bold;
+  
+    }
+  
+
+  
+    .lightbox-controls button:hover {
+  
+      background: #ddd;
+  
+    }
+  
+
+  
+    #watermark {
+  
+      position: fixed;
+  
+      bottom: 10px;
+  
+      right: 10px;
+  
+      font-size: 14px;
+  
+      opacity: 0.5;
+  
+    }
+  
+
+  
+    #backToTop {
+  
+      position: fixed;
+  
+      bottom: 20px;
+  
+      left: 20px;
+  
+      font-size: 1.5rem;
+  
+      background: #ffffff20;
+  
+      color: white;
+  
+      padding: 10px 14px;
+  
+      border-radius: 50%;
+  
+      border: 1px solid white;
+  
+      cursor: pointer;
+  
+      display: none;
+  
+      transition: 0.3s;
+  
+    }
+  
+
+  
+    #backToTop:hover {
+  
+      background: white;
+  
+      color: black;
+  
+    }
+  
+
+  
+    @keyframes fadeIn {
+  
+      from { opacity: 0; transform: translateY(10px); }
+  
+      to { opacity: 1; transform: translateY(0); }
+  
+    }
+  
+
+  
+    .gallery img {
+  
+      animation: fadeIn 0.6s ease-in-out;
+  
+    }
+  
+
+  
+  </style>
+  
 </head>
+  
 <body>
+  
+
+  
+<div class="overlay"></div>
+  
+
+  
+<header>
+  
   <h1>Keval's Photography</h1>
+  
   <div class="buttons">
-    <a href="/" class="btn"><i class="fas fa-home"></i> Home</a>
-    <a href="https://www.instagram.com/keval.kotadia" class="btn" target="_blank">
-      <i class="fas fa-camera"></i> Follow on Instagram
-    </a>
+  
+    <a href="/">🏠 Home</a>
+  
+    <a href="https://www.instagram.com/keval.kotadia?igsh=MW1lZmJveDZtdG1odg==" target="_blank">📷 Follow on Instagram</a>
+  
   </div>
+  
+</header>
+  
 
-  <div class="gallery">
-    <img src="/images/1.jpg" alt="Photo 1" loading="lazy" onclick="openLightbox(0)">
-    <img src="/images/2.jpg" alt="Photo 2" loading="lazy" onclick="openLightbox(1)">
-    <img src="/images/3.jpg" alt="Photo 3" loading="lazy" onclick="openLightbox(2)">
-    <img src="/images/4.jpg" alt="Photo 4" loading="lazy" onclick="openLightbox(3)">
-    <img src="/images/5.jpg" alt="Photo 5" loading="lazy" onclick="openLightbox(4)">
-    <img src="/images/6.jpg" alt="Photo 6" loading="lazy" onclick="openLightbox(5)">
-    <img src="/images/7.jpg" alt="Photo 7" loading="lazy" onclick="openLightbox(6)">
-    <img src="/images/8.jpg" alt="Photo 8" loading="lazy" onclick="openLightbox(7)">
-    <img src="/images/9.jpg" alt="Photo 9" loading="lazy" onclick="openLightbox(8)">
-    <img src="/images/10.jpg" alt="Photo 10" loading="lazy" onclick="openLightbox(9)">
-    <img src="/images/11.jpg" alt="Photo 11" loading="lazy" onclick="openLightbox(10)">
-    <img src="/images/12.jpg" alt="Photo 12" loading="lazy" onclick="openLightbox(11)">
-    <img src="/images/13.jpg" alt="Photo 13" loading="lazy" onclick="openLightbox(12)">
-    <img src="/images/14.jpg" alt="Photo 14" loading="lazy" onclick="openLightbox(13)">
-    <img src="/images/15.jpg" alt="Photo 15" loading="lazy" onclick="openLightbox(14)">
-    <img src="/images/16.jpg" alt="Photo 16" loading="lazy" onclick="openLightbox(15)">
-    <img src="/images/17.jpg" alt="Photo 17" loading="lazy" onclick="openLightbox(16)">
+  
+<section class="gallery">
+  
+  <!-- Image Blocks (17 total) -->
+  
+  <img src="/images/1.jpg" alt="Photo 1" onclick="openLightbox(0)">
+  
+  <img src="/images/2.jpg" alt="Photo 2" onclick="openLightbox(1)">
+  
+  <img src="/images/3.jpg" alt="Photo 3" onclick="openLightbox(2)">
+  
+  <img src="/images/4.jpg" alt="Photo 4" onclick="openLightbox(3)">
+  
+  <img src="/images/5.jpg" alt="Photo 5" onclick="openLightbox(4)">
+  
+  <img src="/images/6.jpg" alt="Photo 6" onclick="openLightbox(5)">
+  
+  <img src="/images/7.jpg" alt="Photo 7" onclick="openLightbox(6)">
+  
+  <img src="/images/8.jpg" alt="Photo 8" onclick="openLightbox(7)">
+  
+  <img src="/images/9.jpg" alt="Photo 9" onclick="openLightbox(8)">
+  
+  <img src="/images/10.jpg" alt="Photo 10" onclick="openLightbox(9)">
+  
+  <img src="/images/11.jpg" alt="Photo 11" onclick="openLightbox(10)">
+  
+  <img src="/images/12.jpg" alt="Photo 12" onclick="openLightbox(11)">
+  
+  <img src="/images/13.jpg" alt="Photo 13" onclick="openLightbox(12)">
+  
+  <img src="/images/14.jpg" alt="Photo 14" onclick="openLightbox(13)">
+  
+  <img src="/images/15.jpg" alt="Photo 15" onclick="openLightbox(14)">
+  
+  <img src="/images/16.jpg" alt="Photo 16" onclick="openLightbox(15)">
+  
+  <img src="/images/17.jpg" alt="Photo 17" onclick="openLightbox(16)">
+  
+</section>
+  
+
+  
+<div id="lightbox">
+  
+  <img id="lightboxImage" src="" alt="Preview"/>
+  
+  <div class="lightbox-controls">
+  
+    <button onclick="prevImage()">⟵ Prev</button>
+  
+    <button onclick="downloadImage()">⬇️ Download</button>
+  
+    <button onclick="nextImage()">Next ⟶</button>
+  
+    <button onclick="closeLightbox()">❌ Close</button>
+  
   </div>
+  
+</div>
+  
 
-  <div id="lightbox" class="lightbox" onclick="closeLightbox()">
-    <span class="close">&times;</span>
-    <img class="lightbox-content" id="lightbox-img">
-    <a class="prev" onclick="changeSlide(-1)">&#10094;</a>
-    <a class="next" onclick="changeSlide(1)">&#10095;</a>
-  </div>
+  
+<div id="watermark">© Keval Photography</div>
+  
+<div id="backToTop" onclick="scrollToTop()">↑</div>
+  
 
-  <script>
-    const images = [
-      "/images/1.jpg", "/images/2.jpg", "/images/3.jpg", "/images/4.jpg", "/images/5.jpg",
-      "/images/6.jpg", "/images/7.jpg", "/images/8.jpg", "/images/9.jpg", "/images/10.jpg",
-      "/images/11.jpg", "/images/12.jpg", "/images/13.jpg", "/images/14.jpg", "/images/15.jpg",
-      "/images/16.jpg", "/images/17.jpg"
-    ];
-    let currentSlide = 0;
+  
+<script>
+  const images = Array.from(document.querySelectorAll('.gallery img'));
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImage = document.getElementById('lightboxImage');
+  let currentIndex = 0;
 
-    function openLightbox(index) {
-      currentSlide = index;
-      document.getElementById("lightbox").style.display = "block";
-      document.getElementById("lightbox-img").src = images[currentSlide];
+  function openLightbox(index) {
+    currentIndex = index;
+    lightboxImage.src = images[currentIndex].src;
+    lightbox.style.display = 'flex';
+  }
+
+  function closeLightbox() {
+    lightbox.style.display = 'none';
+  }
+
+  function nextImage() {
+    currentIndex = (currentIndex + 1) % images.length;
+    lightboxImage.src = images[currentIndex].src;
+  }
+
+  function prevImage() {
+    currentIndex = (currentIndex - 1 + images.length) % images.length;
+    lightboxImage.src = images[currentIndex].src;
+  }
+
+  function downloadImage() {
+    const link = document.createElement('a');
+    link.href = images[currentIndex].src;
+    link.download = `photo_${currentIndex + 1}.jpg`;
+    link.click();
+  }
+
+  // Keyboard navigation
+  document.addEventListener('keydown', function(e) {
+    if (lightbox.style.display === 'flex') {
+      if (e.key === 'ArrowRight') nextImage();
+      else if (e.key === 'ArrowLeft') prevImage();
+      else if (e.key === 'Escape') closeLightbox();
     }
+  });
 
-    function closeLightbox() {
-      document.getElementById("lightbox").style.display = "none";
-    }
+  // Back to Top Button
+  window.onscroll = function () {
+    const btn = document.getElementById("backToTop");
+    btn.style.display = window.scrollY > 200 ? "block" : "none";
+  };
 
-    function changeSlide(n) {
-      currentSlide = (currentSlide + n + images.length) % images.length;
-      document.getElementById("lightbox-img").src = images[currentSlide];
-    }
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 
-    document.addEventListener("keydown", function (e) {
-      if (document.getElementById("lightbox").style.display === "block") {
-        if (e.key === "ArrowLeft") changeSlide(-1);
-        if (e.key === "ArrowRight") changeSlide(1);
-        if (e.key === "Escape") closeLightbox();
-      }
-    });
-  </script>
+  // Touch Swipe Support
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  lightbox.addEventListener('touchstart', function(e) {
+    touchStartX = e.changedTouches[0].screenX;
+  });
+
+  lightbox.addEventListener('touchend', function(e) {
+    touchEndX = e.changedTouches[0].screenX;
+    handleGesture();
+  });
+
+  function handleGesture() {
+    const threshold = 50; // Minimum px to detect swipe
+    if (touchEndX < touchStartX - threshold) nextImage();
+    if (touchEndX > touchStartX + threshold) prevImage();
+  }
+</script>
+  
+
+  
+
+  
 </body>
+  
 </html>
