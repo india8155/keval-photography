@@ -166,7 +166,7 @@
   </div>
 </header>
 
-<section class="gallery">
+<section class="gallery" id="gallery"></section>
   <!-- Image Blocks -->
   ${[...Array(17)].map((_, i) => `<img src="/images/${i+1}.jpg" alt="Photo ${i+1}" onclick="openLightbox(${i})">`).join('\n')}
 </section>
@@ -185,6 +185,11 @@
 <div id="backToTop" onclick="scrollToTop()">↑</div>
 
 <script>
+  const galleryElement = document.getElementById("gallery");
+  galleryElement.innerHTML = [...Array(17)].map((_, i) => 
+    `<img src="/images/${i + 1}.jpg" alt="Photo ${i + 1}" onclick="openLightbox(${i})">`
+  ).join('\n');
+
   const images = Array.from(document.querySelectorAll('.gallery img'));
   const lightbox = document.getElementById('lightbox');
   const lightboxImage = document.getElementById('lightboxImage');
