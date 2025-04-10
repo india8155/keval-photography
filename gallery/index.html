@@ -6,42 +6,96 @@
   <title>Keval's Gallery</title>
   <link rel="stylesheet" href="/style.css" />
   <style>
-  .lightbox {
-    background: rgba(0, 0, 0, 0.9);
-    backdrop-filter: blur(4px);
-  }
-
-  .lightbox-arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 3rem;
-    color: white;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    z-index: 1001;
-    user-select: none;
-    transition: color 0.2s ease;
-  }
-
-  .lightbox-arrow:hover {
-    color: #ffcccc;
-  }
-
-  .lightbox-prev {
-    left: 10px;
-  }
-
-  .lightbox-next {
-    right: 10px;
-  }
-
-  @media (max-width: 600px) {
-    .lightbox-arrow {
-      font-size: 2.5rem;
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.9);
+      backdrop-filter: blur(4px);
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      z-index: 1000;
     }
-  }
+    .lightbox img {
+      max-width: 90vw;
+      max-height: 80vh;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+    .lightbox-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 3rem;
+      color: white;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      z-index: 1001;
+      user-select: none;
+      transition: color 0.2s ease;
+    }
+    .lightbox-arrow:hover {
+      color: #ffcccc;
+    }
+    .lightbox-prev {
+      left: 10px;
+    }
+    .lightbox-next {
+      right: 10px;
+    }
+    .lightbox-controls {
+      margin-top: 1rem;
+      display: flex;
+      gap: 1rem;
+    }
+    .btn {
+      padding: 8px 16px;
+      border-radius: 5px;
+      border: none;
+      background-color: #333;
+      color: white;
+      text-decoration: none;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background-color: #555;
+    }
+    .danger {
+      background-color: #c0392b;
+    }
+    .danger:hover {
+      background-color: #e74c3c;
+    }
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      text-align: center;
+      padding: 20px;
+    }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin-top: 20px;
+    }
+    .gallery img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    .gallery img:hover {
+      transform: scale(1.05);
+    }
+    @media (max-width: 600px) {
+      .lightbox-arrow {
+        font-size: 2.5rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -52,9 +106,23 @@
       <a href="https://www.instagram.com/keval_kotadia_/" target="_blank" class="btn">📷 Follow on Instagram</a>
     </div>
     <div class="gallery">
-      ${[...Array(17)].map((_, i) => `
-        <img src="/gallery/img/${i + 1}.jpg" alt="Photo ${i + 1}" loading="lazy" onclick="openLightbox(${i})">
-      `).join('')}
+      <img src="/gallery/img/1.jpg" alt="Photo 1" loading="lazy" onclick="openLightbox(0)">
+      <img src="/gallery/img/2.jpg" alt="Photo 2" loading="lazy" onclick="openLightbox(1)">
+      <img src="/gallery/img/3.jpg" alt="Photo 3" loading="lazy" onclick="openLightbox(2)">
+      <img src="/gallery/img/4.jpg" alt="Photo 4" loading="lazy" onclick="openLightbox(3)">
+      <img src="/gallery/img/5.jpg" alt="Photo 5" loading="lazy" onclick="openLightbox(4)">
+      <img src="/gallery/img/6.jpg" alt="Photo 6" loading="lazy" onclick="openLightbox(5)">
+      <img src="/gallery/img/7.jpg" alt="Photo 7" loading="lazy" onclick="openLightbox(6)">
+      <img src="/gallery/img/8.jpg" alt="Photo 8" loading="lazy" onclick="openLightbox(7)">
+      <img src="/gallery/img/9.jpg" alt="Photo 9" loading="lazy" onclick="openLightbox(8)">
+      <img src="/gallery/img/10.jpg" alt="Photo 10" loading="lazy" onclick="openLightbox(9)">
+      <img src="/gallery/img/11.jpg" alt="Photo 11" loading="lazy" onclick="openLightbox(10)">
+      <img src="/gallery/img/12.jpg" alt="Photo 12" loading="lazy" onclick="openLightbox(11)">
+      <img src="/gallery/img/13.jpg" alt="Photo 13" loading="lazy" onclick="openLightbox(12)">
+      <img src="/gallery/img/14.jpg" alt="Photo 14" loading="lazy" onclick="openLightbox(13)">
+      <img src="/gallery/img/15.jpg" alt="Photo 15" loading="lazy" onclick="openLightbox(14)">
+      <img src="/gallery/img/16.jpg" alt="Photo 16" loading="lazy" onclick="openLightbox(15)">
+      <img src="/gallery/img/17.jpg" alt="Photo 17" loading="lazy" onclick="openLightbox(16)">
     </div>
   </div>
 
@@ -69,7 +137,25 @@
   </div>
 
   <script>
-    const images = [...Array(17)].map((_, i) => `/gallery/img/${i + 1}.jpg`);
+    const images = [
+      "/gallery/img/1.jpg",
+      "/gallery/img/2.jpg",
+      "/gallery/img/3.jpg",
+      "/gallery/img/4.jpg",
+      "/gallery/img/5.jpg",
+      "/gallery/img/6.jpg",
+      "/gallery/img/7.jpg",
+      "/gallery/img/8.jpg",
+      "/gallery/img/9.jpg",
+      "/gallery/img/10.jpg",
+      "/gallery/img/11.jpg",
+      "/gallery/img/12.jpg",
+      "/gallery/img/13.jpg",
+      "/gallery/img/14.jpg",
+      "/gallery/img/15.jpg",
+      "/gallery/img/16.jpg",
+      "/gallery/img/17.jpg"
+    ];
     let currentIndex = 0;
 
     function openLightbox(index) {
@@ -88,7 +174,7 @@
       openLightbox(currentIndex);
     }
 
-    // Keyboard + swipe
+    // Keyboard support
     document.addEventListener('keydown', e => {
       if (document.getElementById('lightbox').style.display === 'flex') {
         if (e.key === 'ArrowLeft') changeSlide(-1);
@@ -97,6 +183,7 @@
       }
     });
 
+    // Swipe support
     let touchStartX = 0;
     document.getElementById('lightbox').addEventListener('touchstart', e => {
       touchStartX = e.changedTouches[0].screenX;
