@@ -104,6 +104,7 @@
       margin-top: 1rem;
       display: flex;
       gap: 1rem;
+      justify-content: center;
       flex-wrap: wrap;
     }
 
@@ -118,6 +119,32 @@
 
     .lightbox-controls button:hover {
       background: #ddd;
+    }
+
+    .arrow-button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: #ffffff80;
+      border: none;
+      border-radius: 50%;
+      padding: 10px 14px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      z-index: 1000;
+    }
+
+    .arrow-button:hover {
+      background: white;
+      color: black;
+    }
+
+    #prevArrow {
+      left: 20px;
+    }
+
+    #nextArrow {
+      right: 20px;
     }
 
     #watermark {
@@ -166,14 +193,34 @@
   </div>
 </header>
 
-<section class="gallery" id="gallery"></section>
+<section class="gallery">
+  <!-- Image Blocks (with lazy loading) -->
+  <!-- Replace total image count as per your assets -->
+  <img src="/images/1.jpg" alt="Photo 1" loading="lazy" onclick="openLightbox(0)">
+  <img src="/images/2.jpg" alt="Photo 2" loading="lazy" onclick="openLightbox(1)">
+  <img src="/images/3.jpg" alt="Photo 3" loading="lazy" onclick="openLightbox(2)">
+  <img src="/images/4.jpg" alt="Photo 4" loading="lazy" onclick="openLightbox(3)">
+  <img src="/images/5.jpg" alt="Photo 5" loading="lazy" onclick="openLightbox(4)">
+  <img src="/images/6.jpg" alt="Photo 6" loading="lazy" onclick="openLightbox(5)">
+  <img src="/images/7.jpg" alt="Photo 7" loading="lazy" onclick="openLightbox(6)">
+  <img src="/images/8.jpg" alt="Photo 8" loading="lazy" onclick="openLightbox(7)">
+  <img src="/images/9.jpg" alt="Photo 9" loading="lazy" onclick="openLightbox(8)">
+  <img src="/images/10.jpg" alt="Photo 10" loading="lazy" onclick="openLightbox(9)">
+  <img src="/images/11.jpg" alt="Photo 11" loading="lazy" onclick="openLightbox(10)">
+  <img src="/images/12.jpg" alt="Photo 12" loading="lazy" onclick="openLightbox(11)">
+  <img src="/images/13.jpg" alt="Photo 13" loading="lazy" onclick="openLightbox(12)">
+  <img src="/images/14.jpg" alt="Photo 14" loading="lazy" onclick="openLightbox(13)">
+  <img src="/images/15.jpg" alt="Photo 15" loading="lazy" onclick="openLightbox(14)">
+  <img src="/images/16.jpg" alt="Photo 16" loading="lazy" onclick="openLightbox(15)">
+  <img src="/images/17.jpg" alt="Photo 17" loading="lazy" onclick="openLightbox(16)">
+</section>
 
 <div id="lightbox">
+  <button id="prevArrow" class="arrow-button" onclick="prevImage()">⟵</button>
   <img id="lightboxImage" src="" alt="Preview"/>
+  <button id="nextArrow" class="arrow-button" onclick="nextImage()">⟶</button>
   <div class="lightbox-controls">
-    <button onclick="prevImage()">⟵ Prev</button>
     <button onclick="downloadImage()">⬇️ Download</button>
-    <button onclick="nextImage()">Next ⟶</button>
     <button onclick="closeLightbox()">❌ Close</button>
   </div>
 </div>
@@ -182,12 +229,6 @@
 <div id="backToTop" onclick="scrollToTop()">↑</div>
 
 <script>
-  // Dynamically add image blocks
-  const galleryElement = document.getElementById("gallery");
-  galleryElement.innerHTML = [...Array(17)].map((_, i) => 
-    `<img src="/images/${i + 1}.jpg" alt="Photo ${i + 1}" onclick="openLightbox(${i})">`
-  ).join('\n');
-
   const images = Array.from(document.querySelectorAll('.gallery img'));
   const lightbox = document.getElementById('lightbox');
   const lightboxImage = document.getElementById('lightboxImage');
@@ -228,22 +269,19 @@
     }
   });
 
-  // Touch swipe support
-  let startX = 0;
-  lightbox.addEventListener('touchstart', e => {
-    startX = e.touches[0].clientX;
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  lightbox.addEventListener('touchstart', function(e) {
+    touchStartX = e.changedTouches[0].screenX;
   });
 
-  lightbox.addEventListener('touchend', e => {
-    const endX = e.changedTouches[0].clientX;
-    const diff = startX - endX;
-    if (Math.abs(diff) > 50) {
-      if (diff > 0) nextImage();
-      else prevImage();
-    }
+  lightbox.addEventListener('touchend', function(e) {
+    touchEndX = e.changedTouches[0].screenX;
+    if (touchEndX < touchStartX - 40) nextImage();
+    if (touchEndX > touchStartX + 40) prevImage();
   });
 
-  // Scroll to top
   window.onscroll = function () {
     const btn = document.getElementById("backToTop");
     btn.style.display = window.scrollY > 200 ? "block" : "none";
