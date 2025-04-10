@@ -167,9 +167,6 @@
 </header>
 
 <section class="gallery" id="gallery"></section>
-  <!-- Image Blocks -->
-  ${[...Array(17)].map((_, i) => `<img src="/images/${i+1}.jpg" alt="Photo ${i+1}" onclick="openLightbox(${i})">`).join('\n')}
-</section>
 
 <div id="lightbox">
   <img id="lightboxImage" src="" alt="Preview"/>
@@ -185,6 +182,7 @@
 <div id="backToTop" onclick="scrollToTop()">↑</div>
 
 <script>
+  // Dynamically add image blocks
   const galleryElement = document.getElementById("gallery");
   galleryElement.innerHTML = [...Array(17)].map((_, i) => 
     `<img src="/images/${i + 1}.jpg" alt="Photo ${i + 1}" onclick="openLightbox(${i})">`
@@ -222,7 +220,6 @@
     link.click();
   }
 
-  // Keyboard navigation
   document.addEventListener('keydown', function(e) {
     if (lightbox.style.display === 'flex') {
       if (e.key === 'ArrowRight') nextImage();
@@ -231,31 +228,29 @@
     }
   });
 
-  // Back to Top Button
+  // Touch swipe support
+  let startX = 0;
+  lightbox.addEventListener('touchstart', e => {
+    startX = e.touches[0].clientX;
+  });
+
+  lightbox.addEventListener('touchend', e => {
+    const endX = e.changedTouches[0].clientX;
+    const diff = startX - endX;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) nextImage();
+      else prevImage();
+    }
+  });
+
+  // Scroll to top
   window.onscroll = function () {
     const btn = document.getElementById("backToTop");
     btn.style.display = window.scrollY > 200 ? "block" : "none";
   };
+
   function scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  // Swipe gesture for touchscreen
-  let touchStartX = 0;
-  let touchEndX = 0;
-
-  lightbox.addEventListener('touchstart', e => {
-    touchStartX = e.changedTouches[0].screenX;
-  });
-
-  lightbox.addEventListener('touchend', e => {
-    touchEndX = e.changedTouches[0].screenX;
-    handleSwipe();
-  });
-
-  function handleSwipe() {
-    if (touchEndX < touchStartX - 50) nextImage();
-    if (touchEndX > touchStartX + 50) prevImage();
   }
 </script>
 
