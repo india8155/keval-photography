@@ -236,19 +236,16 @@
     link.click();
   }
 
-  // Enable left/right arrow navigation in lightbox
+  // Keyboard navigation
   document.addEventListener('keydown', function(e) {
     if (lightbox.style.display === 'flex') {
-      if (e.key === 'ArrowRight') {
-        nextImage();
-      } else if (e.key === 'ArrowLeft') {
-        prevImage();
-      } else if (e.key === 'Escape') {
-        closeLightbox();
-      }
+      if (e.key === 'ArrowRight') nextImage();
+      else if (e.key === 'ArrowLeft') prevImage();
+      else if (e.key === 'Escape') closeLightbox();
     }
   });
 
+  // Back to Top Button
   window.onscroll = function () {
     const btn = document.getElementById("backToTop");
     btn.style.display = window.scrollY > 200 ? "block" : "none";
@@ -257,8 +254,26 @@
   function scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
-</script>
 
+  // Touch Swipe Support
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  lightbox.addEventListener('touchstart', function(e) {
+    touchStartX = e.changedTouches[0].screenX;
+  });
+
+  lightbox.addEventListener('touchend', function(e) {
+    touchEndX = e.changedTouches[0].screenX;
+    handleGesture();
+  });
+
+  function handleGesture() {
+    const threshold = 50; // Minimum px to detect swipe
+    if (touchEndX < touchStartX - threshold) nextImage();
+    if (touchEndX > touchStartX + threshold) prevImage();
+  }
+</script>
 
 </body>
 </html>
