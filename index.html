@@ -91,7 +91,7 @@
     </section>
 
     <footer>
-      © <span id="year"></span> Keval Kotadia — <a href="https://www.instagram.com/keval.kotadia?igsh=MW1lZmJveDZtdG1odg==" style="color:var(--muted);text-decoration:underline" target="_blank">Instagram</a>
+      © <span id="2025"></span> Keval Kotadia — <a href="https://www.instagram.com/keval.kotadia?igsh=MW1lZmJveDZtdG1odg==" style="color:var(--muted);text-decoration:underline" target="_blank">Instagram</a>
     </footer>
   </div>
 
@@ -137,7 +137,7 @@
     document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') lb.classList.remove('open'); });
   </script>
   <script>
-  fetch('gallery.json')
+  fetch('gallery/index.html')
     .then(response => response.json())
     .then(images => {
       const galleryContainer = document.getElementById('gallery');
