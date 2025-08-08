@@ -3,7 +3,7 @@ name: Generate gallery.json
 on:
   push:
     paths:
-      - 'images/**'   # jya tamara photos che
+      - 'images/**'    # images folder repo root ma che
 
 jobs:
   generate-json:
@@ -13,25 +13,25 @@ jobs:
     - name: Generate gallery.json
       run: |
         FILES=$(ls images)
-        echo "[" > gallery.json
+        echo "[" > gallery/gallery.json
         COUNT=0
         for FILE in $FILES
         do
-          if [ $COUNT -gt 0 ]; then echo "," >> gallery.json; fi
-          echo "  {" >> gallery.json
-          echo "    \"src\": \"../images/$FILE\"," >> gallery.json
-          echo "    \"title\": \"Photo $((COUNT+1))\"," >> gallery.json
-          echo "    \"year\": \"2025\"," >> gallery.json
-          echo "    \"alt\": \"Photo number $((COUNT+1)) by Keval Kotadia\"" >> gallery.json
-          echo "  }" >> gallery.json
+          if [ $COUNT -gt 0 ]; then echo "," >> gallery/gallery.json; fi
+          echo "  {" >> gallery/gallery.json
+          echo "    \"src\": \"../images/$FILE\"," >> gallery/gallery.json
+          echo "    \"title\": \"Photo $((COUNT+1))\"," >> gallery/gallery.json
+          echo "    \"year\": \"2025\"," >> gallery/gallery.json
+          echo "    \"alt\": \"Photo number $((COUNT+1)) by Keval Kotadia\"" >> gallery/gallery.json
+          echo "  }" >> gallery/gallery.json
           COUNT=$((COUNT+1))
         done
-        echo "]" >> gallery.json
+        echo "]" >> gallery/gallery.json
     - name: Commit changes
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-        git add gallery.json
+        git add gallery/gallery.json
         git commit -m "Auto-update gallery.json"
         git push
       continue-on-error: true
