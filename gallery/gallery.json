@@ -112,16 +112,9 @@
   }
 ,
   {
-    "src": "../images/background.jpg",
+    "src": "../images/favicon.png",
     "title": "Photo 17",
     "year": "2025",
     "alt": "Photo number 17 by Keval Kotadia"
-  }
-,
-  {
-    "src": "../images/favicon.png",
-    "title": "Photo 18",
-    "year": "2025",
-    "alt": "Photo number 18 by Keval Kotadia"
   }
 ]
