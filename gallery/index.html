@@ -3,196 +3,254 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Keval Kotadia — Gallery</title>
-  <link rel="icon" type="image/png" href="images/favicon.png" />
-  <meta name="description" content="Gallery of nature photos by Keval Kotadia" />
-  <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+  <title>Keval Kotadia — Nature Photography Gallery</title>
+  <meta name="description" content="Explore the serene nature photography of Keval Kotadia — gallery of landscapes, wildlife & more." />
+  <link rel="icon" href="../gallery/favicon.png" />
   <style>
-    :root{
-      --bg:#0f0f10; --card:#0f1720; --muted:#a7b0b8; --accent:#f59e0b; --white:#ffffff;
-      --max-width:1100px; --radius:14px;
+    :root {
+      --bg: #0f0f10;
+      --card: #0f1720;
+      --muted: #a7b0b8;
+      --accent: #f59e0b;
+      --white: #ffffff;
+      --max-width: 1100px;
+      --radius: 14px;
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
     }
-    *{box-sizing:border-box}
-    body{margin:0;background:linear-gradient(180deg,#071021 0%, #081428 100%); color:var(--white); -webkit-font-smoothing:antialiased}
-    .container{max-width:var(--max-width); margin:0 auto; padding:28px}
-    header{display:flex;align-items:center;justify-content:space-between;gap:16px}
-    .brand{display:flex;align-items:center;gap:12px}
-    .logo{width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,#111827,#0ea5a9);display:flex;align-items:center;justify-content:center;font-weight:700}
-    .brand h1{font-size:18px;margin:0}
-    nav a{color:var(--white);text-decoration:none;margin-left:16px;font-size:14px}
-    .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin:20px 0}
-    .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border-radius:12px;overflow:hidden;position:relative;cursor:pointer;}
-    .card img{width:100%;height:260px;object-fit:cover;display:block;border-radius:12px}
-    .card .meta{padding:12px}
-    .card .meta h3{margin:0 0 6px;font-size:16px}
-    .card .meta p{margin:0;color:var(--muted);font-size:13px}
-    .lightbox{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.8);z-index:1200}
-    .lightbox.open{display:flex}
-    .lightbox img{max-width:95%;max-height:85%;border-radius:8px;box-shadow:0 20px 40px rgba(0,0,0,0.6);touch-action:none;}
-    .lb-close{position:absolute;top:28px;right:28px;background:rgba(0,0,0,0.4);border-radius:8px;padding:8px 10px;cursor:pointer;user-select:none;}
-    .lb-download {
-      position: absolute;
-      top: 28px;
-      left: 28px;
-      cursor: pointer;
-      padding: 8px 10px;
-      background: rgba(0,0,0,0.4);
-      border-radius: 8px;
-      color: #fff;
-      font-size: 16px;
-      user-select: none;
-      text-decoration: none;
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      background: linear-gradient(180deg, #071021 0%, #081428 100%);
+      color: var(--white);
+      -webkit-font-smoothing: antialiased;
+    }
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 28px 20px 40px;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .logo {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #111827, #0ea5a9);
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 1300;
+      font-weight: 700;
+      font-size: 20px;
+      user-select: none;
+      color: white;
     }
-    .lb-download:hover {
-      background: rgba(0,0,0,0.7);
+    .brand h1 {
+      font-size: 18px;
+      margin: 0;
     }
-    footer{margin:48px 0 16px;color:var(--muted);font-size:13px;text-align:center}
+    nav a {
+      color: var(--white);
+      text-decoration: none;
+      margin-left: 16px;
+      font-size: 14px;
+      transition: color 0.2s ease;
+    }
+    nav a:hover {
+      color: var(--accent);
+    }
+    h2 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 18px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .card {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+      border-radius: var(--radius);
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    .card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    }
+    .card img {
+      width: 100%;
+      height: 260px;
+      object-fit: cover;
+      display: block;
+      border-radius: var(--radius);
+      transition: filter 0.3s ease;
+      filter: brightness(0.95);
+    }
+    .card img:hover {
+      filter: brightness(1);
+    }
+    .meta {
+      padding: 12px;
+    }
+    .meta h3 {
+      margin: 0 0 6px;
+      font-size: 16px;
+    }
+    .meta p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    /* Lightbox styles */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.9);
+      z-index: 1500;
+      overflow: hidden;
+      padding: 20px;
+      user-select: none;
+    }
+    .lightbox.open {
+      display: flex;
+    }
+    .lightbox img {
+      max-width: 95%;
+      max-height: 85%;
+      border-radius: 8px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      will-change: opacity;
+    }
+    .lightbox img.visible {
+      opacity: 1;
+    }
+    .lb-close, .lb-download {
+      position: absolute;
+      top: 20px;
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 8px;
+      padding: 10px 14px;
+      cursor: pointer;
+      color: white;
+      font-size: 18px;
+      user-select: none;
+      transition: background-color 0.2s ease;
+      font-weight: bold;
+      text-decoration: none;
+    }
+    .lb-close:hover, .lb-download:hover {
+      background: var(--accent);
+      color: #050505;
+    }
+    .lb-close {
+      right: 20px;
+    }
+    .lb-download {
+      right: 70px;
+    }
+    /* Responsive tweaks */
+    @media (min-width: 900px) {
+      .card img {
+        height: 200px;
+      }
+    }
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class="container" role="main">
     <header>
       <div class="brand">
         <div class="logo">KK</div>
         <div>
           <h1>Keval Kotadia</h1>
+          <p>Nature & Landscape Photographer</p>
         </div>
       </div>
       <nav>
-        <a href="../">Home</a>
+        <a href="../index.html">Home</a>
         <a href="../gallery/">Gallery</a>
-        <a href="https://www.instagram.com/keval.kotadia?igsh=MW1lZmJveDZtdG1odg==" target="_blank">Instagram</a>
+        <a href="https://www.instagram.com/keval.kotadia?igsh=MW1lZmJveDZtdG1odg==" target="_blank" rel="noopener noreferrer">Instagram</a>
       </nav>
     </header>
 
-    <section id="gallery">
-      <h2 style="margin-top:6px">Gallery</h2>
-      <div id="galleryGrid" class="gallery" aria-live="polite"></div>
+    <section aria-label="Photography Gallery" style="margin-top:20px;">
+      <h2>Gallery</h2>
+      <ul id="galleryGrid" class="gallery" aria-live="polite" role="list"></ul>
     </section>
 
-    <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" tabindex="-1">
-      <div class="lb-close" id="lbClose" role="button" aria-label="Close lightbox">✕</div>
-      <a id="lbDownload" class="lb-download" download href="#" title="Download Photo" aria-label="Download photo">⬇</a>
+    <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+      <a href="#" id="lbDownload" class="lb-download" title="Download photo" download>⬇</a>
+      <div class="lb-close" id="lbClose" title="Close viewer" role="button" tabindex="0">✕</div>
       <img id="lbImage" src="" alt="Enlarged photo" />
     </div>
-
-    <footer>
-      © <span id="year"></span> Keval Kotadia
-    </footer>
   </div>
 
   <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
+    // Set current year in footer if you have footer year span somewhere
+    // document.getElementById('year').textContent = new Date().getFullYear();
 
-    const lb = document.getElementById('lightbox');
-    const lbImg = document.getElementById('lbImage');
-    const lbClose = document.getElementById('lbClose');
-    const lbDownload = document.getElementById('lbDownload');
-
-    let currentIndex = 0;
     let galleryData = [];
-
-    function openLightbox(item, index) {
-      lbImg.src = item.src;
-      lbImg.alt = item.alt || item.title || '';
-      lb.classList.add('open');
-      currentIndex = index;
-      updateDownloadLink();
-      lb.focus();
-    }
-
-    function updateDownloadLink() {
-      lbDownload.href = lbImg.src;
-      lbDownload.setAttribute('download', lbImg.alt || 'photo');
-    }
-
-    lbClose.addEventListener('click', () => {
-      lb.classList.remove('open');
-      lbImg.src = '';
-    });
-
-    lb.addEventListener('click', (e) => {
-      if (e.target === lb) {
-        lb.classList.remove('open');
-        lbImg.src = '';
-      }
-    });
-
-    // Keyboard navigation
-    document.addEventListener('keydown', (e) => {
-      if (!lb.classList.contains('open')) return;
-      if (e.key === 'Escape') {
-        lb.classList.remove('open');
-        lbImg.src = '';
-      } else if (e.key === 'ArrowRight') {
-        showNextPhoto();
-      } else if (e.key === 'ArrowLeft') {
-        showPrevPhoto();
-      }
-    });
-
-    function showNextPhoto() {
-      currentIndex = (currentIndex + 1) % galleryData.length;
-      const item = galleryData[currentIndex];
-      lbImg.src = item.src;
-      lbImg.alt = item.alt || item.title || '';
-      updateDownloadLink();
-    }
-
-    function showPrevPhoto() {
-      currentIndex = (currentIndex - 1 + galleryData.length) % galleryData.length;
-      const item = galleryData[currentIndex];
-      lbImg.src = item.src;
-      lbImg.alt = item.alt || item.title || '';
-      updateDownloadLink();
-    }
-
-    // Swipe support for touch devices
-    let touchStartX = 0;
-    let touchEndX = 0;
-
-    lbImg.addEventListener('touchstart', (e) => {
-      touchStartX = e.changedTouches[0].screenX;
-    });
-
-    lbImg.addEventListener('touchend', (e) => {
-      touchEndX = e.changedTouches[0].screenX;
-      handleGesture();
-    });
-
-    function handleGesture() {
-      if (touchEndX < touchStartX - 40) { // swipe left
-        showNextPhoto();
-      }
-      if (touchEndX > touchStartX + 40) { // swipe right
-        showPrevPhoto();
-      }
-    }
+    let currentIndex = 0;
 
     async function loadGallery() {
       try {
-        const res = await fetch('gallery.json', {cache: 'no-cache'});
+        const res = await fetch('../gallery/gallery.json', { cache: 'no-cache' });
         if (!res.ok) throw new Error('gallery.json not found');
         galleryData = await res.json();
 
         const grid = document.getElementById('galleryGrid');
-        grid.innerHTML = '';
+        grid.innerHTML = ''; // clear old
 
         galleryData.forEach((item, index) => {
-          const card = document.createElement('article');
+          const card = document.createElement('li');
           card.className = 'card';
+          card.setAttribute('tabindex', '0');
+          card.setAttribute('role', 'listitem');
 
           const img = document.createElement('img');
           img.loading = 'lazy';
           img.decoding = 'async';
           img.alt = item.alt || item.title || 'Photo by Keval Kotadia';
           img.src = item.src;
-          img.addEventListener('click', () => openLightbox(item, index));
+          // Responsive srcset & WebP fallback example:
+          // (Assuming you create optimized webp images alongside jpgs in images/ folder)
+          // You can update this or remove if not applicable:
+          /*
+          img.srcset = `
+            ${item.src.replace('.jpg', '.webp')} 1x,
+            ${item.src.replace('.jpg', '@2x.webp')} 2x
+          `;
+          */
+          img.addEventListener('click', () => openLightbox(index));
+          img.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              openLightbox(index);
+            }
+          });
 
           const meta = document.createElement('div');
           meta.className = 'meta';
@@ -212,10 +270,113 @@
         });
       } catch (err) {
         console.error('Error loading gallery:', err);
-        document.getElementById('galleryGrid').innerHTML = '<p style="color:var(--muted)">Gallery not available.</p>';
+        const grid = document.getElementById('galleryGrid');
+        grid.innerHTML = '<p style="color:var(--muted)">Gallery not available.</p>';
       }
     }
 
+    // Lightbox elements
+    const lb = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lbImage');
+    const lbClose = document.getElementById('lbClose');
+    const lbDownload = document.getElementById('lbDownload');
+
+    function openLightbox(index) {
+      currentIndex = index;
+      const item = galleryData[currentIndex];
+      if (!item) return;
+
+      lbImg.classList.remove('visible'); // hide old image for fade
+      setTimeout(() => {
+        lbImg.src = item.src;
+        lbImg.alt = item.alt || item.title || '';
+        lbDownload.href = item.src;
+        lbImg.classList.add('visible'); // fade in
+      }, 100);
+
+      lb.classList.add('open');
+      document.body.style.overflow = 'hidden'; // prevent scroll
+
+      // Focus close button for accessibility
+      lbClose.focus();
+    }
+
+    function closeLightbox() {
+      lb.classList.remove('open');
+      lbImg.src = '';
+      document.body.style.overflow = '';
+    }
+
+    lbClose.addEventListener('click', closeLightbox);
+    lbClose.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        closeLightbox();
+      }
+    });
+
+    lb.addEventListener('click', (e) => {
+      if (e.target === lb) {
+        closeLightbox();
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (!lb.classList.contains('open')) return;
+
+      if (e.key === 'Escape') {
+        closeLightbox();
+      } else if (e.key === 'ArrowRight') {
+        nextPhoto();
+      } else if (e.key === 'ArrowLeft') {
+        prevPhoto();
+      }
+    });
+
+    // Swipe support
+    let touchStartX = null;
+    let touchEndX = null;
+
+    lb.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    });
+
+    lb.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleGesture();
+    });
+
+    function handleGesture() {
+      if (!touchStartX || !touchEndX) return;
+      const diff = touchStartX - touchEndX;
+      const threshold = 40; // min px for swipe
+      if (Math.abs(diff) > threshold) {
+        if (diff > 0) nextPhoto();
+        else prevPhoto();
+      }
+      touchStartX = null;
+      touchEndX = null;
+    }
+
+    function nextPhoto() {
+      if (currentIndex < galleryData.length - 1) {
+        currentIndex++;
+      } else {
+        currentIndex = 0; // loop to first
+      }
+      openLightbox(currentIndex);
+    }
+
+    function prevPhoto() {
+      if (currentIndex > 0) {
+        currentIndex--;
+      } else {
+        currentIndex = galleryData.length - 1; // loop to last
+      }
+      openLightbox(currentIndex);
+    }
+
+    // Load gallery on page load
     loadGallery();
   </script>
 </body>
