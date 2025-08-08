@@ -1,18 +1,18 @@
 [
   {
-    "src": "images/1.jpg",
+    "src": "../images/1.jpg",
     "title": "Photo 1",
     "year": "2023",
     "alt": "Photo number 1 by Keval Kotadia"
   },
   {
-    "src": "images/2.jpg",
+    "src": "../images/2.jpg",
     "title": "Photo 2",
     "year": "2023",
     "alt": "Photo number 2 by Keval Kotadia"
   },
   {
-    "src": "images/3.jpg",
+    "src": "../images/3.jpg",
     "title": "Photo 3",
     "year": "2023",
     "alt": "Photo number 3 by Keval Kotadia"
