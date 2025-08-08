@@ -28,11 +28,11 @@ jobs:
         done
         echo "]" >> gallery/gallery.json
     - name: Commit changes
- run: |
+  run: |
     git config --local user.email "action@github.com"
     git config --local user.name "GitHub Action"
     git add gallery/gallery.json
     git commit -m "Auto-update gallery.json"
     git push https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/india8155/keval-photography.git HEAD:main
- continue-on-error: true
+  continue-on-error: true
 
