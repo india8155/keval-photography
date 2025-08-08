@@ -1,13 +1,19 @@
-<!-- Updated: Removed Contact section & updated Instagram link -->
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Keval Kotadia — Nature Photography</title>
-  <link rel="icon" type="image/png" href="gallery/favicon.png" />
   <meta name="description" content="Explore the serene nature photography of Keval Kotadia — landscapes, wildlife & more." />
-  <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+  <link rel="icon" type="image/png" href="images/favicon.png" />
+  
+  <!-- Open Graph SEO -->
+  <meta property="og:title" content="Keval Kotadia — Nature Photography" />
+  <meta property="og:description" content="Explore serene landscape and nature photography by Keval Kotadia." />
+  <meta property="og:image" content="images/featured.webp" />
+  <meta property="og:url" content="https://www.kevalkotadia.uk/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  
   <style>
     :root{
       --bg:#0f0f10; --card:#0f1720; --muted:#a7b0b8; --accent:#f59e0b; --white:#ffffff;
@@ -15,34 +21,90 @@
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
     }
     *{box-sizing:border-box}
-    body{margin:0;background:linear-gradient(180deg,#071021 0%, #081428 100%); color:var(--white); -webkit-font-smoothing:antialiased}
+    body{
+      margin:0;
+      background:linear-gradient(180deg,#071021 0%, #081428 100%);
+      color:var(--white);
+      -webkit-font-smoothing:antialiased;
+      scroll-behavior: smooth;
+      position: relative;
+      min-height: 100vh;
+      padding-bottom: 80px; /* footer height */
+    }
     .container{max-width:var(--max-width); margin:0 auto; padding:28px}
     header{display:flex;align-items:center;justify-content:space-between;gap:16px}
     .brand{display:flex;align-items:center;gap:12px}
     .logo{width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,#111827,#0ea5a9);display:flex;align-items:center;justify-content:center;font-weight:700}
     .brand h1{font-size:18px;margin:0}
     .brand p{margin:0;font-size:13px;color:var(--muted)}
-    nav a{color:var(--white);text-decoration:none;margin-left:16px;font-size:14px}
+    nav a{
+      color:var(--white);
+      text-decoration:none;
+      margin-left:16px;
+      font-size:14px;
+    }
+    nav a:hover,
+    nav a:focus{
+      color:var(--accent);
+      outline:none;
+    }
     .hero{display:grid;grid-template-columns:1fr;gap:24px;align-items:center;margin:40px 0}
     .hero-main{padding:28px;background:rgba(255,255,255,0.02);border-radius:12px}
     .hero .headline{font-size:28px;margin:0 0 8px}
     .hero .sub{color:var(--muted);margin:0 0 16px}
     .cta{display:inline-block;padding:10px 16px;border-radius:10px;background:var(--accent);color:#050505;font-weight:600;text-decoration:none}
-    .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin:20px 0}
-    .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border-radius:12px;overflow:hidden;position:relative}
-    .card img{width:100%;height:260px;object-fit:cover;display:block}
-    .card .meta{padding:12px}
-    .card .meta h3{margin:0 0 6px;font-size:16px}
-    .card .meta p{margin:0;color:var(--muted);font-size:13px}
-    .lightbox{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.8);z-index:1200}
-    .lightbox.open{display:flex}
-    .lightbox img{max-width:95%;max-height:85%;border-radius:8px;box-shadow:0 20px 40px rgba(0,0,0,0.6)}
-    .lb-close{position:absolute;top:28px;right:28px;background:rgba(0,0,0,0.4);border-radius:8px;padding:8px 10px;cursor:pointer}
-    footer{margin:48px 0 16px;color:var(--muted);font-size:13px;text-align:center}
+    .cta:hover,
+    .cta:focus{
+      background:#d37f02;
+      outline:none;
+    }
+    footer{
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 60px;
+      background: #0a0a0b;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+      line-height: 60px;
+    }
+    footer a{
+      color: var(--muted);
+      text-decoration: underline;
+    }
+    footer a:hover,
+    footer a:focus {
+      color: var(--accent);
+      outline:none;
+    }
     @media (min-width:900px){
       .hero{grid-template-columns:1fr 420px}
       .hero .hero-image{height:420px;border-radius:12px;overflow:hidden}
-      .card img{height:200px}
+    }
+    /* Scroll to Top button */
+    #scrollTopBtn {
+      display: none;
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 100;
+      background-color: var(--accent);
+      color: #050505;
+      border: none;
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      cursor: pointer;
+      font-size: 24px;
+      font-weight: bold;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+      transition: background-color 0.3s ease;
+    }
+    #scrollTopBtn:hover,
+    #scrollTopBtn:focus {
+      background-color: #d37f02;
+      outline:none;
     }
   </style>
 </head>
@@ -50,41 +112,63 @@
   <div class="container">
     <header>
       <div class="brand">
-        <div class="logo">KK</div>
+        <div class="logo" aria-label="Keval Kotadia Logo">KK</div>
         <div>
           <h1>Keval Kotadia</h1>
           <p>Nature & Landscape Photographer</p>
         </div>
       </div>
       <nav>
-        <a href="../gallery/">Gallery</a>
+        <a href="../gallery/" aria-label="Go to Gallery page">Gallery</a>
         <a href="#about">About</a>
-        <a href="https://www.instagram.com/keval.kotadia?igsh=MW1lZmJveDZtdG1odg==" target="_blank">Instagram</a>
+        <a href="https://www.instagram.com/keval.kotadia" aria-label="Keval Kotadia Instagram Profile" target="_blank" rel="noopener noreferrer">Instagram</a>
       </nav>
     </header>
 
     <section class="hero">
       <div class="hero-main">
         <p class="headline">Capturing the quiet moments in nature.</p>
-        <p class="sub">Welcome — I’m Keval. I specialize in landscape and nature photography. Browse the gallery below and follow me on Instagram for my latest work.</p>
-        <a class="cta" href="../gallery/">View Gallery</a>
+        <p class="sub">Welcome — I’m Keval. I specialize in landscape and nature photography. Browse the gallery and follow me on Instagram for my latest work.</p>
+        <a class="cta" href="gallery/" aria-label="View Gallery">View Gallery</a>
       </div>
       <div class="hero-image" aria-hidden="true">
-        <img src="../gallery/background.jpg" alt="Featured photo" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:12px">
+        <img src="gallery/background.jpg" alt="Featured photo" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:12px">
       </div>
     </section>
 
     <section id="about" style="margin-top:30px">
       <h2>About</h2>
       <div style="display:grid;grid-template-columns:1fr;gap:16px;margin-top:12px">
-        <div style="font-size:15px;color:var(--muted)">I’m a nature photographer based in India. I hunt light, patience and moments that tell a story. Available for prints, commissions and travel assignments.</div>
+        <div style="font-size:15px;color:var(--muted)">
+          I’m a nature photographer based in India. I hunt light, patience and moments that tell a story. Available for prints, commissions and travel assignments.<br>
+          Contact: <a href="mailto:keval@example.com" aria-label="Email Keval Kotadia">keval@example.com</a>
+        </div>
       </div>
     </section>
-
-    <footer>
-      © <span id="year"></span> Keval Kotadia — <a href="https://www.instagram.com/keval.kotadia?igsh=MW1lZmJveDZtdG1odg==" style="color:var(--muted);text-decoration:underline" target="_blank">Instagram</a>
-    </footer>
   </div>
 
+  <footer>
+    © <span id="year"></span> Keval Kotadia — <a href="https://www.instagram.com/keval.kotadia" target="_blank" rel="noopener noreferrer">Instagram</a>
+  </footer>
+
+  <button id="scrollTopBtn" aria-label="Scroll to top">↑</button>
+
+  <script>
+    // Set current year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Scroll to top button logic
+    const scrollBtn = document.getElementById('scrollTopBtn');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        scrollBtn.style.display = 'block';
+      } else {
+        scrollBtn.style.display = 'none';
+      }
+    });
+    scrollBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
 </body>
 </html>
