@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Admin — Gallery</title>
+  <link rel="icon" href="../images/favicon.png" />
+  <style>
+    :root{--bg:#071021;--muted:#a7b0b8;--accent:#f59e0b;--white:#fff}
+    body{margin:0;font-family:Inter,system-ui,Arial;background:linear-gradient(180deg,#071021,#081428);color:var(--white)}
+    .wrap{max-width:900px;margin:18px auto;padding:18px}
+    .card{background:rgba(255,255,255,0.02);padding:14px;border-radius:10px;margin-bottom:12px}
+    label{display:block;margin-bottom:6px;font-size:13px;color:var(--muted)}
+    input[type="text"], input[type="number"], textarea{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--white)}
+    button{background:var(--accent);color:#050505;border:none;padding:10px 12px;border-radius:8px;cursor:pointer;font-weight:600}
+    .inline{display:flex;gap:8px;flex-wrap:wrap}
+    .thumb{width:100%;height:220px;object-fit:cover;border-radius:8px;margin-bottom:8px}
+    .list-item{display:flex;gap:12px;align-items:center;padding:8px;border-radius:8px;background:rgba(255,255,255,0.02);margin-bottom:8px}
+    .list-item img{width:80px;height:60px;object-fit:cover;border-radius:6px}
+    .small-btn{padding:6px 8px;border-radius:6px;background:#222;color:#fff;border:none;cursor:pointer}
+    .danger{background:#b91c1c}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h2>Admin — Gallery</h2>
+
+    <div id="authUI" class="card">
+      <div id="authForm">
+        <label>Email</label>
+        <input id="email" type="text" placeholder="you@domain.com"/>
+        <label>Password</label>
+        <input id="password" type="password" placeholder="password"/>
+        <div style="margin-top:10px"><button id="loginBtn">Login</button></div>
+      </div>
+      <div id="signedInUI" style="display:none">
+        <div>Signed in as <span id="userEmail"></span></div>
+        <div style="margin-top:8px"><button id="signOutBtn" class="small-btn">Sign out</button></div>
+      </div>
+    </div>
+
+    <div id="uploader" class="card" style="display:none">
+      <h3>Upload Photo</h3>
+      <label>Select image (mobile: choose from gallery or camera)</label>
+      <input id="fileInput" type="file" accept="image/*" capture="environment" />
+      <img id="preview" class="thumb" style="display:none"/>
+      <label>Title</label>
+      <input id="title" type="text" />
+      <label>Year</label>
+      <input id="year" type="number" />
+      <label>Description</label>
+      <textarea id="description" rows="3"></textarea>
+      <div style="margin-top:10px" class="inline">
+        <button id="uploadBtn">Upload</button>
+        <button id="clearBtn" class="small-btn">Clear</button>
+      </div>
+    </div>
+
+    <div id="items" style="margin-top:12px"></div>
+
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+    import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+    import { getStorage, ref as sRef, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-storage.js";
+    import { firebaseConfig } from "../firebase-config.js";
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const storage = getStorage(app);
+
+    // ui refs
+    const emailEl = document.getElementById('email');
+    const passwordEl = document.getElementById('password');
+    const loginBtn = document.getElementById('loginBtn');
+    const signOutBtn = document.getElementById('signOutBtn');
+    const userEmail = document.getElementById('userEmail');
+    const authForm = document.getElementById('authForm');
+    const signedInUI = document.getElementById('signedInUI');
+    const uploader = document.getElementById('uploader');
+    const fileInput = document.getElementById('fileInput');
+    const preview = document.getElementById('preview');
+    const titleEl = document.getElementById('title');
+    const yearEl = document.getElementById('year');
+    const descEl = document.getElementById('description');
+    const uploadBtn = document.getElementById('uploadBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const itemsEl = document.getElementById('items');
+
+    // Auth
+    loginBtn.addEventListener('click', async () => {
+      try {
+        const user = await signInWithEmailAndPassword(auth, emailEl.value, passwordEl.value);
+        console.log('Logged in', user.user.email);
+      } catch (err) {
+        alert(err.message);
+      }
+    });
+    signOutBtn.addEventListener('click', () => signOut(auth));
+
+    onAuthStateChanged(auth, user => {
+      if (user) {
+        authForm.style.display = 'none';
+        signedInUI.style.display = 'block';
+        uploader.style.display = 'block';
+        userEmail.textContent = user.email;
+        loadItems();
+      } else {
+        authForm.style.display = 'block';
+        signedInUI.style.display = 'none';
+        uploader.style.display = 'none';
+        itemsEl.innerHTML = '';
+      }
+    });
+
+    // preview
+    fileInput.addEventListener('change', (e) => {
+      const f = e.target.files[0];
+      if (!f) return;
+      const url = URL.createObjectURL(f);
+      preview.src = url;
+      preview.style.display = 'block';
+    });
+
+    clearBtn.addEventListener('click', () => {
+      fileInput.value = '';
+      preview.style.display = 'none';
+      titleEl.value = '';
+      yearEl.value = '';
+      descEl.value = '';
+    });
+
+    // upload
+    uploadBtn.addEventListener('click', async () => {
+      const file = fileInput.files[0];
+      if (!file) { alert('Choose an image'); return; }
+      const title = titleEl.value || '';
+      const year = yearEl.value || '';
+      const desc = descEl.value || '';
+      uploadBtn.disabled = true;
+      uploadBtn.textContent = 'Uploading...';
+      try {
+        // Create a unique filename
+        const filename = `gallery-${Date.now()}-${file.name.replace(/\s+/g,'_')}`;
+        const storageRef = sRef(storage, `gallery-images/${filename}`);
+        await uploadBytes(storageRef, file);
+        const url = await getDownloadURL(storageRef);
+
+        // Save metadata to Firestore
+        await addDoc(collection(db,'gallery'), {
+          src: url,
+          title,
+          year,
+          description: desc,
+          createdAt: serverTimestamp()
+        });
+
+        alert('Uploaded!');
+        fileInput.value = '';
+        preview.style.display = 'none';
+        titleEl.value = '';
+        yearEl.value = '';
+        descEl.value = '';
+        loadItems();
+      } catch (err) {
+        console.error(err);
+        alert('Upload failed: ' + err.message);
+      } finally {
+        uploadBtn.disabled = false;
+        uploadBtn.textContent = 'Upload';
+      }
+    });
+
+    // load items (list)
+    async function loadItems(){
+      itemsEl.innerHTML = '';
+      const snap = await getDocs(collection(db,'gallery'));
+      snap.forEach(docSnap => {
+        const data = docSnap.data();
+        const id = docSnap.id;
+        const div = document.createElement('div');
+        div.className = 'list-item';
+        div.innerHTML = `<img src="${data.src}" alt="${data.title||''}"/>
+          <div style="flex:1">
+            <div style="font-weight:600">${data.title||'(no title)'}</div>
+            <div style="color:var(--muted);font-size:13px">${data.year||''}</div>
+            <div style="margin-top:6px;color:var(--muted);font-size:13px">${(data.description||'')}</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <button class="small-btn" onclick="editItem('${id}')">Edit</button>
+            <button class="small-btn" onclick="deleteItem('${id}')">Delete</button>
+          </div>`;
+        itemsEl.appendChild(div);
+      });
+    }
+
+    // Expose edit/delete to global so buttons work
+    window.editItem = async function(id){
+      const dref = doc(db,'gallery',id);
+      const docSnap = await (await getDocs(collection(db,'gallery'))).docs.find(d=>d.id===id);
+      // fetch doc directly
+      // simplified: open a prompt to edit title/year/desc
+      const docRef = doc(db,'gallery',id);
+      const newTitle = prompt('Title:', (await (await getDocs(collection(db,'gallery'))).docs.find(d=>d.id===id)).data().title || '');
+      if (newTitle === null) return;
+      const newYear = prompt('Year:', (await (await getDocs(collection(db,'gallery'))).docs.find(d=>d.id===id)).data().year || '');
+      const newDesc = prompt('Description:', (await (await getDocs(collection(db,'gallery'))).docs.find(d=>d.id===id)).data().description || '');
+      await updateDoc(docRef, { title: newTitle, year: newYear, description: newDesc });
+      alert('Updated');
+      loadItems();
+    }
+
+    window.deleteItem = async function(id){
+      if (!confirm('Delete this photo?')) return;
+      // delete both firestore doc and storage object (we need storage path)
+      try {
+        // get doc
+        const docRef = doc(db,'gallery',id);
+        const docSnap = await (await getDocs(collection(db,'gallery'))).docs.find(d=>d.id===id);
+        const data = docSnap.data();
+        // try to derive storage path from URL - if you used default storage URL format
+        // Here we attempt to delete by download URL: we need storage path; if you saved path separately, delete easier.
+        // For safety, we'll delete Firestore doc first (storage will remain but storage cleanup can be manual).
+        await deleteDoc(docRef);
+        alert('Deleted from gallery. Storage file may remain (optional cleanup).');
+        loadItems();
+      } catch(err){
+        console.error(err);
+        alert('Delete failed: ' + err.message);
+      }
+    }
+
+  </script>
+</body>
+</html>
