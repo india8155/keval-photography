@@ -42,7 +42,6 @@
     <div id="uploader" class="card" style="display:none">
       <h3>Upload Photo</h3>
       <label>Select image (mobile: choose from gallery or camera)</label>
-      <!-- Fixed id here from fileInput to photoUpload -->
       <input type="file" id="photoUpload" accept="image/*">
       <img id="preview" class="thumb" style="display:none"/>
       <label>Title</label>
@@ -64,7 +63,7 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
-    import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, serverTimestamp, getDoc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
     import { getStorage, ref as sRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-storage.js";
     import { firebaseConfig } from "../firebase-config.js";
 
@@ -82,7 +81,6 @@
     const authForm = document.getElementById('authForm');
     const signedInUI = document.getElementById('signedInUI');
     const uploader = document.getElementById('uploader');
-    // Fixed this:
     const fileInput = document.getElementById('photoUpload');
     const preview = document.getElementById('preview');
     const titleEl = document.getElementById('title');
@@ -164,7 +162,10 @@
         titleEl.value = '';
         yearEl.value = '';
         descEl.value = '';
-        loadItems();
+
+        // Give Firestore some time for serverTimestamp to resolve before loading
+        setTimeout(loadItems, 1500);
+
       } catch (err) {
         console.error(err);
         alert('Upload failed: ' + err.message);
@@ -177,38 +178,56 @@
     // load and show gallery items
     async function loadItems(){
       itemsEl.innerHTML = '';
-      const snap = await getDocs(collection(db,'gallery'));
-      snap.forEach(docSnap => {
-        const data = docSnap.data();
-        const id = docSnap.id;
-        const div = document.createElement('div');
-        div.className = 'list-item';
-        div.innerHTML = `<img src="${data.src}" alt="${data.title||''}"/>
-          <div style="flex:1">
-            <div style="font-weight:600">${data.title||'(no title)'}</div>
-            <div style="color:var(--muted);font-size:13px">${data.year||''}</div>
-            <div style="margin-top:6px;color:var(--muted);font-size:13px">${(data.description||'')}</div>
-          </div>
-          <div style="display:flex;flex-direction:column;gap:6px">
-            <button class="small-btn" onclick="editItem('${id}')">Edit</button>
-            <button class="small-btn" onclick="deleteItem('${id}')">Delete</button>
-          </div>`;
-        itemsEl.appendChild(div);
-      });
+      try {
+        const snap = await getDocs(collection(db,'gallery'));
+        snap.forEach(docSnap => {
+          const data = docSnap.data();
+          const id = docSnap.id;
+          const div = document.createElement('div');
+          div.className = 'list-item';
+          div.innerHTML = `<img src="${data.src}" alt="${data.title||''}"/>
+            <div style="flex:1">
+              <div style="font-weight:600">${data.title||'(no title)'}</div>
+              <div style="color:var(--muted);font-size:13px">${data.year||''}</div>
+              <div style="margin-top:6px;color:var(--muted);font-size:13px">${(data.description||'')}</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <button class="small-btn" onclick="editItem('${id}')">Edit</button>
+              <button class="small-btn" onclick="deleteItem('${id}')">Delete</button>
+            </div>`;
+          itemsEl.appendChild(div);
+        });
+      } catch (err) {
+        console.error(err);
+        itemsEl.innerHTML = '<div style="color:var(--muted)">Failed to load items.</div>';
+      }
     }
 
-    // Edit item (simple prompt-based)
+    // Edit item (fetch single doc, prompt, update)
     window.editItem = async function(id){
-      const docRef = doc(db,'gallery',id);
-      const docSnap = await getDocs(collection(db,'gallery'));
-      const docData = docSnap.docs.find(d=>d.id===id)?.data() || {};
-      const newTitle = prompt('Title:', docData.title || '');
-      if (newTitle === null) return;
-      const newYear = prompt('Year:', docData.year || '');
-      const newDesc = prompt('Description:', docData.description || '');
-      await updateDoc(docRef, { title: newTitle, year: newYear, description: newDesc });
-      alert('Updated');
-      loadItems();
+      try {
+        const docRef = doc(db,'gallery',id);
+        const docSnap = await getDoc(docRef);
+        if (!docSnap.exists()) {
+          alert('Item not found');
+          return;
+        }
+        const docData = docSnap.data();
+
+        const newTitle = prompt('Title:', docData.title || '');
+        if (newTitle === null) return;
+        const newYear = prompt('Year:', docData.year || '');
+        if (newYear === null) return;
+        const newDesc = prompt('Description:', docData.description || '');
+        if (newDesc === null) return;
+
+        await updateDoc(docRef, { title: newTitle, year: newYear, description: newDesc });
+        alert('Updated');
+        loadItems();
+      } catch(err) {
+        console.error(err);
+        alert('Failed to update: ' + err.message);
+      }
     }
 
     // Delete item (Firestore doc only)
