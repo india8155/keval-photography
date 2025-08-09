@@ -4,7 +4,7 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Admin — Gallery</title>
-  <link rel="icon" href="../images/favicon.png" />
+  <link rel="icon" href="../gallery/favicon.png" />
   <style>
     :root{--bg:#071021;--muted:#a7b0b8;--accent:#f59e0b;--white:#fff}
     body{margin:0;font-family:Inter,system-ui,Arial;background:linear-gradient(180deg,#071021,#081428);color:var(--white)}
@@ -42,7 +42,7 @@
     <div id="uploader" class="card" style="display:none">
       <h3>Upload Photo</h3>
       <label>Select image (mobile: choose from gallery or camera)</label>
-      <input id="fileInput" type="file" accept="image/*" capture="environment" />
+      <input type="file" id="photoUpload" accept="image/*">
       <img id="preview" class="thumb" style="display:none"/>
       <label>Title</label>
       <input id="title" type="text" />
