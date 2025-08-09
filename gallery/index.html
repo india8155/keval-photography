@@ -1,74 +1,178 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Gallery — Keval Kotadia</title>
-  <link rel="icon" href="../gallery/favicon.png" />
-  <style>
-    :root {
-      --bg:#071021;
-      --card:#0f1720;
-      --muted:#a7b0b8;
-      --accent:#f59e0b;
-      --white:#fff;
-    }
-    * {
-      box-sizing: border-box;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>📸 Keval Photography</title>
+<style>
     body {
-      margin: 0;
-      background: linear-gradient(180deg,#071021,#081428);
-      color: var(--white);
-      font-family: Inter, system-ui, Arial;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        background: #f5f5f5;
     }
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 20px;
+    h1 {
+        text-align: center;
+        padding: 15px;
+        background: #222;
+        color: white;
+        margin: 0;
     }
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 18px;
-      position: relative;
-      padding-right: 20px;
+    .gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 15px;
+        padding: 20px;
     }
-    .logo {
-      width: 44px;
-      height: 44px;
-      border-radius: 10px;
-      background: linear-gradient(135deg,#111827,#0ea5a9);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      user-select: none;
+    .gallery-item {
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        transition: transform 0.2s ease;
     }
-    nav {
-      display: flex;
-      gap: 12px;
+    .gallery-item:hover {
+        transform: scale(1.03);
     }
-    nav a {
-      color: var(--white);
-      text-decoration: none;
-      font-size: 14px;
+    .gallery-item img {
+        width: 100%;
+        height: auto;
+        cursor: pointer;
+        display: block;
+        border-radius: 12px 12px 0 0;
     }
-    nav a:hover,
-    nav a:focus {
-      color: var(--accent);
-      outline: none;
+    .desc {
+        padding: 10px;
+        font-size: 14px;
+        color: #555;
+        text-align: center;
     }
-    h2 {
-      margin: 0 0 12px;
+    .download-btn {
+        display: block;
+        text-align: center;
+        padding: 10px;
+        background: #007BFF;
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+        border-radius: 0 0 12px 12px;
     }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill,minmax(220px,1fr));
-      gap: 16px;
+    .download-btn:hover {
+        background: #0056b3;
     }
+    /* Modal Styles */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 999;
+        padding-top: 50px;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0,0,0,0.85);
+        animation: fadeIn 0.3s ease-in-out;
+    }
+    @keyframes fadeIn {
+        from {opacity: 0;}
+        to {opacity: 1;}
+    }
+    .modal-content {
+        margin: auto;
+        display: block;
+        max-width: 90%;
+        max-height: 80%;
+        border-radius: 15px;
+        box-shadow: 0 0 15px rgba(255,255,255,0.3);
+        animation: scaleIn 0.3s ease-in-out;
+    }
+    @keyframes scaleIn {
+        from {transform: scale(0.8);}
+        to {transform: scale(1);}
+    }
+    .close {
+        position: absolute;
+        top: 20px;
+        right: 35px;
+        color: #fff;
+        font-size: 40px;
+        font-weight: bold;
+        cursor: pointer;
+        text-decoration: none;
+    }
+    @media screen and (max-width: 768px) {
+        .gallery {
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        }
+    }
+</style>
+</head>
+<body>
+
+<h1>📸 Keval Photography</h1>
+<div class="gallery" id="gallery"></div>
+
+<!-- Modal -->
+<div id="imgModal" class="modal">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <img class="modal-content" id="modalImage">
+</div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+    // Firebase Config
+    const firebaseConfig = {
+        apiKey: "YOUR_API_KEY",
+        authDomain: "keval-photography-new.firebaseapp.com",
+        projectId: "keval-photography-new",
+        storageBucket: "keval-photography-new.appspot.com",
+        messagingSenderId: "YOUR_SENDER_ID",
+        appId: "YOUR_APP_ID"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    async function loadGallery() {
+        const snapshot = await getDocs(collection(db, "gallery"));
+        const gallery = document.getElementById("gallery");
+
+        snapshot.forEach(doc => {
+            const data = doc.data();
+            const imageUrl = data.imageUrl;
+            const description = data.description || "No description";
+
+            const div = document.createElement("div");
+            div.classList.add("gallery-item");
+
+            // Append &download param to force download
+            const downloadUrl = imageUrl + "&download=" + encodeURIComponent("photo.jpg");
+
+            div.innerHTML = `
+                <img src="${imageUrl}" alt="Gallery Image" onclick="openModal('${imageUrl}')">
+                <div class="desc">${description}</div>
+                <a href="${downloadUrl}" download="photo.jpg" class="download-btn">Download</a>
+            `;
+            gallery.appendChild(div);
+        });
+    }
+
+    loadGallery();
+
+    window.openModal = function(imgSrc) {
+        document.getElementById("modalImage").src = imgSrc;
+        document.getElementById("imgModal").style.display = "block";
+    };
+
+    window.closeModal = function() {
+        document.getElementById("imgModal").style.display = "none";
+    };
+</script>
+
+</body>
+</html>    }
     .card {
       background: rgba(255,255,255,0.02);
       border-radius: 12px;
