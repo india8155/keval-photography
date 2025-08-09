@@ -226,16 +226,24 @@
     <footer>© <span id="year"></span> Keval Kotadia</footer>
   </div>
 
-  <!-- Firebase SDKs using v9 compat (modular) via CDN -->
+  <!-- Firebase SDKs using v9 modular via CDN -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-    import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
-    import { getStorage, ref as storageRef, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-storage.js";
-    import { firebaseConfig } from '../firebase-config.js';
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+    // Inline your firebaseConfig here:
+    const firebaseConfig = {
+      apiKey: "AIzaSyBFM1T3GctmY9-gX1ijPxmDW7CqgOVu8cc",
+      authDomain: "keval-photography.firebaseapp.com",
+      projectId: "keval-photography",
+      storageBucket: "keval-photography.firebasestorage.app",
+      messagingSenderId: "512590520552",
+      appId: "1:512590520552:web:27133c664cd9e0166da95d",
+      measurementId: "G-XV370VQS31"
+    };
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
-    const storage = getStorage(app);
 
     document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -299,7 +307,6 @@
     const menuBtn = document.getElementById('menuBtn');
     const navLinks = document.getElementById('nav-links');
     menuBtn.addEventListener('click', () => {
-      // console.log('Menu button clicked'); // uncomment for debug
       const expanded = menuBtn.getAttribute('aria-expanded') === 'true' || false;
       menuBtn.setAttribute('aria-expanded', !expanded);
       navLinks.classList.toggle('show');
