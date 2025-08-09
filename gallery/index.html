@@ -6,40 +6,206 @@
   <title>Gallery — Keval Kotadia</title>
   <link rel="icon" href="../gallery/favicon.png" />
   <style>
-    :root{--bg:#071021;--card:#0f1720;--muted:#a7b0b8;--accent:#f59e0b;--white:#fff}
-    *{box-sizing:border-box} body{margin:0;background:linear-gradient(180deg,#071021,#081428);color:var(--white);font-family:Inter,system-ui,Arial}
-    .container{max-width:1100px;margin:0 auto;padding:20px}
-    header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
-    .logo{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#111827,#0ea5a9);display:flex;align-items:center;justify-content:center;font-weight:700}
-    nav a{color:var(--white);text-decoration:none;margin-left:12px}
-    h2{margin:0 0 12px}
-    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
-    .card{background:rgba(255,255,255,0.02);border-radius:12px;overflow:hidden;cursor:pointer}
-    .card img{width:100%;height:220px;object-fit:cover;display:block}
-    .meta{padding:10px}
-    .meta h3{margin:0 0 6px;font-size:16px}
-    .meta p{margin:0;color:var(--muted);font-size:13px}
+    :root {
+      --bg:#071021;
+      --card:#0f1720;
+      --muted:#a7b0b8;
+      --accent:#f59e0b;
+      --white:#fff;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      background: linear-gradient(180deg,#071021,#081428);
+      color: var(--white);
+      font-family: Inter, system-ui, Arial;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+      position: relative;
+      padding-right: 20px;
+    }
+    .logo {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: linear-gradient(135deg,#111827,#0ea5a9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      user-select: none;
+    }
+    nav {
+      display: flex;
+      gap: 12px;
+    }
+    nav a {
+      color: var(--white);
+      text-decoration: none;
+      font-size: 14px;
+    }
+    nav a:hover,
+    nav a:focus {
+      color: var(--accent);
+      outline: none;
+    }
+    h2 {
+      margin: 0 0 12px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill,minmax(220px,1fr));
+      gap: 16px;
+    }
+    .card {
+      background: rgba(255,255,255,0.02);
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+    }
+    .meta {
+      padding: 10px;
+    }
+    .meta h3 {
+      margin: 0 0 6px;
+      font-size: 16px;
+    }
+    .meta p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
     /* lightbox */
-    .lightbox{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.9);z-index:9999;padding:20px}
-    .lightbox.open{display:flex}
-    .lightbox img{max-width:95%;max-height:85%;border-radius:8px}
-    .lb-close{position:absolute;top:20px;right:20px;background:rgba(0,0,0,0.5);padding:8px;border-radius:8px;cursor:pointer}
-    .download-btn{position:absolute;top:20px;right:80px;background:var(--accent);color:#050505;padding:8px 10px;border-radius:8px;text-decoration:none;font-weight:600}
-    footer{margin:40px 0 10px;color:var(--muted);text-align:center}
-    @media(min-width:900px){.card img{height:200px}}
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.9);
+      z-index: 9999;
+      padding: 20px;
+    }
+    .lightbox.open {
+      display: flex;
+    }
+    .lightbox img {
+      max-width: 95%;
+      max-height: 85%;
+      border-radius: 8px;
+    }
+    .lb-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(0,0,0,0.5);
+      padding: 8px;
+      border-radius: 8px;
+      cursor: pointer;
+      color: var(--white);
+      font-size: 18px;
+      border: none;
+    }
+    .lb-close:focus {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+    .download-btn {
+      position: absolute;
+      top: 20px;
+      right: 80px;
+      background: var(--accent);
+      color: #050505;
+      padding: 8px 10px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    footer {
+      margin: 40px 0 10px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    /* Hamburger menu icon */
+    .menu-icon {
+      display: none; /* desktop ma hide */
+      font-size: 28px;
+      cursor: pointer;
+      user-select: none;
+      color: var(--white);
+      background: transparent;
+      border: none;
+      padding: 0;
+    }
+    .menu-icon:focus {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    /* Mobile nav hidden by default */
+    @media (max-width: 768px) {
+      nav {
+        display: none; /* hide normal nav */
+        flex-direction: column;
+        position: absolute;
+        top: 70px; /* header ni niche */
+        right: 20px;
+        background: var(--card);
+        padding: 12px 20px;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.6);
+        z-index: 100;
+        min-width: 140px;
+      }
+      nav.show {
+        display: flex; /* show menu */
+      }
+      .menu-icon {
+        display: block; /* mobile ma show */
+      }
+    }
+
+    @media(min-width:900px){
+      .card img {
+        height: 200px;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <header>
       <div style="display:flex;align-items:center;gap:12px">
-        <div class="logo">KK</div>
+        <div class="logo" aria-label="Keval Kotadia Logo">KK</div>
         <div>
           <h1 style="margin:0;font-size:18px">Keval Kotadia</h1>
           <div style="color:var(--muted);font-size:13px">Nature & Landscape</div>
         </div>
       </div>
-      <nav>
+
+      <!-- Hamburger icon for mobile -->
+      <button class="menu-icon" id="menuBtn" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-links">☰</button>
+
+      <nav id="nav-links" role="navigation">
         <a href="../">Home</a>
         <a href="../admin/">Admin</a>
         <a href="https://www.instagram.com/keval.kotadia" target="_blank" rel="noopener noreferrer">Instagram</a>
@@ -83,7 +249,6 @@
     async function loadGallery() {
       grid.innerHTML = '';
       try {
-        // Fetch ordered by createdAt if you store that field; otherwise simple getDocs
         const q = query(collection(db, 'gallery'), orderBy('createdAt', 'desc'));
         const snap = await getDocs(q);
         const items = [];
@@ -108,7 +273,8 @@
           const meta = document.createElement('div');
           meta.className = 'meta';
           meta.innerHTML = `<h3>${item.title || ''}</h3><p>${item.year || ''}</p>`;
-          card.appendChild(img); card.appendChild(meta);
+          card.appendChild(img);
+          card.appendChild(meta);
           grid.appendChild(card);
         });
 
@@ -125,8 +291,19 @@
       downloadBtn.setAttribute('download', item.title || 'photo');
       lb.classList.add('open');
     }
-    lbClose.addEventListener('click', ()=> lb.classList.remove('open'));
-    lb.addEventListener('click', (e)=> { if (e.target === lb) lb.classList.remove('open'); });
+    lbClose.addEventListener('click', () => lb.classList.remove('open'));
+    lb.addEventListener('click', (e) => {
+      if (e.target === lb) lb.classList.remove('open');
+    });
+
+    // Hamburger menu toggle
+    const menuBtn = document.getElementById('menuBtn');
+    const navLinks = document.getElementById('nav-links');
+    menuBtn.addEventListener('click', () => {
+      const expanded = menuBtn.getAttribute('aria-expanded') === 'true' || false;
+      menuBtn.setAttribute('aria-expanded', !expanded);
+      navLinks.classList.toggle('show');
+    });
 
     loadGallery();
   </script>
