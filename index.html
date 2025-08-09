@@ -32,15 +32,33 @@
       padding-bottom: 80px; /* footer height */
     }
     .container{max-width:var(--max-width); margin:0 auto; padding:28px}
-    header{display:flex;align-items:center;justify-content:space-between;gap:16px}
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      position: relative;
+      padding-right: 20px;
+    }
     .brand{display:flex;align-items:center;gap:12px}
-    .logo{width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,#111827,#0ea5a9);display:flex;align-items:center;justify-content:center;font-weight:700}
+    .logo{
+      width:48px;
+      height:48px;
+      border-radius:10px;
+      background:linear-gradient(135deg,#111827,#0ea5a9);
+      display:flex;align-items:center;justify-content:center;font-weight:700;
+      user-select:none;
+    }
     .brand h1{font-size:18px;margin:0}
     .brand p{margin:0;font-size:13px;color:var(--muted)}
+    
+    nav {
+      display: flex;
+      gap: 16px;
+    }
     nav a{
       color:var(--white);
       text-decoration:none;
-      margin-left:16px;
       font-size:14px;
     }
     nav a:hover,
@@ -48,6 +66,46 @@
       color:var(--accent);
       outline:none;
     }
+
+    /* Hamburger menu icon */
+    .menu-icon {
+      display: none; /* desktop ma hide */
+      font-size: 28px;
+      cursor: pointer;
+      user-select: none;
+      color: var(--white);
+      background: transparent;
+      border: none;
+      padding: 0;
+    }
+    .menu-icon:focus {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    /* Mobile nav hidden by default */
+    @media (max-width: 768px) {
+      nav {
+        display: none; /* hide normal nav */
+        flex-direction: column;
+        position: absolute;
+        top: 70px; /* header ni niche */
+        right: 20px;
+        background: var(--card);
+        padding: 12px 20px;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.6);
+        z-index: 100;
+        min-width: 140px;
+      }
+      nav.show {
+        display: flex; /* show menu */
+      }
+      .menu-icon {
+        display: block; /* mobile ma show */
+      }
+    }
+
     .hero{display:grid;grid-template-columns:1fr;gap:24px;align-items:center;margin:40px 0}
     .hero-main{padding:28px;background:rgba(255,255,255,0.02);border-radius:12px}
     .hero .headline{font-size:28px;margin:0 0 8px}
@@ -118,7 +176,12 @@
           <p>Nature & Landscape Photographer</p>
         </div>
       </div>
-      <nav>
+
+      <!-- Hamburger icon for mobile -->
+      <button class="menu-icon" onclick="toggleMenu()" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-links">☰</button>
+
+      <!-- Navigation menu -->
+      <nav id="nav-links" role="navigation">
         <a href="../gallery/" aria-label="Go to Gallery page">Gallery</a>
         <a href="#about">About</a>
         <a href="https://www.instagram.com/keval.kotadia" aria-label="Keval Kotadia Instagram Profile" target="_blank" rel="noopener noreferrer">Instagram</a>
@@ -169,6 +232,15 @@
     scrollBtn.addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
+
+    // Toggle navigation menu for mobile
+    function toggleMenu() {
+      const nav = document.getElementById('nav-links');
+      const btn = document.querySelector('.menu-icon');
+      const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', !isExpanded);
+      nav.classList.toggle('show');
+    }
   </script>
 </body>
 </html>
