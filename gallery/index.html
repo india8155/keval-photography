@@ -93,6 +93,16 @@
       color: var(--muted);
       font-size: 13px;
     }
+    .meta p.desc {
+      margin-top: 6px;
+      font-size: 12px;
+      color: var(--muted);
+      white-space: normal;
+      max-height: 3.6em;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
     /* lightbox */
     .lightbox {
       position: fixed;
@@ -103,6 +113,7 @@
       background: rgba(0,0,0,0.9);
       z-index: 9999;
       padding: 20px;
+      flex-direction: column;
     }
     .lightbox.open {
       display: flex;
@@ -111,6 +122,15 @@
       max-width: 95%;
       max-height: 85%;
       border-radius: 8px;
+      user-select: none;
+    }
+    #lbCaption {
+      margin-top: 12px;
+      max-width: 90vw;
+      color: var(--muted);
+      font-size: 14px;
+      text-align: center;
+      user-select: text;
     }
     .lb-close {
       position: absolute;
@@ -123,6 +143,7 @@
       color: var(--white);
       font-size: 18px;
       border: none;
+      z-index: 10000;
     }
     .lb-close:focus {
       outline: 2px solid var(--accent);
@@ -138,7 +159,9 @@
       border-radius: 8px;
       text-decoration: none;
       font-weight: 600;
+      z-index: 10000;
     }
+
     footer {
       margin: 40px 0 10px;
       color: var(--muted);
@@ -147,7 +170,7 @@
 
     /* Hamburger menu icon */
     .menu-icon {
-      display: none; /* desktop ma hide */
+      display: none; /* desktop hide */
       font-size: 28px;
       cursor: pointer;
       user-select: none;
@@ -167,20 +190,20 @@
         display: none; /* hide normal nav */
         flex-direction: column;
         position: absolute;
-        top: 60px; /* adjusted from 70px */
+        top: 60px;
         right: 20px;
         background: var(--card);
         padding: 12px 20px;
         border-radius: 12px;
         box-shadow: 0 2px 8px rgba(0,0,0,0.6);
-        z-index: 1000; /* increased z-index */
+        z-index: 1000;
         min-width: 140px;
       }
       nav.show {
-        display: flex; /* show menu */
+        display: flex;
       }
       .menu-icon {
-        display: block; /* mobile ma show */
+        display: block;
       }
     }
 
@@ -217,10 +240,11 @@
       <div id="grid" class="grid" aria-live="polite"></div>
     </main>
 
-    <div id="lightbox" class="lightbox" role="dialog" aria-modal="true">
+    <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" tabindex="-1">
       <button id="lbClose" class="lb-close" aria-label="Close">✕</button>
       <a id="download" class="download-btn" download>⬇ Download</a>
-      <img id="lbImg" src="" alt=""/>
+      <img id="lbImg" src="" alt="" />
+      <div id="lbCaption"></div>
     </div>
 
     <footer>© <span id="year"></span> Keval Kotadia</footer>
@@ -251,34 +275,42 @@
     const lbImg = document.getElementById('lbImg');
     const lbClose = document.getElementById('lbClose');
     const downloadBtn = document.getElementById('download');
+    const lbCaption = document.getElementById('lbCaption');
+
+    let galleryItems = [];
+    let currentIndex = -1;
 
     async function loadGallery() {
       grid.innerHTML = '';
       try {
         const q = collection(db, 'gallery');
         const snap = await getDocs(q);
-        const items = [];
+        galleryItems = [];
         snap.forEach(doc => {
           const data = doc.data();
-          items.push({ id: doc.id, ...data });
+          galleryItems.push({ id: doc.id, ...data });
         });
 
-        if (items.length === 0) {
+        if (galleryItems.length === 0) {
           grid.innerHTML = '<div style="color:var(--muted)">No photos yet.</div>';
           return;
         }
 
-        items.forEach(item => {
+        galleryItems.forEach((item, index) => {
           const card = document.createElement('div');
           card.className = 'card';
           const img = document.createElement('img');
           img.alt = item.title || '';
           img.src = item.src; // src stored is public storage URL
           img.loading = 'lazy';
-          img.addEventListener('click', () => openLightbox(item));
+          img.addEventListener('click', () => openLightbox(index));
           const meta = document.createElement('div');
           meta.className = 'meta';
-          meta.innerHTML = `<h3>${item.title || ''}</h3><p>${item.year || ''}</p>`;
+          meta.innerHTML = `
+            <h3>${item.title || ''}</h3>
+            <p>${item.year || ''}</p>
+            <p class="desc">${item.description || ''}</p>
+          `;
           card.appendChild(img);
           card.appendChild(meta);
           grid.appendChild(card);
@@ -290,17 +322,77 @@
       }
     }
 
-    function openLightbox(item) {
+    function openLightbox(index) {
+      if (index < 0 || index >= galleryItems.length) return;
+      currentIndex = index;
+      const item = galleryItems[index];
       lbImg.src = item.src;
       lbImg.alt = item.title || '';
       downloadBtn.href = item.src;
       downloadBtn.setAttribute('download', item.title || 'photo');
+      lbCaption.textContent = item.description || '';
       lb.classList.add('open');
+      lb.focus();
     }
-    lbClose.addEventListener('click', () => lb.classList.remove('open'));
+
+    function closeLightbox() {
+      lb.classList.remove('open');
+      currentIndex = -1;
+    }
+
+    function showNext() {
+      if (galleryItems.length === 0) return;
+      currentIndex = (currentIndex + 1) % galleryItems.length;
+      openLightbox(currentIndex);
+    }
+
+    function showPrev() {
+      if (galleryItems.length === 0) return;
+      currentIndex = (currentIndex - 1 + galleryItems.length) % galleryItems.length;
+      openLightbox(currentIndex);
+    }
+
+    lbClose.addEventListener('click', closeLightbox);
+
     lb.addEventListener('click', (e) => {
-      if (e.target === lb) lb.classList.remove('open');
+      if (e.target === lb) closeLightbox();
     });
+
+    // Keyboard navigation
+    window.addEventListener('keydown', (e) => {
+      if (!lb.classList.contains('open')) return;
+      if (e.key === 'ArrowRight') {
+        showNext();
+      } else if (e.key === 'ArrowLeft') {
+        showPrev();
+      } else if (e.key === 'Escape') {
+        closeLightbox();
+      }
+    });
+
+    // Touch swipe navigation
+    let touchStartX = 0;
+    let touchEndX = 0;
+    const swipeThreshold = 50;
+
+    lb.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    });
+    lb.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipeGesture();
+    });
+
+    function handleSwipeGesture() {
+      const diff = touchEndX - touchStartX;
+      if (Math.abs(diff) > swipeThreshold) {
+        if (diff > 0) {
+          showPrev();
+        } else {
+          showNext();
+        }
+      }
+    }
 
     // Hamburger menu toggle
     const menuBtn = document.getElementById('menuBtn');
