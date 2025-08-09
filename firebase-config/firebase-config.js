@@ -1,3 +1,4 @@
+// firebase-config/firebase-config.js
 export const firebaseConfig = {
   apiKey: "AIzaSyBFM1T3GctmY9-gX1ijPxmDW7CqgOVu8cc",
   authDomain: "keval-photography.firebaseapp.com",
