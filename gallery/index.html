@@ -249,7 +249,7 @@
     async function loadGallery() {
       grid.innerHTML = '';
       try {
-        const q = query(collection(db, 'gallery'), orderBy('createdAt', 'desc'));
+        const q = collection(db, 'gallery');
         const snap = await getDocs(q);
         const items = [];
         snap.forEach(doc => {
