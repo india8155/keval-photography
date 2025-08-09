@@ -42,6 +42,7 @@
     <div id="uploader" class="card" style="display:none">
       <h3>Upload Photo</h3>
       <label>Select image (mobile: choose from gallery or camera)</label>
+      <!-- Fixed id here from fileInput to photoUpload -->
       <input type="file" id="photoUpload" accept="image/*">
       <img id="preview" class="thumb" style="display:none"/>
       <label>Title</label>
@@ -64,7 +65,7 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
     import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
-    import { getStorage, ref as sRef, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-storage.js";
+    import { getStorage, ref as sRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-storage.js";
     import { firebaseConfig } from "../firebase-config.js";
 
     const app = initializeApp(firebaseConfig);
@@ -81,7 +82,8 @@
     const authForm = document.getElementById('authForm');
     const signedInUI = document.getElementById('signedInUI');
     const uploader = document.getElementById('uploader');
-    const fileInput = document.getElementById('fileInput');
+    // Fixed this:
+    const fileInput = document.getElementById('photoUpload');
     const preview = document.getElementById('preview');
     const titleEl = document.getElementById('title');
     const yearEl = document.getElementById('year');
@@ -90,7 +92,7 @@
     const clearBtn = document.getElementById('clearBtn');
     const itemsEl = document.getElementById('items');
 
-    // Auth
+    // Auth login
     loginBtn.addEventListener('click', async () => {
       try {
         const user = await signInWithEmailAndPassword(auth, emailEl.value, passwordEl.value);
@@ -116,7 +118,7 @@
       }
     });
 
-    // preview
+    // preview image on file select
     fileInput.addEventListener('change', (e) => {
       const f = e.target.files[0];
       if (!f) return;
@@ -133,7 +135,7 @@
       descEl.value = '';
     });
 
-    // upload
+    // upload logic
     uploadBtn.addEventListener('click', async () => {
       const file = fileInput.files[0];
       if (!file) { alert('Choose an image'); return; }
@@ -143,13 +145,11 @@
       uploadBtn.disabled = true;
       uploadBtn.textContent = 'Uploading...';
       try {
-        // Create a unique filename
         const filename = `gallery-${Date.now()}-${file.name.replace(/\s+/g,'_')}`;
-        const storageRef = sRef(storage, `gallery-images/${filename}`);
-        await uploadBytes(storageRef, file);
-        const url = await getDownloadURL(storageRef);
+        const storageReference = sRef(storage, `gallery-images/${filename}`);
+        await uploadBytes(storageReference, file);
+        const url = await getDownloadURL(storageReference);
 
-        // Save metadata to Firestore
         await addDoc(collection(db,'gallery'), {
           src: url,
           title,
@@ -174,7 +174,7 @@
       }
     });
 
-    // load items (list)
+    // load and show gallery items
     async function loadItems(){
       itemsEl.innerHTML = '';
       const snap = await getDocs(collection(db,'gallery'));
@@ -197,33 +197,25 @@
       });
     }
 
-    // Expose edit/delete to global so buttons work
+    // Edit item (simple prompt-based)
     window.editItem = async function(id){
-      const dref = doc(db,'gallery',id);
-      const docSnap = await (await getDocs(collection(db,'gallery'))).docs.find(d=>d.id===id);
-      // fetch doc directly
-      // simplified: open a prompt to edit title/year/desc
       const docRef = doc(db,'gallery',id);
-      const newTitle = prompt('Title:', (await (await getDocs(collection(db,'gallery'))).docs.find(d=>d.id===id)).data().title || '');
+      const docSnap = await getDocs(collection(db,'gallery'));
+      const docData = docSnap.docs.find(d=>d.id===id)?.data() || {};
+      const newTitle = prompt('Title:', docData.title || '');
       if (newTitle === null) return;
-      const newYear = prompt('Year:', (await (await getDocs(collection(db,'gallery'))).docs.find(d=>d.id===id)).data().year || '');
-      const newDesc = prompt('Description:', (await (await getDocs(collection(db,'gallery'))).docs.find(d=>d.id===id)).data().description || '');
+      const newYear = prompt('Year:', docData.year || '');
+      const newDesc = prompt('Description:', docData.description || '');
       await updateDoc(docRef, { title: newTitle, year: newYear, description: newDesc });
       alert('Updated');
       loadItems();
     }
 
+    // Delete item (Firestore doc only)
     window.deleteItem = async function(id){
       if (!confirm('Delete this photo?')) return;
-      // delete both firestore doc and storage object (we need storage path)
       try {
-        // get doc
         const docRef = doc(db,'gallery',id);
-        const docSnap = await (await getDocs(collection(db,'gallery'))).docs.find(d=>d.id===id);
-        const data = docSnap.data();
-        // try to derive storage path from URL - if you used default storage URL format
-        // Here we attempt to delete by download URL: we need storage path; if you saved path separately, delete easier.
-        // For safety, we'll delete Firestore doc first (storage will remain but storage cleanup can be manual).
         await deleteDoc(docRef);
         alert('Deleted from gallery. Storage file may remain (optional cleanup).');
         loadItems();
