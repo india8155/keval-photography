@@ -65,7 +65,7 @@
     import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
     import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, serverTimestamp, getDoc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
     import { getStorage, ref as sRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-storage.js";
-    import { firebaseConfig } from "../firebase-config/firebase-config.js"; // adjust path as needed
+    import { firebaseConfig } from "./firebase-config/firebase-config.js";
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
