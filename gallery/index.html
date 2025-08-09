@@ -121,7 +121,7 @@
     .lightbox img {
       max-width: 95%;
       max-height: 85%;
-      border-radius: 8px;
+      border-radius: 12px; /* updated */
       user-select: none;
     }
     #lbCaption {
@@ -255,7 +255,6 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
     import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
-    // Inline your firebaseConfig here:
     const firebaseConfig = {
       apiKey: "AIzaSyDSOpp4Wnk-4ez07FDSRgwGvcFc8IfDOEc",
       authDomain: "keval-photography-new.firebaseapp.com",
@@ -301,7 +300,7 @@
           card.className = 'card';
           const img = document.createElement('img');
           img.alt = item.title || '';
-          img.src = item.src; // src stored is public storage URL
+          img.src = item.src;
           img.loading = 'lazy';
           img.addEventListener('click', () => openLightbox(index));
           const meta = document.createElement('div');
@@ -328,11 +327,16 @@
       const item = galleryItems[index];
       lbImg.src = item.src;
       lbImg.alt = item.title || '';
-      downloadBtn.href = item.src;
-      downloadBtn.setAttribute('download', item.title || 'photo');
       lbCaption.textContent = item.description || '';
       lb.classList.add('open');
       lb.focus();
+
+      // Fix download button: force download with filename
+      downloadBtn.href = item.src;
+      downloadBtn.setAttribute('download', (item.title || 'photo') + '.jpg');
+      downloadBtn.onclick = (e) => {
+        e.stopPropagation(); // prevent closing lightbox when clicking download
+      };
     }
 
     function closeLightbox() {
